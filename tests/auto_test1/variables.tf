@@ -50,7 +50,7 @@ variable "openai_outbound_network_access_restricted" {
 
 variable "openai_public_network_access_enabled" {
   type        = bool
-  default     = false
+  default     = true
   description = "Whether or not public network access is enabled. Defaults to `false`."
 }
 

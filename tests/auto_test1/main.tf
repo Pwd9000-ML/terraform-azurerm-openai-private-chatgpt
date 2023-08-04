@@ -21,11 +21,11 @@ resource "random_integer" "number" {
 }
 
 ### Resource group to deploy the container apps instance and supporting resources into
-resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = var.location
-  tags     = var.tags
-}
+#resource "azurerm_resource_group" "rg" {
+#  name     = var.resource_group_name
+#  location = var.location
+#  tags     = var.tags
+#}
 
 ### Resource group to deploy the cognitive account openai service into
 resource "azurerm_resource_group" "openai_rg" {
@@ -49,7 +49,7 @@ module "private-chatgpt-openai" {
   openai_local_auth_enabled                 = var.openai_local_auth_enabled
   openai_outbound_network_access_restricted = var.openai_outbound_network_access_restricted
   openai_public_network_access_enabled      = var.openai_public_network_access_enabled
-  identity                                  = var.openai_identity
+  openai_identity                           = var.openai_identity
   tags                                      = var.tags
 
 }
