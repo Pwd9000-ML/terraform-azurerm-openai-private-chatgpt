@@ -19,26 +19,19 @@ variable "location" {
   description = "Azure region to deploy resources to."
 }
 
-###Resource Group###
-#variable "resource_group_name" {
-#  type        = string
-#  description = "Name of the resource group where resources will be hosted."
-#  nullable    = false
-#}
-
-variable "openai_resource_group_name" {
-  type        = string
-  description = "Name of the resource group to create where the cognitive account OpenAI service is hosted."
-  nullable    = false
-}
-
 ##########################################
 # OpenAI Service                         #
 ##########################################
 variable "create_openai_service" {
   type        = bool
   description = "Create the OpenAI service."
-  default     = true
+  default     = false
+}
+
+variable "openai_resource_group_name" {
+  type        = string
+  description = "Name of the resource group to create where the cognitive account OpenAI service is hosted."
+  nullable    = false
 }
 
 variable "openai_account_name" {
