@@ -12,7 +12,6 @@ tags = {
 kv_config = {
   name                      = "openaikv9000"
   sku                       = "standard"
-  enable_rbac_authorization = true
 }
 keyvault_firewall_default_action             = "Deny"
 keyvault_firewall_bypass                     = "AzureServices"

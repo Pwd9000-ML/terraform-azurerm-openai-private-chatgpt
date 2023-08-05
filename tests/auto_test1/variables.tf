@@ -22,12 +22,10 @@ variable "kv_config" {
   type = object({
     name                      = string
     sku                       = string
-    enable_rbac_authorization = bool
   })
   default = {
     name                      = "openaikv9000"
     sku                       = "standard"
-    enable_rbac_authorization = true
   }
   description = "Key Vault configuration object to create azure key vault to store openai account details."
   nullable    = false
