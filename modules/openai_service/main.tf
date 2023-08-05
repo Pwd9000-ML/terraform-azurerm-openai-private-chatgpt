@@ -1,7 +1,7 @@
 #####################################################
 # PRE-REQS (VNET, Subs, Delegated Subs, DNS, LINKS) #
 #####################################################
-resource "azurerm_cognitive_account" "OpenAI" {
+resource "azurerm_cognitive_account" "openai" {
   kind                               = "OpenAI"
   location                           = var.location
   name                               = var.account_name
@@ -55,3 +55,4 @@ resource "azurerm_cognitive_account" "OpenAI" {
     }
   }
 }
+

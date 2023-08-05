@@ -19,6 +19,53 @@ variable "location" {
   description = "Azure region to deploy resources to."
 }
 
+# solution resource group
+variable "resource_group_name" {
+  type        = string
+  description = "Name of the resource group where the Private ChatGPT solution resources will be hosted."
+  nullable    = false
+}
+
+###Key Vault###
+variable "kv_config" {
+  type = object({
+    name                      = string
+    sku                       = string
+    enable_rbac_authorization = bool
+  })
+  default = {
+    name                      = "openaikv9000"
+    sku                       = "standard"
+    enable_rbac_authorization = true
+  }
+  description = "Key Vault configuration object to create azure key vault to store openai account details."
+  nullable    = false
+}
+
+variable "keyvault_firewall_default_action" {
+  type        = string
+  default     = "Deny"
+  description = "Default action for keyvault firewall rules."
+}
+
+variable "keyvault_firewall_bypass" {
+  type        = string
+  default     = "AzureServices"
+  description = "List of keyvault firewall rules to bypass."
+}
+
+variable "keyvault_firewall_allowed_ips" {
+  type        = list(string)
+  default     = []
+  description = "value of keyvault firewall allowed ip rules."
+}
+
+variable "keyvault_firewall_virtual_network_subnet_ids" {
+  type        = list(string)
+  default     = []
+  description = "value of keyvault firewall allowed virtual network subnet ids."
+}
+
 ##########################################
 # OpenAI Service                         #
 ##########################################
@@ -30,7 +77,7 @@ variable "create_openai_service" {
 
 variable "openai_resource_group_name" {
   type        = string
-  description = "Name of the resource group to create where the cognitive account OpenAI service is hosted."
+  description = "Name of the resource group where the cognitive account OpenAI service is hosted (if different from solution resource group)."
   nullable    = false
 }
 
