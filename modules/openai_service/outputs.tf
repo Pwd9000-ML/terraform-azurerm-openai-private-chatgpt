@@ -19,3 +19,13 @@ output "openai_subdomain" {
   description = "The subdomain used to connect to the Cognitive Service Account."
   value       = azurerm_cognitive_account.openai.custom_subdomain_name
 }
+
+output "openai_account_name" {
+  description = "The name of the Cognitive Service Account."
+  value       = var.account_name
+}
+
+output "openai_resource_group_name" {
+  description = "The name of the Resource Group hosting the Cognitive Service Account."
+  value       = var.resource_group_name
+}

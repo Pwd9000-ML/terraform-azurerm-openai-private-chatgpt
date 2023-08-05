@@ -56,4 +56,8 @@ module "private-chatgpt-openai" {
   openai_public_network_access_enabled      = var.openai_public_network_access_enabled
   openai_identity                           = var.openai_identity
 
+  #Create Model Deployment?
+  create_model_deployment = var.create_model_deployment
+  model_deployment        = var.model_deployment
+
 }

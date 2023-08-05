@@ -62,31 +62,27 @@ module "create_openai_service" {
 }
 
 ### Model Deployment
-# module "create_model_deployment" {
-#   source = "./modules/model_deployment"
-#   # Only deploy new model if 'var.create_model_deployment' is true
-#   #count                       = var.create_networking_prereqs == true ? 1 : 0
-#   #network_resource_group_name = var.network_resource_group_name
-#   #location                    = var.location
-#   #virtual_network_name        = var.virtual_network_name
-#   #vnet_address_space          = var.vnet_address_space
-#   #subnet_config               = var.subnet_config
-#   #subnet_config_delegated_aci = var.subnet_config_delegated_aci
-#   #private_dns_zones           = var.private_dns_zones
-#   #tags                        = var.tags
-# }
+module "create_model_deployment" {
+  source = "./modules/model_deployment"
+  # Only deploy new model if 'var.create_model_deployment' is true
+  count                      = var.create_model_deployment == true ? 1 : 0
+  openai_resource_group_name = var.create_openai_service == true ? module.create_openai_service[0].openai_resource_group_name : var.openai_resource_group_name
+  openai_account_name        = var.create_openai_service == true ? module.create_openai_service[0].openai_account_name : var.openai_account_name
+  model_deployment           = var.model_deployment
+  depends_on                 = [module.create_openai_service]
+}
 
 ### Save OpenAI Cognitive Account details to Key Vault
 resource "azurerm_key_vault_secret" "openai_endpoint" {
   name         = "${var.openai_account_name}-openai-endpoint"
-  value        = var.create_openai_service == true ? module.create_openai_service[0].openai_endpoint : data.azurerm_automation_account.openai[0].endpoint
+  value        = var.create_openai_service == true ? module.create_openai_service[0].openai_endpoint : data.azurerm_cognitive_account.openai[0].endpoint
   key_vault_id = azurerm_key_vault.openai_kv.id
   depends_on   = [azurerm_role_assignment.kv_role_assigment]
 }
 
 resource "azurerm_key_vault_secret" "openai_primary_key" {
   name         = "${var.openai_account_name}-openai-key"
-  value        = var.create_openai_service == true ? module.create_openai_service[0].openai_primary_key : data.azurerm_automation_account.openai[0].primary_key
+  value        = var.create_openai_service == true ? module.create_openai_service[0].openai_primary_key : data.azurerm_cognitive_account.openai[0].primary_access_key
   key_vault_id = azurerm_key_vault.openai_kv.id
   depends_on   = [azurerm_role_assignment.kv_role_assigment]
 }

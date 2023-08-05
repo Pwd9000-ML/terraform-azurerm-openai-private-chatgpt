@@ -20,12 +20,12 @@ variable "openai_resource_group_name" {
 ### key vault ###
 variable "kv_config" {
   type = object({
-    name                      = string
-    sku                       = string
+    name = string
+    sku  = string
   })
   default = {
-    name                      = "openaikv9000"
-    sku                       = "standard"
+    name = "openaikv9000"
+    sku  = "standard"
   }
   description = "Key Vault configuration object to create azure key vault to store openai account details."
   nullable    = false
@@ -111,4 +111,46 @@ variable "openai_identity" {
       identity_ids = (Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this OpenAI Account.
     })
   DESCRIPTION
+}
+
+### model deployment ###
+variable "create_model_deployment" {
+  type        = bool
+  description = "Create the model deployment."
+  default     = false
+}
+
+variable "model_deployment" {
+  type = map(object({
+    name            = string
+    model_format    = string
+    model_name      = string
+    model_version   = string
+    scale_type      = string
+    scale_tier      = optional(string)
+    scale_size      = optional(number)
+    scale_family    = optional(string)
+    scale_capacity  = optional(number)
+    rai_policy_name = optional(string)
+  }))
+  default     = {}
+  description = <<-DESCRIPTION
+      type = map(object({
+        name                 = (Required) The name of the Cognitive Services Account Deployment. Changing this forces a new resource to be created.
+        model = {
+          model_format  = (Required) The format of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created. Possible value is OpenAI.
+          model_name    = (Required) The name of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created.
+          model_version = (Required) The version of Cognitive Services Account Deployment model.
+        }
+        scale = {
+          scale_type     = (Required) Deployment scale type. Possible value is Standard. Changing this forces a new resource to be created.
+          scale_tier     = (Optional) Possible values are Free, Basic, Standard, Premium, Enterprise. Changing this forces a new resource to be created.
+          scale_size     = (Optional) The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. Changing this forces a new resource to be created.
+          scale_family   = (Optional) If the service has different generations of hardware, for the same SKU, then that can be captured here. Changing this forces a new resource to be created.
+          scale_capacity = (Optional) Tokens-per-Minute (TPM). If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. Default value is 1. Changing this forces a new resource to be created.
+        }
+        rai_policy_name = (Optional) The name of RAI policy. Changing this forces a new resource to be created.
+      }))
+  DESCRIPTION
+  nullable    = false
 }

@@ -10,8 +10,8 @@ tags = {
 
 # solution specific variables
 kv_config = {
-  name                      = "openaikv9000"
-  sku                       = "standard"
+  name = "openaikv9000"
+  sku  = "standard"
 }
 keyvault_firewall_default_action             = "Deny"
 keyvault_firewall_bypass                     = "AzureServices"
@@ -28,4 +28,16 @@ openai_outbound_network_access_restricted = false
 openai_public_network_access_enabled      = true
 openai_identity = {
   type = "SystemAssigned"
+}
+
+### Create Model deployment ###
+create_model_deployment = true
+model_deployment = {
+  "gpt-35-turbo-16k" = {
+    name          = "pwd9000-gpt-35-turbo-16k"
+    model_format  = "OpenAI"
+    model_name    = "gpt-35-turbo-16k"
+    model_version = "0613"
+    scale_type    = "Standard"
+  }
 }
