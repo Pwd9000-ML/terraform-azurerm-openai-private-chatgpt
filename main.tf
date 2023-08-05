@@ -40,6 +40,7 @@ resource "azurerm_role_assignment" "kv_role_assigment" {
 # set 'var.create_openai_service' = false        #
 ##################################################
 
+### OpenAI Service
 module "create_openai_service" {
   source = "./modules/openai_service"
   # Only deploy a new openai service 'var.create_openai_service' is true
@@ -61,6 +62,7 @@ module "create_openai_service" {
   tags                               = var.tags
 }
 
+### Model Deployment
 # module "create_model_deployment" {
 #   source = "./modules/model_deployment"
 #   # Only deploy new model if 'var.create_model_deployment' is true
@@ -75,3 +77,17 @@ module "create_openai_service" {
 #   #tags                        = var.tags
 # }
 
+### Save OpenAI Cognitive Account details to Key Vault
+resource "azurerm_key_vault_secret" "openai_endpoint" {
+  name         = "${var.openai_account_name}-endpoint"
+  value        = var.create_openai_service == true ? module.create_openai_service.openai_endpoint : data.azurerm_automation_account.openai.endpoint
+  key_vault_id = azurerm_key_vault.openai_kv.id
+  depends_on   = [azurerm_role_assignment.kv_role_assigment]
+}
+
+resource "azurerm_key_vault_secret" "openai_primary_key" {
+  name         = "${var.openai_account_name}-key"
+  value        = var.create_openai_service == true ? module.create_openai_service.openai_endpoint : data.azurerm_automation_account.openai.primary_key
+  key_vault_id = azurerm_key_vault.openai_kv.id
+  depends_on   = [azurerm_role_assignment.kv_role_assigment]
+}
