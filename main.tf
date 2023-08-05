@@ -79,15 +79,15 @@ module "create_openai_service" {
 
 ### Save OpenAI Cognitive Account details to Key Vault
 resource "azurerm_key_vault_secret" "openai_endpoint" {
-  name         = "${var.openai_account_name}-endpoint"
-  value        = var.create_openai_service == true ? module.create_openai_service.openai_endpoint : data.azurerm_automation_account.openai.endpoint
+  name         = "${var.openai_account_name}-openai-endpoint"
+  value        = var.create_openai_service == true ? module.create_openai_service[0].openai_endpoint : data.azurerm_automation_account.openai[0].endpoint
   key_vault_id = azurerm_key_vault.openai_kv.id
   depends_on   = [azurerm_role_assignment.kv_role_assigment]
 }
 
 resource "azurerm_key_vault_secret" "openai_primary_key" {
-  name         = "${var.openai_account_name}-key"
-  value        = var.create_openai_service == true ? module.create_openai_service.openai_endpoint : data.azurerm_automation_account.openai.primary_key
+  name         = "${var.openai_account_name}-openai-key"
+  value        = var.create_openai_service == true ? module.create_openai_service[0].openai_primary_key : data.azurerm_automation_account.openai[0].primary_key
   key_vault_id = azurerm_key_vault.openai_kv.id
   depends_on   = [azurerm_role_assignment.kv_role_assigment]
 }

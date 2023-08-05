@@ -95,8 +95,8 @@ variable "openai_sku_name" {
 
 variable "openai_custom_subdomain_name" {
   type        = string
-  description = "The subdomain name used for token-based authentication. Changing this forces a new resource to be created."
-  default     = null
+  description = "The subdomain name used for token-based authentication. Changing this forces a new resource to be created (normally the same as variable `openai_account_name`)"
+  default     = "demo-account"
 }
 
 variable "openai_dynamic_throttling_enabled" {

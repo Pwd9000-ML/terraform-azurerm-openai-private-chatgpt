@@ -35,8 +35,8 @@ variable "sku_name" {
 
 variable "custom_subdomain_name" {
   type        = string
-  default     = null
-  description = "The subdomain name used for token-based authentication. Changing this forces a new resource to be created."
+  default     = "demo-account"
+  description = "The subdomain name used for token-based authentication. Changing this forces a new resource to be created. (normally the same as the account name)"
 }
 
 variable "dynamic_throttling_enabled" {

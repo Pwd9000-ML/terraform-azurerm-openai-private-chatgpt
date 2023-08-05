@@ -48,7 +48,8 @@ module "private-chatgpt-openai" {
   #Create OpenAI Service?
   create_openai_service                     = var.create_openai_service
   openai_resource_group_name                = azurerm_resource_group.openai_rg.name
-  openai_account_name                       = "${var.openai_account_name}-${random_integer.number.result}"
+  openai_account_name                       = var.openai_account_name
+  openai_custom_subdomain_name              = var.openai_custom_subdomain_name
   openai_sku_name                           = var.openai_sku_name
   openai_local_auth_enabled                 = var.openai_local_auth_enabled
   openai_outbound_network_access_restricted = var.openai_outbound_network_access_restricted

@@ -1,6 +1,6 @@
 ### Common Variables ###
 openai_resource_group_name = "Terraform-Cognitive-Services"
-location                   = "uksouth"
+location                   = "eastus"
 tags = {
   Terraform   = "True"
   Description = "Private ChatGPT - Azure OpenAI"
@@ -22,6 +22,7 @@ keyvault_firewall_virtual_network_subnet_ids = []
 ### Create OpenAI Service ###
 create_openai_service                     = true
 openai_account_name                       = "pwd9000"
+openai_custom_subdomain_name              = "pwd9000" #translates to
 openai_sku_name                           = "S0"
 openai_local_auth_enabled                 = true
 openai_outbound_network_access_restricted = false
