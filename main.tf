@@ -22,7 +22,7 @@ resource "azurerm_key_vault" "openai_kv" {
   tags = var.tags
 }
 
-# Add "self" permission to key vault RBAC
+# Add "self" permission to key vault RBAC (to manange key vault secrets)
 resource "azurerm_role_assignment" "kv_role_assigment" {
   for_each             = toset(["Key Vault Administrator"])
   role_definition_name = each.key
@@ -64,7 +64,7 @@ module "create_openai_service" {
 ### Model Deployment
 module "create_model_deployment" {
   source = "./modules/model_deployment"
-  # Only deploy new model if 'var.create_model_deployment' is true
+  # Only deploy new model if 'var.create_model_deployment' is true (else use existing cognitive account)
   count                      = var.create_model_deployment == true ? 1 : 0
   openai_resource_group_name = var.create_openai_service == true ? module.create_openai_service[0].openai_resource_group_name : var.openai_resource_group_name
   openai_account_name        = var.create_openai_service == true ? module.create_openai_service[0].openai_account_name : var.openai_account_name
@@ -72,7 +72,7 @@ module "create_model_deployment" {
   depends_on                 = [module.create_openai_service]
 }
 
-### Save OpenAI Cognitive Account details to Key Vault
+### Save OpenAI Cognitive Account details to Key Vault (will be pulled into container apps as secrets/enviroment variables)
 resource "azurerm_key_vault_secret" "openai_endpoint" {
   name         = "${var.openai_account_name}-openai-endpoint"
   value        = var.create_openai_service == true ? module.create_openai_service[0].openai_endpoint : data.azurerm_cognitive_account.openai[0].endpoint
@@ -83,6 +83,30 @@ resource "azurerm_key_vault_secret" "openai_endpoint" {
 resource "azurerm_key_vault_secret" "openai_primary_key" {
   name         = "${var.openai_account_name}-openai-key"
   value        = var.create_openai_service == true ? module.create_openai_service[0].openai_primary_key : data.azurerm_cognitive_account.openai[0].primary_access_key
+  key_vault_id = azurerm_key_vault.openai_kv.id
+  depends_on   = [azurerm_role_assignment.kv_role_assigment]
+}
+
+resource "azurerm_key_vault_secret" "openai_model_type" {
+  for_each     = { for each in var.model_deployment : each.deployment_id => each }
+  name         = "${var.openai_account_name}-model-${each.value.deployment_no}-type"
+  value        = each.value.api_type
+  key_vault_id = azurerm_key_vault.openai_kv.id
+  depends_on   = [azurerm_role_assignment.kv_role_assigment]
+}
+
+resource "azurerm_key_vault_secret" "openai_model_deployment_id" {
+  for_each     = { for each in var.model_deployment : each.deployment_id => each }
+  name         = "${var.openai_account_name}-model-${each.value.deployment_no}-deployment-id"
+  value        = each.value.deployment_id
+  key_vault_id = azurerm_key_vault.openai_kv.id
+  depends_on   = [azurerm_role_assignment.kv_role_assigment]
+}
+
+resource "azurerm_key_vault_secret" "openai_model" {
+  for_each     = { for each in var.model_deployment : each.deployment_id => each }
+  name         = "${var.openai_account_name}-model-${each.value.deployment_no}"
+  value        = each.value.model
   key_vault_id = azurerm_key_vault.openai_kv.id
   depends_on   = [azurerm_role_assignment.kv_role_assigment]
 }

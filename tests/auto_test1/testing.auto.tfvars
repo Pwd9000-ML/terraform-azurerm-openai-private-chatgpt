@@ -32,12 +32,23 @@ openai_identity = {
 
 ### Create Model deployment ###
 create_model_deployment = true
-model_deployment = {
-  "gpt-35-turbo-16k" = {
-    name          = "pwd9000-gpt-35-turbo-16k"
+model_deployment = [
+  {
+    deployment_no = 1
+    deployment_id = "pwd9000-gpt-35-turbo-16k"
+    api_type      = "azure"
+    model         = "gpt-35-turbo-16k"
     model_format  = "OpenAI"
-    model_name    = "gpt-35-turbo-16k"
+    model_version = "0613"
+    scale_type    = "Standard"
+  },
+    {
+    deployment_no = 2
+    deployment_id = "pwd9000-gpt-35-turbo"
+    api_type      = "azure"
+    model         = "gpt-35-turbo"
+    model_format  = "OpenAI"
     model_version = "0613"
     scale_type    = "Standard"
   }
-}
+]
