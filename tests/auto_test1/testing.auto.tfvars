@@ -1,14 +1,14 @@
 ### Common Variables ###
-openai_resource_group_name = "Terraform-Cognitive-Services"
-location                   = "eastus"
+resource_group_name = "Terraform-PrivateGPT"
+location            = "eastus"
 tags = {
   Terraform   = "True"
-  Description = "Private ChatGPT - Azure OpenAI"
+  Description = "Private ChatGPT hosten on Azure OpenAI"
   Author      = "Marcel Lupo"
   GitHub      = "https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt"
 }
 
-# solution specific variables
+### OpenAI Service Module Inputs ###
 kv_config = {
   name = "openaikv9000"
   sku  = "standard"
@@ -34,21 +34,44 @@ openai_identity = {
 create_model_deployment = true
 model_deployment = [
   {
-    deployment_no = 1
-    deployment_id = "pwd9000-gpt-35-turbo-16k"
-    api_type      = "azure"
-    model         = "gpt-35-turbo-16k"
+    deployment_id = "gpt35turbo16k"
+    model_name    = "gpt-35-turbo-16k"
     model_format  = "OpenAI"
     model_version = "0613"
     scale_type    = "Standard"
   },
-    {
-    deployment_no = 2
-    deployment_id = "pwd9000-gpt-35-turbo"
-    api_type      = "azure"
-    model         = "gpt-35-turbo"
+  {
+    deployment_id = "gpt35turbo"
+    model_name    = "gpt-35-turbo"
     model_format  = "OpenAI"
     model_version = "0613"
     scale_type    = "Standard"
   }
 ]
+
+### log analytics workspace ###
+laws_name              = "gptlaws9000"
+laws_sku               = "PerGB2018"
+laws_retention_in_days = 30
+
+### Container App Enviornment ###
+cae_name = "gptcae9000"
+
+### Container App ###
+ca_name          = "gptca9000"
+ca_revision_mode = "Single"
+ca_identity = {
+  type = "SystemAssigned"
+}
+ca_ingress = {
+  allow_insecure_connections = false
+  external_enabled           = true
+  target_port                = 3000
+  transport                  = "auto"
+}
+ca_container_config = {
+  name   = "gpt-chatbot-ui"
+  image  = "ghcr.io/pwd9000-ml/chatbot-ui:main"
+  cpu    = 2
+  memory = "4Gi"
+}

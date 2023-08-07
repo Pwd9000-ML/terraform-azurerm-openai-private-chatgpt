@@ -21,8 +21,8 @@ resource "random_integer" "number" {
 }
 
 ### Resource group to deploy the container apps private ChatGPT instance and supporting resources into
-resource "azurerm_resource_group" "openai_rg" {
-  name     = var.openai_resource_group_name
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
   location = var.location
   tags     = var.tags
 }
@@ -34,12 +34,13 @@ module "private-chatgpt-openai" {
   source = "../.."
 
   #common
-  location            = var.location
-  tags                = var.tags
-  resource_group_name = azurerm_resource_group.openai_rg.name
+  solution_resource_group_name = azurerm_resource_group.rg.name
+  location                     = var.location
+  tags                         = var.tags
 
-  #keyvault
+  #keyvault (OpenAI Service Account details)
   kv_config                                    = var.kv_config
+  keyvault_resource_group_name                 = azurerm_resource_group.rg.name
   keyvault_firewall_default_action             = var.keyvault_firewall_default_action
   keyvault_firewall_bypass                     = var.keyvault_firewall_bypass
   keyvault_firewall_allowed_ips                = var.keyvault_firewall_allowed_ips
@@ -47,7 +48,7 @@ module "private-chatgpt-openai" {
 
   #Create OpenAI Service?
   create_openai_service                     = var.create_openai_service
-  openai_resource_group_name                = azurerm_resource_group.openai_rg.name
+  openai_resource_group_name                = azurerm_resource_group.rg.name
   openai_account_name                       = var.openai_account_name
   openai_custom_subdomain_name              = var.openai_custom_subdomain_name
   openai_sku_name                           = var.openai_sku_name
@@ -60,4 +61,17 @@ module "private-chatgpt-openai" {
   create_model_deployment = var.create_model_deployment
   model_deployment        = var.model_deployment
 
+  #Create a solution log analytics workspace to store logs from our container apps instance
+  laws_name              = var.laws_name
+  laws_sku               = var.laws_sku
+  laws_retention_in_days = var.laws_retention_in_days
+
+  #Create Container App Enviornment
+  cae_name = var.cae_name
+
+  #Create a container app instance
+  ca_name             = var.ca_name
+  ca_revision_mode    = var.ca_revision_mode
+  ca_identity         = var.ca_identity
+  ca_container_config = var.ca_container_config
 }

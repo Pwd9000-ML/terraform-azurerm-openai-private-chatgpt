@@ -12,11 +12,13 @@ variable "tags" {
 }
 
 ### solution resource group ###
-variable "openai_resource_group_name" {
+variable "resource_group_name" {
   type        = string
   description = "Name of the resource group to create where the cognitive account OpenAI service is hosted."
   nullable    = false
 }
+
+### OpenAI service Module params ###
 ### key vault ###
 variable "kv_config" {
   type = object({
@@ -122,10 +124,8 @@ variable "create_model_deployment" {
 
 variable "model_deployment" {
   type = list(object({
-    deployment_no   = number
     deployment_id   = string
-    api_type        = string
-    model           = string
+    model_name      = string
     model_format    = string
     model_version   = string
     scale_type      = string
@@ -138,12 +138,10 @@ variable "model_deployment" {
   default     = []
   description = <<-DESCRIPTION
       type = list(object({
-        deployment_no   = (Required) The unique number of each model deployment (Numbered when saved in Azure KeyVault).
         deployment_id   = (Required) The name of the Cognitive Services Account `Model Deployment`. Changing this forces a new resource to be created.
-        api_type        = (Required) The type of the Cognitive Services Account `Model Deployment`. Possible values are `azure`.
-        model = {
+        model_name = {
           model_format  = (Required) The format of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created. Possible value is OpenAI.
-          model         = (Required) The name of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created.
+          model_name    = (Required) The name of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created.
           model_version = (Required) The version of Cognitive Services Account Deployment model.
         }
         scale = {
@@ -157,4 +155,102 @@ variable "model_deployment" {
       }))
   DESCRIPTION
   nullable    = false
+}
+
+### log analytics workspace ###
+variable "laws_name" {
+  type        = string
+  description = "Name of the log analytics workspace to create."
+  default     = "chatgpt-laws"
+}
+
+variable "laws_sku" {
+  type        = string
+  description = "SKU of the log analytics workspace to create."
+  default     = "PerGB2018"
+}
+
+variable "laws_retention_in_days" {
+  type        = number
+  description = "Retention in days of the log analytics workspace to create."
+  default     = 30
+}
+
+### container app environment ###
+variable "cae_name" {
+  type        = string
+  description = "Name of the container app environment to create."
+  default     = "chatgpt-cae"
+}
+
+### container app ###
+variable "ca_name" {
+  type        = string
+  description = "Name of the container app to create."
+  default     = "chatgpt-ca"
+}
+
+variable "ca_revision_mode" {
+  type        = string
+  description = "Revision mode of the container app to create."
+  default     = "Single"
+}
+
+variable "ca_identity" {
+  type = object({
+    type         = string
+    identity_ids = optional(list(string))
+  })
+  default     = null
+  description = <<-DESCRIPTION
+    type = object({
+      type         = (Required) The type of the Identity. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned`.
+      identity_ids = (Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this OpenAI Account.
+    })
+  DESCRIPTION
+}
+
+variable "ca_ingress" {
+  type = object({
+    allow_insecure_connections = optional(bool)
+    external_enabled           = optional(bool)
+    target_port                = number
+    transport                  = optional(string)
+  })
+  default = {
+    allow_insecure_connections = false
+    external_enabled           = true
+    target_port                = 3000
+    transport                  = "auto"
+  }
+  description = <<-DESCRIPTION
+    type = object({
+      allow_insecure_connections = (Optional) Allow insecure connections to the container app. Defaults to `false`.
+      external_enabled           = (Optional) Enable external access to the container app. Defaults to `true`.
+      target_port               = (Required) The port to use for the container app. Defaults to `3000`.
+      transport                = (Optional) The transport protocol to use for the container app. Defaults to `auto`.
+    })
+  DESCRIPTION
+}
+
+variable "ca_container_config" {
+  type = object({
+    name   = string
+    image  = string
+    cpu    = number
+    memory = string
+  })
+  default = {
+    name  = "gpt-chatbot-ui"
+    image = "ghcr.io/pwd9000-ml/chatbot-ui:main"
+    cpu   = 2
+  memory = "4Gi" }
+  description = <<-DESCRIPTION
+    type = object({
+      name                    = (Required) The name of the container.
+      image                   = (Required) The name of the container image.
+      cpu                     = (Required) The number of CPU cores to allocate to the container.
+      memory                  = (Required) The amount of memory to allocate to the container in GB.
+    })
+  DESCRIPTION
 }

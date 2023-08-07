@@ -1,39 +1,40 @@
 ##################################################
 # VARIABLES                                      #
 ##################################################
-###Common###
-variable "tags" {
-  type = map(string)
-  default = {
-    Terraform   = "True"
-    Description = "Private ChatGPT hosted on Azure OpenAI service."
-    Author      = "Marcel Lupo"
-    GitHub      = "https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt"
-  }
-  description = "A map of key value pairs that is used to tag resources created."
-}
-
+### common ###
 variable "location" {
   type        = string
   default     = "uksouth"
-  description = "Azure region to deploy resources to."
+  description = "Azure region where resources will be hosted."
 }
 
-# solution resource group
-variable "resource_group_name" {
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "A map of key value pairs that is used to tag resources created."
+}
+
+variable "solution_resource_group_name" {
   type        = string
-  description = "Name of the resource group where the Private ChatGPT solution resources will be hosted."
+  description = "Name of the resource group to create the ChatGPT solution resources in."
   nullable    = false
 }
 
-###Key Vault###
+### OpenAI service Module params ###
+### key vault ###
+variable "keyvault_resource_group_name" {
+  type        = string
+  description = "Name of the resource group to create the Key Vault that will store OpenAI service account details."
+  nullable    = false
+}
+
 variable "kv_config" {
   type = object({
     name = string
     sku  = string
   })
   default = {
-    name = "openaikv9000"
+    name = "kvname"
     sku  = "standard"
   }
   description = "Key Vault configuration object to create azure key vault to store openai account details."
@@ -43,45 +44,49 @@ variable "kv_config" {
 variable "keyvault_firewall_default_action" {
   type        = string
   default     = "Deny"
-  description = "Default action for keyvault firewall rules."
+  description = "Default action for key vault firewall rules."
 }
 
 variable "keyvault_firewall_bypass" {
   type        = string
   default     = "AzureServices"
-  description = "List of keyvault firewall rules to bypass."
+  description = "List of key vault firewall rules to bypass."
 }
 
 variable "keyvault_firewall_allowed_ips" {
   type        = list(string)
   default     = []
-  description = "value of keyvault firewall allowed ip rules."
+  description = "value of key vault firewall allowed ip rules."
 }
 
 variable "keyvault_firewall_virtual_network_subnet_ids" {
   type        = list(string)
   default     = []
-  description = "value of keyvault firewall allowed virtual network subnet ids."
+  description = "value of key vault firewall allowed virtual network subnet ids."
 }
 
-##########################################
-# OpenAI Service                         #
-##########################################
+### openai service ###
+variable "openai_resource_group_name" {
+  type        = string
+  description = "Name of the resource group to create teh OpenAI service / or where an existing service is hosted."
+  nullable    = false
+}
+
 variable "create_openai_service" {
   type        = bool
   description = "Create the OpenAI service."
   default     = false
 }
 
-variable "openai_resource_group_name" {
-  type        = string
-  description = "Name of the resource group where the cognitive account OpenAI service is hosted (if different from solution resource group)."
-  nullable    = false
-}
-
 variable "openai_account_name" {
   type        = string
   description = "Name of the OpenAI service."
+  default     = "demo-account"
+}
+
+variable "openai_custom_subdomain_name" {
+  type        = string
+  description = "The subdomain name used for token-based authentication. Changing this forces a new resource to be created. (normally the same as the account name)"
   default     = "demo-account"
 }
 
@@ -91,61 +96,31 @@ variable "openai_sku_name" {
   default     = "S0"
 }
 
-variable "openai_custom_subdomain_name" {
-  type        = string
-  description = "The subdomain name used for token-based authentication. Changing this forces a new resource to be created (normally the same as variable `openai_account_name`)"
-  default     = "demo-account"
-}
-
-variable "openai_dynamic_throttling_enabled" {
-  type        = bool
-  description = "Determines whether or not dynamic throttling is enabled. If set to `true`, dynamic throttling will be enabled. If set to `false`, dynamic throttling will not be enabled."
-  default     = null
-}
-
-variable "openai_fqdns" {
-  type        = list(string)
-  description = "List of FQDNs allowed for the Cognitive Account."
-  default     = null
-}
-
 variable "openai_local_auth_enabled" {
   type        = bool
-  description = "Whether local authentication methods is enabled for the Cognitive Account. Defaults to `true`."
   default     = true
+  description = "Whether local authentication methods is enabled for the Cognitive Account. Defaults to `true`."
 }
 
 variable "openai_outbound_network_access_restricted" {
   type        = bool
-  description = "Whether or not outbound network access is restricted."
   default     = false
+  description = "Whether or not outbound network access is restricted. Defaults to `false`."
 }
 
 variable "openai_public_network_access_enabled" {
   type        = bool
-  description = "Whether or not public network access is enabled for the Cognitive Account."
   default     = true
-}
-variable "openai_customer_managed_key" {
-  type = object({
-    key_vault_key_id   = string
-    identity_client_id = optional(string)
-  })
-  default     = null
-  description = <<-DESCRIPTION
-    type = object({
-      key_vault_key_id   = (Required) The ID of the Key Vault Key which should be used to Encrypt the data in this OpenAI Account.
-      identity_client_id = (Optional) The Client ID of the User Assigned Identity that has access to the key. This property only needs to be specified when there're multiple identities attached to the OpenAI Account.
-    })
-  DESCRIPTION
+  description = "Whether or not public network access is enabled. Defaults to `false`."
 }
 
 variable "openai_identity" {
   type = object({
-    type         = string
-    identity_ids = optional(list(string))
+    type = string
   })
-  default     = null
+  default = {
+    type = "SystemAssigned"
+  }
   description = <<-DESCRIPTION
     type = object({
       type         = (Required) The type of the Identity. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned`.
@@ -154,46 +129,7 @@ variable "openai_identity" {
   DESCRIPTION
 }
 
-variable "openai_network_acls" {
-  type = set(object({
-    default_action = string
-    ip_rules       = optional(set(string))
-    virtual_network_rules = optional(set(object({
-      subnet_id                            = string
-      ignore_missing_vnet_service_endpoint = optional(bool, false)
-    })))
-  }))
-  default     = null
-  description = <<-DESCRIPTION
-    type = set(object({
-      default_action = (Required) The Default Action to use when no rules match from ip_rules / virtual_network_rules. Possible values are `Allow` and `Deny`.
-      ip_rules       = (Optional) One or more IP Addresses, or CIDR Blocks which should be able to access the Cognitive Account.
-      virtual_network_rules = optional(set(object({
-        subnet_id                            = (Required) The ID of a Subnet which should be able to access the OpenAI Account.
-        ignore_missing_vnet_service_endpoint = (Optional) Whether ignore missing vnet service endpoint or not. Default to `false`.
-      })))
-    }))
-  DESCRIPTION
-}
-
-variable "openai_storage" {
-  type = list(object({
-    storage_account_id = string
-    identity_client_id = optional(string)
-  }))
-  default     = []
-  description = <<-DESCRIPTION
-    type = list(object({
-      storage_account_id = (Required) Full resource id of a Microsoft.Storage resource.
-      identity_client_id = (Optional) The client ID of the managed identity associated with the storage resource.
-    }))
-  DESCRIPTION
-  nullable    = false
-}
-
-##########################################
-# Model Deployment                       #
-##########################################
+### model deployment ###
 variable "create_model_deployment" {
   type        = bool
   description = "Create the model deployment."
@@ -202,10 +138,8 @@ variable "create_model_deployment" {
 
 variable "model_deployment" {
   type = list(object({
-    deployment_no   = number
     deployment_id   = string
-    api_type        = string
-    model           = string
+    model_name      = string
     model_format    = string
     model_version   = string
     scale_type      = string
@@ -218,12 +152,10 @@ variable "model_deployment" {
   default     = []
   description = <<-DESCRIPTION
       type = list(object({
-        deployment_no   = (Required) The unique number of each model deployment (Numbered when saved in Azure KeyVault).
         deployment_id   = (Required) The name of the Cognitive Services Account `Model Deployment`. Changing this forces a new resource to be created.
-        api_type        = (Required) The type of the Cognitive Services Account `Model Deployment`. Possible values are `azure`.
-        model = {
+        model_name = {
           model_format  = (Required) The format of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created. Possible value is OpenAI.
-          model         = (Required) The name of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created.
+          model_name    = (Required) The name of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created.
           model_version = (Required) The version of Cognitive Services Account Deployment model.
         }
         scale = {
@@ -237,4 +169,102 @@ variable "model_deployment" {
       }))
   DESCRIPTION
   nullable    = false
+}
+
+### log analytics workspace ###
+variable "laws_name" {
+  type        = string
+  description = "Name of the log analytics workspace to create."
+  default     = "chatgpt-laws"
+}
+
+variable "laws_sku" {
+  type        = string
+  description = "SKU of the log analytics workspace to create."
+  default     = "PerGB2018"
+}
+
+variable "laws_retention_in_days" {
+  type        = number
+  description = "Retention in days of the log analytics workspace to create."
+  default     = 30
+}
+
+### container app environment ###
+variable "cae_name" {
+  type        = string
+  description = "Name of the container app environment to create."
+  default     = "chatgpt-cae"
+}
+
+### container app ###
+variable "ca_name" {
+  type        = string
+  description = "Name of the container app to create."
+  default     = "chatgpt-ca"
+}
+
+variable "ca_revision_mode" {
+  type        = string
+  description = "Revision mode of the container app to create."
+  default     = "Single"
+}
+
+variable "ca_identity" {
+  type = object({
+    type         = string
+    identity_ids = optional(list(string))
+  })
+  default     = null
+  description = <<-DESCRIPTION
+    type = object({
+      type         = (Required) The type of the Identity. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned`.
+      identity_ids = (Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this OpenAI Account.
+    })
+  DESCRIPTION
+}
+
+variable "ca_ingress" {
+  type = object({
+    allow_insecure_connections = optional(bool)
+    external_enabled           = optional(bool)
+    target_port                = number
+    transport                  = optional(string)
+  })
+  default = {
+    allow_insecure_connections = false
+    external_enabled           = true
+    target_port                = 3000
+    transport                  = "auto"
+  }
+  description = <<-DESCRIPTION
+    type = object({
+      allow_insecure_connections = (Optional) Allow insecure connections to the container app. Defaults to `false`.
+      external_enabled           = (Optional) Enable external access to the container app. Defaults to `true`.
+      target_port               = (Required) The port to use for the container app. Defaults to `3000`.
+      transport                = (Optional) The transport protocol to use for the container app. Defaults to `auto`.
+    })
+  DESCRIPTION
+}
+
+variable "ca_container_config" {
+  type = object({
+    name   = string
+    image  = string
+    cpu    = number
+    memory = string
+  })
+  default = {
+    name  = "gpt-chatbot-ui"
+    image = "ghcr.io/pwd9000-ml/chatbot-ui:main"
+    cpu   = 2
+  memory = "4Gi" }
+  description = <<-DESCRIPTION
+    type = object({
+      name                    = (Required) The name of the container.
+      image                   = (Required) The name of the container image.
+      cpu                     = (Required) The number of CPU cores to allocate to the container.
+      memory                  = (Required) The amount of memory to allocate to the container in GB.
+    })
+  DESCRIPTION
 }
