@@ -21,7 +21,7 @@ keyvault_firewall_virtual_network_subnet_ids = []
 ### Create OpenAI Service ###
 create_openai_service                     = true
 openai_account_name                       = "pwd9000"
-openai_custom_subdomain_name              = "pwd9000" #translates to
+openai_custom_subdomain_name              = "pwd9000" #translates to "https://pwd9000.openai.azure.com/"
 openai_sku_name                           = "S0"
 openai_local_auth_enabled                 = true
 openai_outbound_network_access_restricted = false
@@ -68,10 +68,38 @@ ca_ingress = {
   external_enabled           = true
   target_port                = 3000
   transport                  = "auto"
+  traffic_weight = {
+    latest_revision = true
+    percentage      = 100
+  }
 }
 ca_container_config = {
   name   = "gpt-chatbot-ui"
   image  = "ghcr.io/pwd9000-ml/chatbot-ui:main"
   cpu    = 2
   memory = "4Gi"
+
+  ## Environment Variables (Required)##
+  env = [
+    {
+      name        = "OPENAI_API_KEY"
+      secret_name = "openai-api-key" #see locals.tf (Can also be added from key vault created by module, or existing key)
+    },
+    {
+      name        = "OPENAI_API_HOST"
+      secret_name = "openai-api-host" #see locals.tf (Can also be added from key vault created by module, or existing host/endpoint)
+    },
+    {
+      name  = "OPENAI_API_TYPE"
+      value = "azure"
+    },
+    {
+      name  = "AZURE_DEPLOYMENT_ID" #see model_deployment variable (deployment_id)
+      value = "gpt35turbo16k"
+    },
+    {
+      name  = "DEFAULT_MODEL" #see model_deployment variable (model_name)
+      value = "gpt-35-turbo-16k"
+    }
+  ]
 }

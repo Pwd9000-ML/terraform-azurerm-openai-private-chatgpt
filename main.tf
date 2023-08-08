@@ -55,7 +55,7 @@ resource "azurerm_container_app_environment" "gpt" {
 }
 
 ### Create a container app instance ###
-resource "azurerm_container_app" "example" {
+resource "azurerm_container_app" "gpt" {
   name                         = var.ca_name
   container_app_environment_id = azurerm_container_app_environment.gpt.id
   resource_group_name          = var.solution_resource_group_name
@@ -76,6 +76,13 @@ resource "azurerm_container_app" "example" {
       external_enabled           = ingress.value.external_enabled
       target_port                = ingress.value.target_port
       transport                  = ingress.value.transport
+      dynamic "traffic_weight" {
+        for_each = ingress.value.traffic_weight != null ? [ingress.value.traffic_weight] : []
+        content {
+          percentage      = traffic_weight.value.percentage
+          latest_revision = traffic_weight.value.latest_revision
+        }
+      }
     }
   }
 
@@ -87,8 +94,33 @@ resource "azurerm_container_app" "example" {
         image  = container.value.image
         cpu    = container.value.cpu
         memory = container.value.memory
+        dynamic "env" {
+          for_each = length(container.value.env) > 0 ? { for each in container.value.env : each.name => each } : {}
+          content {
+            name        = env.value.name
+            secret_name = env.value.secret_name
+            value       = env.value.value
+          }
+        }
       }
     }
   }
+
+  dynamic "secret" {
+    for_each = length(var.ca_secrets) > 0 ? { for each in var.ca_secrets : each.name => each } : {}
+    content {
+      name  = secret.value.name
+      value = secret.value.value
+    }
+  }
+
   tags = var.tags
+}
+
+# Add container app permission to key vault RBAC (to retrieve OpenAI Account and model details)
+resource "azurerm_role_assignment" "kv_role_assigment" {
+  for_each             = toset(["Key Vault Secrets User"])
+  role_definition_name = each.key
+  scope                = module.openai.key_vault_id
+  principal_id         = azurerm_container_app.gpt.identity.0.principal_id
 }

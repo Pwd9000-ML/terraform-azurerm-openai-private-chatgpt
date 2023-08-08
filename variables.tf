@@ -230,20 +230,31 @@ variable "ca_ingress" {
     external_enabled           = optional(bool)
     target_port                = number
     transport                  = optional(string)
+    traffic_weight = optional(object({
+      percentage      = number
+      latest_revision = optional(bool)
+    }))
   })
   default = {
     allow_insecure_connections = false
     external_enabled           = true
     target_port                = 3000
     transport                  = "auto"
+    traffic_weight = {
+      percentage      = 100
+      latest_revision = true
+    }
   }
   description = <<-DESCRIPTION
     type = object({
       allow_insecure_connections = (Optional) Allow insecure connections to the container app. Defaults to `false`.
       external_enabled           = (Optional) Enable external access to the container app. Defaults to `true`.
-      target_port               = (Required) The port to use for the container app. Defaults to `3000`.
-      transport                = (Optional) The transport protocol to use for the container app. Defaults to `auto`.
-    })
+      target_port                = (Required) The port to use for the container app. Defaults to `3000`.
+      transport                  = (Optional) The transport protocol to use for the container app. Defaults to `auto`.
+      type = object({
+        percentage      = (Required) The percentage of traffic to route to the container app. Defaults to `100`.
+        latest_revision = (Optional) The percentage of traffic to route to the container app. Defaults to `true`.
+      })
   DESCRIPTION
 }
 
@@ -253,18 +264,53 @@ variable "ca_container_config" {
     image  = string
     cpu    = number
     memory = string
+    env = optional(list(object({
+      name        = string
+      secret_name = optional(string)
+      value       = optional(string)
+    })))
   })
   default = {
-    name  = "gpt-chatbot-ui"
-    image = "ghcr.io/pwd9000-ml/chatbot-ui:main"
-    cpu   = 2
-  memory = "4Gi" }
+    name   = "gpt-chatbot-ui"
+    image  = "ghcr.io/pwd9000-ml/chatbot-ui:main"
+    cpu    = 2
+    memory = "4Gi"
+    env    = []
+  }
   description = <<-DESCRIPTION
     type = object({
       name                    = (Required) The name of the container.
       image                   = (Required) The name of the container image.
       cpu                     = (Required) The number of CPU cores to allocate to the container.
       memory                  = (Required) The amount of memory to allocate to the container in GB.
+      env = list(object({
+        name        = (Required) The name of the environment variable.
+        secret_name = (Optional) The name of the secret to use for the environment variable.
+        value       = (Optional) The value of the environment variable.
+      }))
     })
   DESCRIPTION
+}
+
+variable "ca_secrets" {
+  type = list(object({
+    name  = string
+    value = string
+  }))
+  default = [
+    {
+      name  = "secret1"
+      value = "value1"
+    },
+    {
+      name  = "secret2"
+      value = "value2"
+    }
+  ]
+  description = <<-DESCRIPTION
+    type = list(object({
+      name  = (Required) The name of the secret.
+      value = (Required) The value of the secret.
+    }))
+  DESCRIPTION  
 }

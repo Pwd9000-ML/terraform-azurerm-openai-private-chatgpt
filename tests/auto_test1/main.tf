@@ -74,4 +74,7 @@ module "private-chatgpt-openai" {
   ca_revision_mode    = var.ca_revision_mode
   ca_identity         = var.ca_identity
   ca_container_config = var.ca_container_config
+
+  #Create a container app secrets
+  ca_secrets = local.ca_secrets
 }
