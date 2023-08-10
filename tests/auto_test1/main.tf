@@ -77,4 +77,15 @@ module "private-chatgpt-openai" {
 
   #Create a container app secrets
   ca_secrets = local.ca_secrets
+
+  #Create front door CDN
+  create_front_door_cdn = var.create_front_door_cdn
+  create_dns_zone       = var.create_dns_zone
+  custom_domain_config  = var.custom_domain_config
+  cdn_profile_name      = var.cdn_profile_name
+  cdn_sku_name          = var.cdn_sku_name
+  cdn_endpoint          = var.cdn_endpoint
+  cdn_origin_groups     = var.cdn_origin_groups
+  cdn_gpt_origin        = var.cdn_gpt_origin
+  cdn_route             = var.cdn_route
 }

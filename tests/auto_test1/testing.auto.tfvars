@@ -103,3 +103,77 @@ ca_container_config = {
     }
   ]
 }
+
+### CDN - Front Door ###
+create_front_door_cdn = true
+create_dns_zone       = true #Set to false if you already have a DNS zone
+custom_domain_config = {
+  zone_name = "gpt9000.com"
+  host_name = "PrivateGPT"
+  ttl       = 3600
+  tls = [{
+    certificate_type    = "ManagedCertificate"
+    minimum_tls_version = "TLS12"
+  }]
+}
+
+# CDN PROFILE
+cdn_profile_name = "fd9000"
+cdn_sku_name     = "Standard_AzureFrontDoor"
+
+# CDN ENDPOINTS
+cdn_endpoint = {
+  name    = "PrivateGPT"
+  enabled = true
+}
+
+# CDN ORIGIN GROUPS
+cdn_origin_groups = [
+  {
+    name                                                      = "PrivateGPTOriginGroup"
+    session_affinity_enabled                                  = false
+    restore_traffic_time_to_healed_or_new_endpoint_in_minutes = 5
+    health_probe = {
+      interval_in_seconds = 30
+      path                = "/"
+      protocol            = "Http"
+      request_type        = "GET"
+    }
+    load_balancing = {
+      additional_latency_in_milliseconds = 0
+      sample_size                        = 4
+      successful_samples_required        = 2
+    }
+  }
+]
+
+# GPT CDN ORIGIN
+cdn_gpt_origin = {
+  name                           = "PrivateGPTOrigin"
+  origin_group_name              = "PrivateGPTOriginGroup"
+  enabled                        = true
+  certificate_name_check_enabled = false
+  http_port                      = 80
+  https_port                     = 443
+  priority                       = 1
+  weight                         = 1000
+}
+
+# CDN ROUTE RULES
+cdn_route = {
+  name                       = "PrivateGPTRoute"
+  enabled                    = true
+  forwarding_protocol        = "HttpsOnly"
+  https_redirect_enabled     = true
+  patterns_to_match          = ["/"]
+  supported_protocols        = ["Http", "Https"]
+  cdn_frontdoor_origin_path  = "/"
+  cdn_frontdoor_rule_set_ids = null
+  link_to_default_domain     = false
+  cache = {
+    query_string_caching_behavior = "IgnoreQueryString"
+    query_strings                 = []
+    compression_enabled           = false
+    content_types_to_compress     = []
+  }
+}

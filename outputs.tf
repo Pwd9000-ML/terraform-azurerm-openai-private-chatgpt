@@ -39,3 +39,20 @@ output "key_vault_uri" {
   description = "The URI of the Key Vault used to store OpenAI account and model details.."
   value       = module.openai.key_vault_uri
 }
+
+## Container App Enviornment
+output "container_app_enviornment_id" {
+  description = "The ID of the container app enviornment."
+  value       = azurerm_container_app_environment.gpt.id
+}
+
+## Container App
+output "container_app_id" {
+  description = "The ID of the container app."
+  value       = azurerm_container_app.gpt.id
+}
+
+output "latest_revision_fqdn" {
+  description = "The FQDN of the Latest Revision of the Container App."
+  value       = azurerm_container_app.gpt.latest_revision_fqdn
+}

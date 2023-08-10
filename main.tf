@@ -36,7 +36,7 @@ module "openai" {
   model_deployment        = var.model_deployment
 }
 
-### Create a solution log analytics workspace to store logs from our container apps instance ###
+### Create a solution log analytics workspace to store logs ###
 resource "azurerm_log_analytics_workspace" "gpt" {
   name                = var.laws_name
   location            = var.location
@@ -123,4 +123,26 @@ resource "azurerm_role_assignment" "kv_role_assigment" {
   role_definition_name = each.key
   scope                = module.openai.key_vault_id
   principal_id         = azurerm_container_app.gpt.identity.0.principal_id
+}
+
+### Front solution with an Azure front door (optional) ###
+# 1.) Deploy Azure Front Door.
+# 2.) Setup a custom domain with AFD managed certificate.
+# 3.) Optionally create an Azure DNS Zone or use an existing one.
+# 4.) Create a CNAME record in the custom DNS zone.
+
+module "azure_frontdoor_cdn" {
+  count  = var.create_front_door_cdn ? 1 : 0
+  source = "./modules/cdn_frontdoor"
+
+  resource_group_name  = var.solution_resource_group_name
+  create_dns_zone      = var.create_dns_zone
+  custom_domain_config = var.custom_domain_config
+  cdn_profile_name     = var.cdn_profile_name
+  cdn_sku_name         = var.cdn_sku_name
+  cdn_endpoint         = var.cdn_endpoint
+  cdn_origin_groups    = var.cdn_origin_groups
+  cdn_gpt_origin       = local.cdn_gpt_origin
+  cdn_route            = var.cdn_route
+  tags                 = var.tags
 }
