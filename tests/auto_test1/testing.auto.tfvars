@@ -76,10 +76,10 @@ ca_ingress = {
 ca_container_config = {
   name         = "gpt-chatbot-ui"
   image        = "ghcr.io/pwd9000-ml/chatbot-ui:main"
-  cpu          = 1
-  memory       = "2Gi"
-  min_replicas = 1
-  max_replicas = 5
+  cpu          = 2
+  memory       = "4Gi"
+  min_replicas = 0
+  max_replicas = 7
 
   ## Environment Variables (Required)##
   env = [
@@ -108,10 +108,11 @@ ca_container_config = {
 
 ### CDN - Front Door ###
 create_front_door_cdn = true
-create_dns_zone       = true #Set to false if you already have a DNS zone
+create_dns_zone       = false #Set to false if you already have a DNS zone
+dns_resource_group_name = "pwd9000-eb-network"
 custom_domain_config = {
-  zone_name = "gpt9001.com"
-  host_name = "PrivateGPT1"
+  zone_name = "pwd9000.com"
+  host_name = "monkeyGPT"
   ttl       = 600
   tls = [{
     certificate_type    = "ManagedCertificate"

@@ -148,4 +148,5 @@ module "azure_frontdoor_cdn" {
   cdn_gpt_origin          = local.cdn_gpt_origin
   cdn_route               = var.cdn_route
   tags                    = var.tags
+  depends_on              = [ azurerm_container_app.gpt ]
 }

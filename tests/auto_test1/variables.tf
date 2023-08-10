@@ -312,6 +312,12 @@ variable "create_dns_zone" {
   default     = false
 }
 
+variable "dns_resource_group_name" {
+  description = "The name of the resource group to create the DNS zone in / or where the existing zone is hosted."
+  type        = string
+  nullable    = false
+}
+
 variable "custom_domain_config" {
   type = object({
     zone_name = string
