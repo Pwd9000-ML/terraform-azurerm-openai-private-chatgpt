@@ -447,7 +447,7 @@ variable "cdn_route" {
     https_redirect_enabled     = bool
     patterns_to_match          = list(string)
     supported_protocols        = list(string)
-    cdn_frontdoor_origin_path  = string
+    cdn_frontdoor_origin_path  = optional(string)
     cdn_frontdoor_rule_set_ids = optional(list(string))
     link_to_default_domain     = bool
     cache = object({
@@ -462,9 +462,9 @@ variable "cdn_route" {
     enabled                    = true
     forwarding_protocol        = "MatchRequest"
     https_redirect_enabled     = false
-    patterns_to_match          = ["/"]
+    patterns_to_match          = ["/*"]
     supported_protocols        = ["Http", "Https"]
-    cdn_frontdoor_origin_path  = "/"
+    cdn_frontdoor_origin_path  = null
     cdn_frontdoor_rule_set_ids = null
     link_to_default_domain     = false
     cache = {

@@ -1,7 +1,7 @@
 # common vars #
-variable "resource_group_name" {
+variable "cdn_resource_group_name" {
   type        = string
-  description = "Name of the resource group to create the ChatGPT solution resources in."
+  description = "Name of the resource group to create the CDN Front Door solution resources in."
   nullable    = false
 }
 
@@ -16,6 +16,12 @@ variable "create_dns_zone" {
   description = "Create a DNS zone for the CDN profile."
   type        = bool
   default     = false
+}
+
+variable "dns_resource_group_name" {
+  description = "The name of the resource group to create the DNS zone in / or where the existing zone is hosted."
+  type        = string
+  nullable    = false
 }
 
 variable "custom_domain_config" {
@@ -155,7 +161,7 @@ variable "cdn_route" {
     https_redirect_enabled     = bool
     patterns_to_match          = list(string)
     supported_protocols        = list(string)
-    cdn_frontdoor_origin_path  = string
+    cdn_frontdoor_origin_path  = optional(string)
     cdn_frontdoor_rule_set_ids = optional(list(string))
     link_to_default_domain     = bool
     cache = object({
@@ -170,9 +176,9 @@ variable "cdn_route" {
     enabled                    = true
     forwarding_protocol        = "MatchRequest"
     https_redirect_enabled     = false
-    patterns_to_match          = ["/"]
+    patterns_to_match          = ["/*"]
     supported_protocols        = ["Http", "Https"]
-    cdn_frontdoor_origin_path  = "/"
+    cdn_frontdoor_origin_path  = null
     cdn_frontdoor_rule_set_ids = null
     link_to_default_domain     = false
     cache = {
@@ -186,7 +192,7 @@ variable "cdn_route" {
     type = object({
       name                           = (Required) The name of the CDN route to create.
       enabled                        = (Required) Is the CDN route enabled? Defaults to `true`.
-      forwarding_protocol            = (Required) The protocol this rule will use when forwarding traffic to backends. Possible values include 'MatchRequest' and 'HttpOnly'. Defaults to 'MatchRequest'.
+      forwarding_protocol            = (Required) The protocol this rule will use when forwarding traffic to backends. Possible values include 'MatchRequest', 'HttpOnly' and 'HttpsOnly'. Defaults to 'MatchRequest'.
       https_redirect_enabled         = (Required) Is HTTPS redirect enabled? Defaults to `false`.
       patterns_to_match              = (Required) The list of patterns to match for this rule. Defaults to `["/"]`.
       supported_protocols            = (Required) The list of supported protocols for this rule. Defaults to `["Http", "Https"]`.

@@ -10,7 +10,7 @@ tags = {
 
 ### OpenAI Service Module Inputs ###
 kv_config = {
-  name = "openaikv9000"
+  name = "openaikv9001"
   sku  = "standard"
 }
 keyvault_firewall_default_action             = "Deny"
@@ -20,8 +20,8 @@ keyvault_firewall_virtual_network_subnet_ids = []
 
 ### Create OpenAI Service ###
 create_openai_service                     = true
-openai_account_name                       = "pwd9000"
-openai_custom_subdomain_name              = "pwd9000" #translates to "https://pwd9000.openai.azure.com/"
+openai_account_name                       = "pwd9001"
+openai_custom_subdomain_name              = "pwd9001" #translates to "https://pwd9001.openai.azure.com/"
 openai_sku_name                           = "S0"
 openai_local_auth_enabled                 = true
 openai_outbound_network_access_restricted = false
@@ -50,15 +50,15 @@ model_deployment = [
 ]
 
 ### log analytics workspace ###
-laws_name              = "gptlaws9000"
+laws_name              = "gptlaws9001"
 laws_sku               = "PerGB2018"
 laws_retention_in_days = 30
 
 ### Container App Enviornment ###
-cae_name = "gptcae9000"
+cae_name = "gptcae9001"
 
 ### Container App ###
-ca_name          = "gptca9000"
+ca_name          = "gptca9001"
 ca_revision_mode = "Single"
 ca_identity = {
   type = "SystemAssigned"
@@ -108,9 +108,9 @@ ca_container_config = {
 create_front_door_cdn = true
 create_dns_zone       = true #Set to false if you already have a DNS zone
 custom_domain_config = {
-  zone_name = "gpt9000.com"
-  host_name = "PrivateGPT"
-  ttl       = 3600
+  zone_name = "gpt9001.com"
+  host_name = "PrivateGPT1"
+  ttl       = 600
   tls = [{
     certificate_type    = "ManagedCertificate"
     minimum_tls_version = "TLS12"
@@ -118,41 +118,41 @@ custom_domain_config = {
 }
 
 # CDN PROFILE
-cdn_profile_name = "fd9000"
+cdn_profile_name = "fd9001"
 cdn_sku_name     = "Standard_AzureFrontDoor"
 
 # CDN ENDPOINTS
 cdn_endpoint = {
-  name    = "PrivateGPT"
+  name    = "PrivateGPT1"
   enabled = true
 }
 
 # CDN ORIGIN GROUPS
 cdn_origin_groups = [
   {
-    name                                                      = "PrivateGPTOriginGroup"
+    name                                                      = "PrivateGPT1OriginGroup"
     session_affinity_enabled                                  = false
     restore_traffic_time_to_healed_or_new_endpoint_in_minutes = 5
     health_probe = {
-      interval_in_seconds = 30
+      interval_in_seconds = 100
       path                = "/"
-      protocol            = "Http"
-      request_type        = "GET"
+      protocol            = "Https"
+      request_type        = "HEAD"
     }
     load_balancing = {
-      additional_latency_in_milliseconds = 0
+      additional_latency_in_milliseconds = 50
       sample_size                        = 4
-      successful_samples_required        = 2
+      successful_samples_required        = 3
     }
   }
 ]
 
 # GPT CDN ORIGIN
 cdn_gpt_origin = {
-  name                           = "PrivateGPTOrigin"
-  origin_group_name              = "PrivateGPTOriginGroup"
+  name                           = "PrivateGPT1Origin"
+  origin_group_name              = "PrivateGPT1OriginGroup"
   enabled                        = true
-  certificate_name_check_enabled = false
+  certificate_name_check_enabled = true
   http_port                      = 80
   https_port                     = 443
   priority                       = 1
@@ -161,13 +161,13 @@ cdn_gpt_origin = {
 
 # CDN ROUTE RULES
 cdn_route = {
-  name                       = "PrivateGPTRoute"
+  name                       = "PrivateGPT1Route"
   enabled                    = true
   forwarding_protocol        = "HttpsOnly"
   https_redirect_enabled     = true
-  patterns_to_match          = ["/"]
+  patterns_to_match          = ["/*"]
   supported_protocols        = ["Http", "Https"]
-  cdn_frontdoor_origin_path  = "/"
+  cdn_frontdoor_origin_path  = null
   cdn_frontdoor_rule_set_ids = null
   link_to_default_domain     = false
   cache = {

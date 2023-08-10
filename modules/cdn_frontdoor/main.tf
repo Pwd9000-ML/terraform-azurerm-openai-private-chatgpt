@@ -2,14 +2,14 @@
 resource "azurerm_dns_zone" "gpt" {
   count               = var.create_dns_zone ? 1 : 0
   name                = var.custom_domain_config.zone_name
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.dns_resource_group_name
   tags                = var.tags
 }
 
 #Create CDN profile
 resource "azurerm_cdn_frontdoor_profile" "gpt" {
   name                = var.cdn_profile_name
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.cdn_resource_group_name
   sku_name            = var.cdn_sku_name #"Standard_AzureFrontDoor"
   tags                = var.tags
 }
@@ -108,7 +108,7 @@ resource "azurerm_cdn_frontdoor_route" "gpt" {
 resource "azurerm_dns_cname_record" "gpt" {
   name                = var.custom_domain_config.host_name
   zone_name           = var.create_dns_zone ? azurerm_dns_zone.gpt[0].name : data.azurerm_dns_zone.gpt[0].name
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.dns_resource_group_name
   ttl                 = var.custom_domain_config.ttl
   record              = azurerm_cdn_frontdoor_endpoint.gpt.host_name
   depends_on          = [azurerm_cdn_frontdoor_route.gpt]
@@ -118,7 +118,7 @@ resource "azurerm_dns_cname_record" "gpt" {
 resource "azurerm_dns_txt_record" "gpt" {
   name                = join(".", ["_dnsauth", "${var.custom_domain_config.host_name}"])
   zone_name           = var.create_dns_zone ? azurerm_dns_zone.gpt[0].name : data.azurerm_dns_zone.gpt[0].name
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.dns_resource_group_name
   ttl                 = var.custom_domain_config.ttl
 
   record {

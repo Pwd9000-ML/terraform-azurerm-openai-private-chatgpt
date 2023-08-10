@@ -135,14 +135,15 @@ module "azure_frontdoor_cdn" {
   count  = var.create_front_door_cdn ? 1 : 0
   source = "./modules/cdn_frontdoor"
 
-  resource_group_name  = var.solution_resource_group_name
-  create_dns_zone      = var.create_dns_zone
-  custom_domain_config = var.custom_domain_config
-  cdn_profile_name     = var.cdn_profile_name
-  cdn_sku_name         = var.cdn_sku_name
-  cdn_endpoint         = var.cdn_endpoint
-  cdn_origin_groups    = var.cdn_origin_groups
-  cdn_gpt_origin       = local.cdn_gpt_origin
-  cdn_route            = var.cdn_route
-  tags                 = var.tags
+  cdn_resource_group_name = var.cdn_resource_group_name
+  create_dns_zone         = var.create_dns_zone
+  dns_resource_group_name = var.dns_resource_group_name
+  custom_domain_config    = var.custom_domain_config
+  cdn_profile_name        = var.cdn_profile_name
+  cdn_sku_name            = var.cdn_sku_name
+  cdn_endpoint            = var.cdn_endpoint
+  cdn_origin_groups       = var.cdn_origin_groups
+  cdn_gpt_origin          = local.cdn_gpt_origin
+  cdn_route               = var.cdn_route
+  tags                    = var.tags
 }
