@@ -87,6 +87,8 @@ resource "azurerm_container_app" "gpt" {
   }
 
   template {
+    min_replicas = var.ca_container_config != null ? var.ca_container_config.min_replicas : null
+    max_replicas = var.ca_container_config != null ? var.ca_container_config.max_replicas : null
     dynamic "container" {
       for_each = var.ca_container_config != null ? [var.ca_container_config] : []
       content {

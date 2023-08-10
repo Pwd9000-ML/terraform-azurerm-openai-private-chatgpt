@@ -246,10 +246,12 @@ variable "ca_ingress" {
 
 variable "ca_container_config" {
   type = object({
-    name   = string
-    image  = string
-    cpu    = number
-    memory = string
+    name         = string
+    image        = string
+    cpu          = number
+    memory       = string
+    min_replicas = optional(number, 1)
+    max_replicas = optional(number, 10)
     env = optional(list(object({
       name        = string
       secret_name = optional(string)
@@ -257,11 +259,13 @@ variable "ca_container_config" {
     })))
   })
   default = {
-    name   = "gpt-chatbot-ui"
-    image  = "ghcr.io/pwd9000-ml/chatbot-ui:main"
-    cpu    = 2
-    memory = "4Gi"
-    env    = []
+    name         = "gpt-chatbot-ui"
+    image        = "ghcr.io/pwd9000-ml/chatbot-ui:main"
+    cpu          = 1
+    memory       = "2Gi"
+    min_replicas = 1
+    max_replicas = 10
+    env          = []
   }
   description = <<-DESCRIPTION
     type = object({

@@ -1,5 +1,5 @@
 ### Common Variables ###
-resource_group_name = "Terraform-PrivateGPT"
+resource_group_name = "Terraform-PrivateGPT1"
 location            = "eastus"
 tags = {
   Terraform   = "True"
@@ -74,10 +74,12 @@ ca_ingress = {
   }
 }
 ca_container_config = {
-  name   = "gpt-chatbot-ui"
-  image  = "ghcr.io/pwd9000-ml/chatbot-ui:main"
-  cpu    = 2
-  memory = "4Gi"
+  name         = "gpt-chatbot-ui"
+  image        = "ghcr.io/pwd9000-ml/chatbot-ui:main"
+  cpu          = 1
+  memory       = "2Gi"
+  min_replicas = 1
+  max_replicas = 5
 
   ## Environment Variables (Required)##
   env = [
