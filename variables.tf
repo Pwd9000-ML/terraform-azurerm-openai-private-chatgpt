@@ -408,22 +408,21 @@ variable "cdn_endpoint" {
 }
 
 variable "cdn_origin_groups" {
-  description = "A map of CDN origin groups to create."
   type = list(object({
     name                                                      = string
-    session_affinity_enabled                                  = bool
-    restore_traffic_time_to_healed_or_new_endpoint_in_minutes = number
-    health_probe = object({
-      interval_in_seconds = number
-      path                = string
-      protocol            = string
-      request_type        = string
-    })
-    load_balancing = object({
-      additional_latency_in_milliseconds = number
-      sample_size                        = number
-      successful_samples_required        = number
-    })
+    session_affinity_enabled                                  = optional(bool, false)
+    restore_traffic_time_to_healed_or_new_endpoint_in_minutes = optional(number, 5)
+    health_probe = optional(object({
+      interval_in_seconds = optional(number, 100)
+      path                = optional(string, "/")
+      protocol            = optional(string, "Http")
+      request_type        = optional(string, "HEAD")
+    }))
+    load_balancing = optional(object({
+      additional_latency_in_milliseconds = optional(number, 50)
+      sample_size                        = optional(number, 4)
+      successful_samples_required        = optional(number, 3)
+    }))
   }))
   default = [
     {
@@ -431,42 +430,73 @@ variable "cdn_origin_groups" {
       session_affinity_enabled                                  = false
       restore_traffic_time_to_healed_or_new_endpoint_in_minutes = 5
       health_probe = {
-        interval_in_seconds = 30
+        interval_in_seconds = 100
         path                = "/"
         protocol            = "Http"
-        request_type        = "GET"
+        request_type        = "HEAD"
       }
       load_balancing = {
-        additional_latency_in_milliseconds = 0
+        additional_latency_in_milliseconds = 50
         sample_size                        = 4
-        successful_samples_required        = 2
+        successful_samples_required        = 3
       }
     }
   ]
+  description = <<-DESCRIPTION
+    type = list(object({
+      name                                                      = (Required) The name of the CDN origin group to create.
+      session_affinity_enabled                                  = (Optional) Is session affinity enabled? Defaults to `false`.
+      restore_traffic_time_to_healed_or_new_endpoint_in_minutes = (Optional) The time in minutes to restore traffic to a healed or new endpoint. Defaults to `5`.
+      health_probe = (Optional) The health probe settings.
+      type = object({
+        interval_in_seconds = (Optional) The interval in seconds between health probes. Defaults to `100`.
+        path                = (Optional) The path to use for health probes. Defaults to `/`.
+        protocol            = (Optional) The protocol to use for health probes. Possible values include 'Http' and 'Https'. Defaults to `Http`.
+        request_type        = (Optional) The request type to use for health probes. Possible values include 'GET', 'HEAD', and 'OPTIONS'. Defaults to `HEAD`.
+      }))
+      load_balancing = (Optional) The load balancing settings.
+      type = object({
+        additional_latency_in_milliseconds = (Optional) The additional latency in milliseconds for probes to fall into the lowest latency bucket. Defaults to `50`.
+        sample_size                        = (Optional) The number of samples to take for load balancing decisions. Defaults to `4`.
+        successful_samples_required        = (Optional) The number of samples within the sample period that must succeed. Defaults to `3`.
+      }))
+    }))
+    DESCRIPTION
 }
 
 variable "cdn_gpt_origin" {
-  description = "A map of CDN origins to create."
   type = object({
     name                           = string
     origin_group_name              = string
-    enabled                        = bool
-    certificate_name_check_enabled = bool
-    http_port                      = number
-    https_port                     = number
-    priority                       = number
-    weight                         = number
+    enabled                        = optional(bool, true)
+    certificate_name_check_enabled = optional(bool, true)
+    http_port                      = optional(number, 80)
+    https_port                     = optional(number, 443)
+    priority                       = optional(number, 1)
+    weight                         = optional(number, 1000)
   })
   default = {
     name                           = "PrivateGPTOrigin"
     origin_group_name              = "PrivateGPTOriginGroup"
     enabled                        = true
-    certificate_name_check_enabled = false
+    certificate_name_check_enabled = true
     http_port                      = 80
     https_port                     = 443
     priority                       = 1
     weight                         = 1000
   }
+  description = <<-DESCRIPTION
+    type = object({
+      name                           = (Required) The name which should be used for this Front Door Origin. Changing this forces a new Front Door Origin to be created.
+      origin_group_name              = (Required) The name of the CDN origin group to associate this origin with.
+      enabled                        = (Optional) Is the CDN origin enabled? Defaults to `true`.
+      certificate_name_check_enabled = (Required) Specifies whether certificate name checks are enabled for this origin. Defaults to `true`.
+      http_port                      = (Optional) The HTTP port of the origin. (e.g. 80)
+      https_port                     = (Optional) The HTTPS port of the origin. (e.g. 443)
+      priority                       = (Optional) The priority of the origin. (e.g. 1)
+      weight                         = (Optional) The weight of the origin. (e.g. 1000)
+    })
+  DESCRIPTION
 }
 
 variable "cdn_route" {

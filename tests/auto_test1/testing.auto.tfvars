@@ -107,8 +107,8 @@ ca_container_config = {
 }
 
 ### CDN - Front Door ###
-create_front_door_cdn = true
-create_dns_zone       = false #Set to false if you already have a DNS zone
+create_front_door_cdn   = true
+create_dns_zone         = false #Set to false if you already have a DNS zone
 dns_resource_group_name = "pwd9000-eb-network"
 custom_domain_config = {
   zone_name = "pwd9000.com"
