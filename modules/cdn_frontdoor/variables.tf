@@ -35,7 +35,7 @@ variable "custom_domain_config" {
     })))
   })
   default = {
-    zone_name = "gpt9000.com"
+    zone_name = "mydomain7335.com"
     host_name = "PrivateGPT"
     ttl       = 3600
     tls = [{
@@ -56,6 +56,7 @@ variable "custom_domain_config" {
     })
   DESCRIPTION
 }
+
 
 # Front Door #
 variable "cdn_profile_name" {

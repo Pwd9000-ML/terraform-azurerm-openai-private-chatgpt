@@ -21,7 +21,7 @@ variable "tags" {
 variable "laws_name" {
   type        = string
   description = "Name of the log analytics workspace to create."
-  default     = "chatgpt-laws"
+  default     = "gptlaws"
 }
 
 variable "laws_sku" {
@@ -40,14 +40,15 @@ variable "laws_retention_in_days" {
 variable "cae_name" {
   type        = string
   description = "Name of the container app environment to create."
-  default     = "chatgpt-cae"
+  default     = "gptcae"
 }
+
 
 ### container app ###
 variable "ca_name" {
   type        = string
   description = "Name of the container app to create."
-  default     = "chatgpt-ca"
+  default     = "gptca"
 }
 
 variable "ca_revision_mode" {
@@ -110,7 +111,7 @@ variable "ca_container_config" {
     image        = string
     cpu          = number
     memory       = string
-    min_replicas = optional(number, 1)
+    min_replicas = optional(number, 0)
     max_replicas = optional(number, 10)
     env = optional(list(object({
       name        = string
@@ -123,7 +124,7 @@ variable "ca_container_config" {
     image        = "ghcr.io/pwd9000-ml/chatbot-ui:main"
     cpu          = 1
     memory       = "2Gi"
-    min_replicas = 1
+    min_replicas = 0
     max_replicas = 10
     env          = []
   }
@@ -133,6 +134,8 @@ variable "ca_container_config" {
       image                   = (Required) The name of the container image.
       cpu                     = (Required) The number of CPU cores to allocate to the container.
       memory                  = (Required) The amount of memory to allocate to the container in GB.
+      min_replicas            = (Optional) The minimum number of replicas to run. Defaults to `0`.
+      max_replicas            = (Optional) The maximum number of replicas to run. Defaults to `10`.
       env = list(object({
         name        = (Required) The name of the environment variable.
         secret_name = (Optional) The name of the secret to use for the environment variable.
