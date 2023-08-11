@@ -502,25 +502,25 @@ variable "cdn_gpt_origin" {
 variable "cdn_route" {
   type = object({
     name                       = string
-    enabled                    = bool
-    forwarding_protocol        = string
-    https_redirect_enabled     = bool
-    patterns_to_match          = list(string)
-    supported_protocols        = list(string)
-    cdn_frontdoor_origin_path  = optional(string)
-    cdn_frontdoor_rule_set_ids = optional(list(string))
-    link_to_default_domain     = bool
-    cache = object({
+    enabled                    = optional(bool, true)
+    forwarding_protocol        = optional(string, "HttpsOnly")
+    https_redirect_enabled     = optional(bool, false)
+    patterns_to_match          = optional(list(string), ["/*"])
+    supported_protocols        = optional(list(string), ["Http", "Https"])
+    cdn_frontdoor_origin_path  = optional(string, null)
+    cdn_frontdoor_rule_set_ids = optional(list(string), null)
+    link_to_default_domain     = optional(bool, false)
+    cache = optional(object({
       query_string_caching_behavior = string
-      query_strings                 = list(string)
+      query_strings                 = optional(list(string), [])
       compression_enabled           = bool
-      content_types_to_compress     = list(string)
-    })
+      content_types_to_compress     = optional(list(string), [])
+    }))
   })
   default = {
     name                       = "PrivateGPTRoute"
     enabled                    = true
-    forwarding_protocol        = "MatchRequest"
+    forwarding_protocol        = "HttpsOnly"
     https_redirect_enabled     = false
     patterns_to_match          = ["/*"]
     supported_protocols        = ["Http", "Https"]
@@ -537,12 +537,12 @@ variable "cdn_route" {
   description = <<-DESCRIPTION
     type = object({
       name                           = (Required) The name of the CDN route to create.
-      enabled                        = (Required) Is the CDN route enabled? Defaults to `true`.
-      forwarding_protocol            = (Required) The protocol this rule will use when forwarding traffic to backends. Possible values include 'MatchRequest', 'HttpOnly' and 'HttpsOnly'. Defaults to 'MatchRequest'.
-      https_redirect_enabled         = (Required) Is HTTPS redirect enabled? Defaults to `false`.
-      patterns_to_match              = (Required) The list of patterns to match for this rule. Defaults to `["/"]`.
-      supported_protocols            = (Required) The list of supported protocols for this rule. Defaults to `["Http", "Https"]`.
-      cdn_frontdoor_origin_path      = (Required) The path to use when forwarding traffic to backends. Defaults to `/`.
+      enabled                        = (Optional) Is the CDN route enabled? Defaults to `true`.
+      forwarding_protocol            = (Optional) The protocol this rule will use when forwarding traffic to backends. Possible values include `MatchRequest`, `HttpOnly` and `HttpsOnly`. Defaults to `HttpsOnly`.
+      https_redirect_enabled         = (Optional) Is HTTPS redirect enabled? Defaults to `false`.
+      patterns_to_match              = (Optional) The list of patterns to match for this rule. Defaults to `["/*"]`.
+      supported_protocols            = (Optional) The list of supported protocols for this rule. Defaults to `["Http", "Https"]`.
+      cdn_frontdoor_origin_path      = (Optional) The path to use when forwarding traffic to backends. Defaults to `null`.
       cdn_frontdoor_rule_set_ids     = (Optional) The list of rule set IDs to associate with this rule. Defaults to `null`.
       link_to_default_domain         = (Optional) Is the CDN route linked to the default domain? Defaults to `false`.
       cache = (Optional) The CDN route cache settings.
