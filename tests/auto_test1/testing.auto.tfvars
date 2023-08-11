@@ -3,7 +3,7 @@ resource_group_name = "Terraform-PrivateGPT1"
 location            = "uksouth"
 tags = {
   Terraform   = "True"
-  Description = "Private ChatGPT hosten on Azure OpenAI"
+  Description = "Private ChatGPT hosted on Azure OpenAI"
   Author      = "Marcel Lupo"
   GitHub      = "https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt"
 }
@@ -51,7 +51,7 @@ model_deployment = [
   }
 ]
 
-### log analytics workspace ###
+### log analytics workspace for container apps ###
 laws_name              = "gptlaws9001"
 laws_sku               = "PerGB2018"
 laws_retention_in_days = 30
@@ -109,7 +109,7 @@ ca_container_config = {
 }
 
 ### key vault access ###
-key_vault_access_permission = ["Key Vault Secrets User"]
+key_vault_access_permission = null
 
 ### CDN - Front Door ###
 create_front_door_cdn   = true
@@ -184,4 +184,40 @@ cdn_route = {
     compression_enabled           = false
     content_types_to_compress     = []
   }
+}
+
+# CDN FIREWALL POLICIES
+cdn_firewall_policies = [{
+  name                              = "PrivateGPTFirewallPolicy"
+  enabled                           = true
+  mode                              = "Prevention"
+  custom_block_response_body        = "WW91ciByZXF1ZXN0IGhhcyBiZWVuIGJsb2NrZWQu"
+  custom_block_response_status_code = 403
+  custom_rules = [
+    {
+      name                           = "PrivateGPTAllowedIPs"
+      action                         = "Block"
+      enabled                        = true
+      priority                       = 100
+      type                           = "MatchRule"
+      rate_limit_duration_in_minutes = 1
+      rate_limit_threshold           = 10
+      match_conditions = [
+        {
+          negation_condition = true
+          match_values       = ["81.103.78.62"]
+          match_variable     = "RemoteAddr"
+          operator           = "IPMatch"
+          transforms         = []
+        }
+      ]
+    }
+  ]
+}]
+
+# CDN SECURITY POLICY (WAF)
+cdn_security_policy = {
+  name                 = "PrivateGPTSecurityPolicy"
+  firewall_policy_name = "PrivateGPTFirewallPolicy"
+  patterns_to_match    = ["/*"]
 }

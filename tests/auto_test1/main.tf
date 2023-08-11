@@ -94,4 +94,6 @@ module "private-chatgpt-openai" {
   cdn_origin_groups       = var.cdn_origin_groups
   cdn_gpt_origin          = var.cdn_gpt_origin
   cdn_route               = var.cdn_route
+  cdn_firewall_policies   = var.cdn_firewall_policies
+  cdn_security_policy     = var.cdn_security_policy
 }

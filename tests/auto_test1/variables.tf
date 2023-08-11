@@ -549,3 +549,80 @@ variable "cdn_route" {
     })
   DESCRIPTION
 }
+
+variable "cdn_firewall_policies" {
+  type = list(object({
+    name                              = string
+    enabled                           = optional(bool, true)
+    mode                              = optional(string, "Prevention")
+    redirect_url                      = optional(string)
+    custom_block_response_status_code = optional(number, 403)
+    custom_block_response_body        = optional(string)
+    custom_rules = optional(list(object({
+      name                           = string
+      action                         = string
+      enabled                        = optional(bool, true)
+      priority                       = number
+      type                           = string
+      rate_limit_duration_in_minutes = optional(number, 1)
+      rate_limit_threshold           = optional(number, 10)
+      match_conditions = list(object({
+        match_variable     = string
+        match_values       = list(string)
+        operator           = string
+        selector           = optional(string)
+        negation_condition = optional(bool)
+        transforms         = optional(list(string))
+      }))
+    })))
+  }))
+  default = [{
+    name                              = "PrivateGPTFirewallPolicy"
+    enabled                           = true
+    mode                              = "Prevention"
+    redirect_url                      = null
+    custom_block_response_status_code = 403
+    custom_block_response_body        = "WW91ciByZXF1ZXN0IGhhcyBiZWVuIGJsb2NrZWQu"
+    custom_rules = [
+      {
+        name                           = "PrivateGPTFirewallPolicyCustomRule"
+        action                         = "Block"
+        enabled                        = true
+        priority                       = 100
+        type                           = "MatchRule"
+        rate_limit_duration_in_minutes = 1
+        rate_limit_threshold           = 10
+        match_conditions = [
+          {
+            match_variable     = "RemoteAddr"
+            match_values       = ["10.0.1.0/24", "10.0.2.0/24"]
+            operator           = "IPMatch"
+            selector           = null
+            negation_condition = null
+            transforms         = []
+          }
+        ]
+      }
+    ]
+  }]
+  description = "The CDN firewall policies to create."
+}
+variable "cdn_security_policy" {
+  type = object({
+    name                 = string
+    firewall_policy_name = string
+    patterns_to_match    = list(string)
+  })
+  default = {
+    name                 = "PrivateGPTSecurityPolicy"
+    firewall_policy_name = "PrivateGPTFirewallPolicy"
+    patterns_to_match    = ["/*"]
+  }
+  description = <<-DESCRIPTION
+    type = object({
+      name                 = (Required) The name of the CDN security policy to create.
+      firewall_policy_name = (Required) The name of the CDN firewall policy to associate with this security policy.
+      patterns_to_match    = (Required) The list of patterns to match for this policy. Defaults to `["/*"]`.
+    })
+  DESCRIPTION
+}

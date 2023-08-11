@@ -126,3 +126,62 @@ resource "azurerm_dns_txt_record" "gpt" {
   }
   depends_on = [azurerm_cdn_frontdoor_route.gpt]
 }
+
+# Enable Firewall Policy
+resource "azurerm_cdn_frontdoor_firewall_policy" "gpt" {
+  for_each = { for each in var.cdn_firewall_policies : each.name => each if each.enabled == true }
+
+  name                              = each.value.name
+  resource_group_name               = var.cdn_resource_group_name
+  sku_name                          = var.cdn_sku_name
+  enabled                           = each.value.enabled
+  mode                              = each.value.mode
+  redirect_url                      = each.value.redirect_url
+  custom_block_response_status_code = each.value.custom_block_response_status_code
+  custom_block_response_body        = each.value.custom_block_response_body
+
+  dynamic "custom_rule" {
+    for_each = each.value.custom_rules
+    content {
+      name                           = custom_rule.value.name
+      enabled                        = custom_rule.value.enabled
+      priority                       = custom_rule.value.priority
+      rate_limit_duration_in_minutes = custom_rule.value.rate_limit_duration_in_minutes
+      rate_limit_threshold           = custom_rule.value.rate_limit_threshold
+      type                           = custom_rule.value.type
+      action                         = custom_rule.value.action
+
+      dynamic "match_condition" {
+        for_each = custom_rule.value.match_conditions
+        content {
+          match_variable     = match_condition.value.match_variable
+          match_values       = match_condition.value.match_values
+          operator           = match_condition.value.operator
+          selector           = match_condition.value.selector
+          negation_condition = match_condition.value.negation_condition
+          transforms         = match_condition.value.transforms
+        }
+      }
+    }
+  }
+
+  tags = var.tags
+}
+
+resource "azurerm_cdn_frontdoor_security_policy" "gpt" {
+  name                     = var.cdn_security_policy.name
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.gpt.id
+
+  security_policies {
+    firewall {
+      cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.gpt[var.cdn_security_policy.firewall_policy_name].id
+
+      association {
+        domain {
+          cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.gpt.id
+        }
+        patterns_to_match = var.cdn_security_policy.patterns_to_match
+      }
+    }
+  }
+}

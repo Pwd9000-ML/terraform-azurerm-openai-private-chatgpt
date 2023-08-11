@@ -1,13 +1,11 @@
-
-
 ###############################################
 # OpenAI Service                              #
 ###############################################
 ### Create OpenAI Service ###
 # 1.) Create an Azure Key Vault to store the OpenAI account details.
 # 2.) Create an OpenAI service account.
-# 3.) Create an OpenAI model deployment.
-# 4.) Store the OpenAI account details in the key vault.
+# 3.) Create an OpenAI language model deployments. (GPT-3, GPT-4, etc.)
+# 4.) Store the OpenAI account and model details in the key vault.
 module "openai" {
   source  = "Pwd9000-ML/openai-service/azurerm"
   version = ">= 1.1.0"
@@ -24,7 +22,7 @@ module "openai" {
   keyvault_firewall_allowed_ips                = var.keyvault_firewall_allowed_ips
   keyvault_firewall_virtual_network_subnet_ids = var.keyvault_firewall_virtual_network_subnet_ids
 
-  #Create OpenAI Service?
+  #Create OpenAI Service
   create_openai_service                     = var.create_openai_service
   openai_resource_group_name                = var.openai_resource_group_name
   openai_account_name                       = var.openai_account_name
@@ -35,7 +33,7 @@ module "openai" {
   openai_public_network_access_enabled      = var.openai_public_network_access_enabled
   openai_identity                           = var.openai_identity
 
-  #Create Model Deployment?
+  #Create Model Deployment
   create_model_deployment = var.create_model_deployment
   model_deployment        = var.model_deployment
 }
@@ -70,7 +68,7 @@ module "privategpt_chatbot_container_apps" {
   ca_secrets          = var.ca_secrets
 
   #key vault access
-  key_vault_access_permission = var.key_vault_access_permission #Set to `null` if no Key Vault access is needed.
+  key_vault_access_permission = var.key_vault_access_permission #Set to `null` if no Key Vault access is needed on CA identity.
   key_vault_id                = var.key_vault_id                #Provide the key vault id if key_vault_access_permission is not null.
 
   depends_on = [module.openai]
@@ -79,23 +77,30 @@ module "privategpt_chatbot_container_apps" {
 ### Front solution with an Azure front door (optional) ###
 # 9.) Deploy Azure Front Door.
 # 10.) Setup a custom domain with AFD managed certificate.
-# 11.) Optionally create an Azure DNS Zone or use an existing one.
-# 12.) Create a CNAME record in the custom DNS zone.
-
+# 11.) Optionally create an Azure DNS Zone or use an existing one for the custom domain. (e.g PrivateGPT.mydomain.com)
+# 12.) Create a CNAME and TXT record in the custom DNS zone.
+# 13.) Setup and apply ADF WAF policy for the front door with allowed IPs custom rule. (Optional)
 module "azure_frontdoor_cdn" {
   count  = var.create_front_door_cdn ? 1 : 0
   source = "./modules/cdn_frontdoor"
 
-  cdn_resource_group_name = var.cdn_resource_group_name
+  #create_dns_zone
   create_dns_zone         = var.create_dns_zone
   dns_resource_group_name = var.dns_resource_group_name
   custom_domain_config    = var.custom_domain_config
+
+  #deploy front door
+  cdn_resource_group_name = var.cdn_resource_group_name
   cdn_profile_name        = var.cdn_profile_name
   cdn_sku_name            = var.cdn_sku_name
   cdn_endpoint            = var.cdn_endpoint
   cdn_origin_groups       = var.cdn_origin_groups
   cdn_gpt_origin          = local.cdn_gpt_origin
   cdn_route               = var.cdn_route
-  tags                    = var.tags
-  depends_on              = [module.privategpt_chatbot_container_apps]
+
+  #deploy firewall policy
+  cdn_firewall_policies = var.cdn_firewall_policies
+  cdn_security_policy   = var.cdn_security_policy
+  tags                  = var.tags
+  depends_on            = [module.privategpt_chatbot_container_apps]
 }
