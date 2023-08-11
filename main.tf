@@ -3,7 +3,11 @@
 ###############################################
 # OpenAI Service                              #
 ###############################################
-#This module will create an OpenAI service account, deploy models and store the account details in a key vault for consumption by our ChatGPT service.
+### Create OpenAI Service ###
+# 1.) Create an Azure Key Vault to store the OpenAI account details.
+# 2.) Create an OpenAI service account.
+# 3.) Create an OpenAI model deployment.
+# 4.) Store the OpenAI account details in the key vault.
 module "openai" {
   source  = "Pwd9000-ML/openai-service/azurerm"
   version = ">= 1.1.0"
@@ -36,102 +40,47 @@ module "openai" {
   model_deployment        = var.model_deployment
 }
 
-### Create a solution log analytics workspace to store logs ###
-resource "azurerm_log_analytics_workspace" "gpt" {
-  name                = var.laws_name
-  location            = var.location
-  resource_group_name = var.solution_resource_group_name
-  sku                 = var.laws_sku
-  retention_in_days   = var.laws_retention_in_days
-}
+### Create a container app ChatBot UI linked with OpenAI service hosted in Azure ###
+# 5.) Create a container app log analytics workspace.
+# 6.) Create a container app environment.
+# 7.) Create a container app instance.
+# 8.) grant the container app access a the key vault (optional).
+module "privategpt_chatbot_container_apps" {
+  source = "./modules/container_app"
 
-### Create Container App Enviornment ###
-resource "azurerm_container_app_environment" "gpt" {
-  name                       = var.cae_name
-  location                   = var.location
-  resource_group_name        = var.solution_resource_group_name
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.gpt.id
-  tags                       = var.tags
-}
+  #common
+  ca_resource_group_name = var.ca_resource_group_name
+  location               = var.location
+  tags                   = var.tags
 
-### Create a container app instance ###
-resource "azurerm_container_app" "gpt" {
-  name                         = var.ca_name
-  container_app_environment_id = azurerm_container_app_environment.gpt.id
-  resource_group_name          = var.solution_resource_group_name
-  revision_mode                = var.ca_revision_mode
+  #log analytics workspace
+  laws_name              = var.laws_name
+  laws_sku               = var.laws_sku
+  laws_retention_in_days = var.laws_retention_in_days
 
-  dynamic "identity" {
-    for_each = var.ca_identity != null ? [var.ca_identity] : []
-    content {
-      type         = identity.value.type
-      identity_ids = identity.value.identity_ids
-    }
-  }
+  #container app environment
+  cae_name = var.cae_name
 
-  dynamic "ingress" {
-    for_each = var.ca_ingress != null ? [var.ca_ingress] : []
-    content {
-      allow_insecure_connections = ingress.value.allow_insecure_connections
-      external_enabled           = ingress.value.external_enabled
-      target_port                = ingress.value.target_port
-      transport                  = ingress.value.transport
-      dynamic "traffic_weight" {
-        for_each = ingress.value.traffic_weight != null ? [ingress.value.traffic_weight] : []
-        content {
-          percentage      = traffic_weight.value.percentage
-          latest_revision = traffic_weight.value.latest_revision
-        }
-      }
-    }
-  }
+  #container app
+  ca_name             = var.ca_name
+  ca_revision_mode    = var.ca_revision_mode
+  ca_identity         = var.ca_identity
+  ca_ingress          = var.ca_ingress
+  ca_container_config = var.ca_container_config
+  ca_secrets          = var.ca_secrets
 
-  template {
-    min_replicas = var.ca_container_config != null ? var.ca_container_config.min_replicas : null
-    max_replicas = var.ca_container_config != null ? var.ca_container_config.max_replicas : null
-    dynamic "container" {
-      for_each = var.ca_container_config != null ? [var.ca_container_config] : []
-      content {
-        name   = container.value.name
-        image  = container.value.image
-        cpu    = container.value.cpu
-        memory = container.value.memory
-        dynamic "env" {
-          for_each = length(container.value.env) > 0 ? { for each in container.value.env : each.name => each } : {}
-          content {
-            name        = env.value.name
-            secret_name = env.value.secret_name
-            value       = env.value.value
-          }
-        }
-      }
-    }
-  }
+  #key vault access
+  key_vault_access_permission = var.key_vault_access_permission #Set to `null` if no Key Vault access is needed.
+  key_vault_id                = var.key_vault_id                #Provide the key vault id if key_vault_access_permission is not null.
 
-  dynamic "secret" {
-    for_each = length(var.ca_secrets) > 0 ? { for each in var.ca_secrets : each.name => each } : {}
-    content {
-      name  = secret.value.name
-      value = secret.value.value
-    }
-  }
-
-  tags = var.tags
-}
-
-# Add container app permission to key vault RBAC (to retrieve OpenAI Account and model details)
-resource "azurerm_role_assignment" "kv_role_assigment" {
-  for_each             = toset(["Key Vault Secrets User"])
-  role_definition_name = each.key
-  scope                = module.openai.key_vault_id
-  principal_id         = azurerm_container_app.gpt.identity.0.principal_id
+  depends_on = [module.openai]
 }
 
 ### Front solution with an Azure front door (optional) ###
-# 1.) Deploy Azure Front Door.
-# 2.) Setup a custom domain with AFD managed certificate.
-# 3.) Optionally create an Azure DNS Zone or use an existing one.
-# 4.) Create a CNAME record in the custom DNS zone.
+# 9.) Deploy Azure Front Door.
+# 10.) Setup a custom domain with AFD managed certificate.
+# 11.) Optionally create an Azure DNS Zone or use an existing one.
+# 12.) Create a CNAME record in the custom DNS zone.
 
 module "azure_frontdoor_cdn" {
   count  = var.create_front_door_cdn ? 1 : 0
@@ -148,5 +97,5 @@ module "azure_frontdoor_cdn" {
   cdn_gpt_origin          = local.cdn_gpt_origin
   cdn_route               = var.cdn_route
   tags                    = var.tags
-  depends_on              = [azurerm_container_app.gpt]
+  depends_on              = [module.privategpt_chatbot_container_apps]
 }

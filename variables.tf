@@ -14,13 +14,9 @@ variable "tags" {
   description = "A map of key value pairs that is used to tag resources created."
 }
 
-variable "solution_resource_group_name" {
-  type        = string
-  description = "Name of the resource group to create the ChatGPT solution resources in."
-  nullable    = false
-}
-
+####################################
 ### OpenAI service Module params ###
+####################################
 ### key vault ###
 variable "keyvault_resource_group_name" {
   type        = string
@@ -168,6 +164,15 @@ variable "model_deployment" {
         rai_policy_name = (Optional) The name of RAI policy. Changing this forces a new resource to be created.
       }))
   DESCRIPTION
+  nullable    = false
+}
+
+###################################
+### Container App Module params ###
+###################################
+variable "ca_resource_group_name" {
+  type        = string
+  description = "Name of the resource group to create the Container App and supporting solution resources in."
   nullable    = false
 }
 
@@ -319,6 +324,22 @@ variable "ca_secrets" {
   DESCRIPTION  
 }
 
+### key vault access ###
+variable "key_vault_access_permission" {
+  type        = list(string)
+  default     = ["Key Vault Secrets User"]
+  description = "The permission to grant the container app to the key vault. Set this variable to `null` if no Key Vault access is needed. Defaults to `Key Vault Secrets User`."
+}
+
+variable "key_vault_id" {
+  type        = string
+  description = "(Required) - The id of the key vault to grant access to."
+  default     = ""
+}
+
+####################################
+### CDN Front Door Module params ###
+####################################
 # DNS zone ## DNS zone #
 variable "create_dns_zone" {
   description = "Create a DNS zone for the CDN profile. If set to false, an existing DNS zone must be provided."

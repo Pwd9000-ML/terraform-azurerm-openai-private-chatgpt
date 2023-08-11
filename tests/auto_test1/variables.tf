@@ -305,6 +305,20 @@ variable "ca_secrets" {
   DESCRIPTION  
 }
 
+# Key Vault Access #
+### key vault access ###
+variable "key_vault_access_permission" {
+  type        = list(string)
+  default     = ["Key Vault Secrets User"]
+  description = "The permission to grant the container app to the key vault. Set this variable to `null` if no Key Vault access is needed. Defaults to `Key Vault Secrets User`."
+}
+
+variable "key_vault_id" {
+  type        = string
+  default     = ""
+  description = "(Required) - The id of the key vault to grant access to."
+}
+
 # DNS zone #
 variable "create_dns_zone" {
   description = "Create a DNS zone for the CDN profile. If set to false, an existing DNS zone must be provided."

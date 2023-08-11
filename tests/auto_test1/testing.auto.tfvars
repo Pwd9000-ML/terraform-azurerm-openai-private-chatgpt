@@ -1,6 +1,6 @@
 ### Common Variables ###
 resource_group_name = "Terraform-PrivateGPT1"
-location            = "eastus"
+location            = "uksouth"
 tags = {
   Terraform   = "True"
   Description = "Private ChatGPT hosten on Azure OpenAI"
@@ -34,18 +34,20 @@ openai_identity = {
 create_model_deployment = true
 model_deployment = [
   {
-    deployment_id = "gpt35turbo16k"
-    model_name    = "gpt-35-turbo-16k"
-    model_format  = "OpenAI"
-    model_version = "0613"
-    scale_type    = "Standard"
+    deployment_id  = "gpt35turbo16k"
+    model_name     = "gpt-35-turbo-16k"
+    model_format   = "OpenAI"
+    model_version  = "0613"
+    scale_type     = "Standard"
+    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
   },
   {
-    deployment_id = "gpt35turbo"
-    model_name    = "gpt-35-turbo"
-    model_format  = "OpenAI"
-    model_version = "0613"
-    scale_type    = "Standard"
+    deployment_id  = "gpt35turbo"
+    model_name     = "gpt-35-turbo"
+    model_format   = "OpenAI"
+    model_version  = "0613"
+    scale_type     = "Standard"
+    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
   }
 ]
 
@@ -79,7 +81,7 @@ ca_container_config = {
   cpu          = 2
   memory       = "4Gi"
   min_replicas = 0
-  max_replicas = 7
+  max_replicas = 5
 
   ## Environment Variables (Required)##
   env = [
@@ -105,6 +107,9 @@ ca_container_config = {
     }
   ]
 }
+
+### key vault access ###
+key_vault_access_permission = ["Key Vault Secrets User"]
 
 ### CDN - Front Door ###
 create_front_door_cdn   = true

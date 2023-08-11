@@ -34,9 +34,8 @@ module "private-chatgpt-openai" {
   source = "../.."
 
   #common
-  solution_resource_group_name = azurerm_resource_group.rg.name
-  location                     = var.location
-  tags                         = var.tags
+  location = var.location
+  tags     = var.tags
 
   #keyvault (OpenAI Service Account details)
   kv_config                                    = var.kv_config
@@ -70,13 +69,18 @@ module "private-chatgpt-openai" {
   cae_name = var.cae_name
 
   #Create a container app instance
-  ca_name             = var.ca_name
-  ca_revision_mode    = var.ca_revision_mode
-  ca_identity         = var.ca_identity
-  ca_container_config = var.ca_container_config
+  ca_resource_group_name = azurerm_resource_group.rg.name
+  ca_name                = var.ca_name
+  ca_revision_mode       = var.ca_revision_mode
+  ca_identity            = var.ca_identity
+  ca_container_config    = var.ca_container_config
 
   #Create a container app secrets
   ca_secrets = local.ca_secrets
+
+  #key vault access
+  key_vault_access_permission = var.key_vault_access_permission
+  key_vault_id                = data.azurerm_key_vault.gpt.id
 
   #Create front door CDN
   create_front_door_cdn   = var.create_front_door_cdn
