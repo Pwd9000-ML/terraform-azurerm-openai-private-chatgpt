@@ -307,7 +307,7 @@ variable "ca_secrets" {
 
 # DNS zone #
 variable "create_dns_zone" {
-  description = "Create a DNS zone for the CDN profile."
+  description = "Create a DNS zone for the CDN profile. If set to false, an existing DNS zone must be provided."
   type        = bool
   default     = false
 }
@@ -322,10 +322,10 @@ variable "custom_domain_config" {
   type = object({
     zone_name = string
     host_name = string
-    ttl       = number
+    ttl       = optional(number, 3600)
     tls = optional(list(object({
-      certificate_type    = string
-      minimum_tls_version = string
+      certificate_type    = optional(string, "ManagedCertificate")
+      minimum_tls_version = optional(string, "TLS12")
     })))
   })
   default = {
@@ -339,11 +339,11 @@ variable "custom_domain_config" {
   }
   description = <<-DESCRIPTION
     type = object({
-      zone_name = (Required) The name of the DNS zone to create the record in.
-      host_name = (Required) The host name of the DNS record to create. (e.g. PrivateGPT)
+      zone_name = (Required) The name of the DNS zone to create the CNAME and TXT record in for the CDN Front Door Custom domain.
+      host_name = (Required) The host name of the DNS record to create. (e.g. Contoso)
       ttl       = (Optional) The TTL of the DNS record to create. (e.g. 3600)
       tls       = optional(list(object({
-        certificate_type    = (Required) Defines the source of the SSL certificate. Possible values include 'CustomerCertificate' and 'ManagedCertificate'. Defaults to 'ManagedCertificate'.
+        certificate_type    = (Optional) Defines the source of the SSL certificate. Possible values include 'CustomerCertificate' and 'ManagedCertificate'. Defaults to 'ManagedCertificate'.
         NOTE: It may take up to 15 minutes for the Front Door Service to validate the state and Domain ownership of the Custom Domain.
         minimum_tls_version = (Optional) TLS protocol version that will be used for Https. Possible values include TLS10 and TLS12. Defaults to TLS12.
       }))))
@@ -359,13 +359,13 @@ variable "create_front_door_cdn" {
 }
 
 variable "cdn_profile_name" {
-  description = "The name of the CDN profile."
+  description = "The name of the CDN profile to create."
   type        = string
   default     = "example-cdn-profile"
 }
 
 variable "cdn_sku_name" {
-  description = "Specifies the SKU for the Front Door Profile. Possible values include 'Standard_AzureFrontDoor' and 'Premium_AzureFrontDoor'."
+  description = "Specifies the SKU for the CDN Front Door Profile. Possible values include 'Standard_AzureFrontDoor' and 'Premium_AzureFrontDoor'."
   type        = string
   default     = "Standard_AzureFrontDoor"
 }
@@ -373,7 +373,7 @@ variable "cdn_sku_name" {
 variable "cdn_endpoint" {
   type = object({
     name    = string
-    enabled = bool
+    enabled = optional(bool, true)
   })
   default = {
     name    = "PrivateGPT"
@@ -381,8 +381,8 @@ variable "cdn_endpoint" {
   }
   description = <<DESCRIPTION
     typp = object({
-      name = (Required) The name of the CDN endpoint to create.
-      enabled = (Required) Is the CDN endpoint enabled? Defaults to `true`.
+      name    = (Required) The name of the CDN endpoint to create.
+      enabled = (Optional) Is the CDN endpoint enabled? Defaults to `true`.
     })
   DESCRIPTION
 }
