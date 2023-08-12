@@ -48,6 +48,22 @@ model_deployment = [
     model_version  = "0613"
     scale_type     = "Standard"
     scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
+  },
+  {
+    deployment_id  = "gpt4"
+    model_name     = "gpt-4"
+    model_format   = "OpenAI"
+    model_version  = "0613"
+    scale_type     = "Standard"
+    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
+  },
+  {
+    deployment_id  = "gpt432k"
+    model_name     = "gpt-4-32k"
+    model_format   = "OpenAI"
+    model_version  = "0613"
+    scale_type     = "Standard"
+    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
   }
 ]
 
@@ -99,11 +115,11 @@ ca_container_config = {
     },
     {
       name  = "AZURE_DEPLOYMENT_ID" #see model_deployment variable (deployment_id)
-      value = "gpt35turbo16k"
+      value = "gpt432k"
     },
     {
       name  = "DEFAULT_MODEL" #see model_deployment variable (model_name)
-      value = "gpt-35-turbo-16k"
+      value = "gpt-4-32k"
     }
   ]
 }
