@@ -10,7 +10,7 @@ tags = {
 
 ### OpenAI Service Module Inputs ###
 kv_config = {
-  name = "openaikv1"
+  name = "openaikv2157"
   sku  = "standard"
 }
 keyvault_firewall_default_action             = "Deny"
@@ -20,8 +20,8 @@ keyvault_firewall_virtual_network_subnet_ids = []
 
 ### Create OpenAI Service ###
 create_openai_service                     = true
-openai_account_name                       = "openaiacc1"
-openai_custom_subdomain_name              = "openaiacc1" #translates to "https://openaiacc1.openai.azure.com/"
+openai_account_name                       = "openaiacc2157"
+openai_custom_subdomain_name              = "openaiacc2157" #translates to "https://openaiacc2157.openai.azure.com/"
 openai_sku_name                           = "S0"
 openai_local_auth_enabled                 = true
 openai_outbound_network_access_restricted = false
@@ -52,15 +52,15 @@ model_deployment = [
 ]
 
 ### log analytics workspace for container apps ###
-laws_name              = "openailaws1"
+laws_name              = "openailaws2157"
 laws_sku               = "PerGB2018"
 laws_retention_in_days = 30
 
 ### Container App Enviornment ###
-cae_name = "openaicae1"
+cae_name = "openaicae2157"
 
 ### Container App ###
-ca_name          = "openaica1"
+ca_name          = "openaica2157"
 ca_revision_mode = "Single"
 ca_identity = {
   type = "SystemAssigned"
@@ -126,7 +126,7 @@ custom_domain_config = {
 }
 
 # CDN PROFILE
-cdn_profile_name = "openaifd1"
+cdn_profile_name = "openaifd2157"
 cdn_sku_name     = "Standard_AzureFrontDoor"
 
 # CDN ENDPOINTS
@@ -189,7 +189,7 @@ cdn_route = {
 # CDN FIREWALL POLICIES
 cdn_firewall_policy = {
   create_waf                        = true
-  name                              = "PrivateGPTWAF"
+  name                              = "PrivateGPTWAF2158"
   enabled                           = true
   mode                              = "Prevention"
   custom_block_response_body        = "WW91ciByZXF1ZXN0IGhhcyBiZWVuIGJsb2NrZWQu"

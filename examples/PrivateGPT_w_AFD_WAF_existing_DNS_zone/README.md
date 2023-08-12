@@ -1,4 +1,4 @@
-# Example 1 - Private ChatGPT with Azure Front Door + Firewall on existing DNS zone
+# Private ChatGPT with Azure Front Door + Firewall on existing DNS zone
 
 This example will create a Privately hosted instance of ChatGPT on Azure OpenAI. This example will create the following:
 

@@ -1,4 +1,4 @@
-# Example 1 - Private ChatGPT with Azure Front Door + Firewall on existing DNS zone
+# Private ChatGPT with Azure Front Door + Firewall on new DNS zone
 
 This example will create a Privately hosted instance of ChatGPT on Azure OpenAI. This example will create the following:
 
@@ -29,10 +29,10 @@ This example will create a Privately hosted instance of ChatGPT on Azure OpenAI.
 1. Deploy Azure Front Door to front solution with CDN + WAF.
 2. Setup a custom domain in Azure Front Door with AFD managed certificate.
     Other options include:
-    - This example specifies an already existing DNZ zone to use. (e.g. `existingzone.com` - see `common.auto.tfvars`)
+    - This example specifies a new DNZ zone to create. (e.g. `newzone2158.com` - see `common.auto.tfvars`)
     - **Note:** Remember to add the zone to your DNS registrar as the module creates a TXT auth. (Certificates fully managed by AFD)
 
-3. Create a CNAME and TXT record in the custom DNS zone. (e.g. `privategpt.existingzone.com`)
+3. Create a CNAME and TXT record in the custom DNS zone. (e.g. `privategpt.newzone2158.com`)
 4. Setup and apply an ADF WAF policy with `IPAllow list` for allowed IPs to connect using a custom rule.
 
 <!-- BEGIN_TF_DOCS -->
