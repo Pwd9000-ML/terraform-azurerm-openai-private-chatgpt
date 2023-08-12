@@ -78,17 +78,5 @@ module "private-chatgpt-openai" {
   key_vault_id                = data.azurerm_key_vault.gpt.id
 
   #Create front door CDN
-  create_front_door_cdn   = var.create_front_door_cdn
-  cdn_resource_group_name = azurerm_resource_group.rg.name
-  create_dns_zone         = var.create_dns_zone
-  dns_resource_group_name = var.dns_resource_group_name
-  custom_domain_config    = var.custom_domain_config
-  cdn_profile_name        = var.cdn_profile_name
-  cdn_sku_name            = var.cdn_sku_name
-  cdn_endpoint            = var.cdn_endpoint
-  cdn_origin_groups       = var.cdn_origin_groups
-  cdn_gpt_origin          = var.cdn_gpt_origin
-  cdn_route               = var.cdn_route
-  cdn_firewall_policy     = var.cdn_firewall_policy
-  cdn_security_policy     = var.cdn_security_policy
+  create_front_door_cdn = var.create_front_door_cdn
 }

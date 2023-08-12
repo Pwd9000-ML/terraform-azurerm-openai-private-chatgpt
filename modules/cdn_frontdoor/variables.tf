@@ -3,6 +3,7 @@ variable "cdn_resource_group_name" {
   type        = string
   description = "Name of the resource group to create the CDN Front Door solution resources in."
   nullable    = false
+  default     = "dns-rg-01"
 }
 
 variable "tags" {
@@ -22,6 +23,7 @@ variable "dns_resource_group_name" {
   description = "The name of the resource group to create the DNS zone in / or where the existing zone is hosted."
   type        = string
   nullable    = false
+  default     = "cdn-rg-01"
 }
 
 variable "custom_domain_config" {

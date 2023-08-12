@@ -47,7 +47,7 @@ model_deployment = [
     model_format   = "OpenAI"
     model_version  = "0613"
     scale_type     = "Standard"
-    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
+    scale_capacity = 16
   },
   {
     deployment_id  = "gpt4"
@@ -55,7 +55,7 @@ model_deployment = [
     model_format   = "OpenAI"
     model_version  = "0613"
     scale_type     = "Standard"
-    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
+    scale_capacity = 16
   },
   {
     deployment_id  = "gpt432k"
@@ -130,7 +130,7 @@ key_vault_access_permission = ["Key Vault Secrets User"]
 ### CDN - Front Door ###
 create_front_door_cdn   = true
 create_dns_zone         = false # Set to false if you already have a DNS zone, set to true if you want to create a new one
-dns_resource_group_name = "rg-of-existing-dns-zone" 
+dns_resource_group_name = "rg-of-existing-dns-zone"
 custom_domain_config = {
   zone_name = "existingzone.com"
   host_name = "privategpt"
@@ -234,6 +234,6 @@ cdn_firewall_policy = {
 
 # CDN SECURITY POLICY (WAF)
 cdn_security_policy = {
-  name                 = "PrivateGPTSecurityPolicy"
-  patterns_to_match    = ["/*"]
+  name              = "PrivateGPTSecurityPolicy"
+  patterns_to_match = ["/*"]
 }

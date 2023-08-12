@@ -47,7 +47,7 @@ model_deployment = [
     model_format   = "OpenAI"
     model_version  = "0613"
     scale_type     = "Standard"
-    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
+    scale_capacity = 16
   },
   {
     deployment_id  = "gpt4"
@@ -55,7 +55,7 @@ model_deployment = [
     model_format   = "OpenAI"
     model_version  = "0613"
     scale_type     = "Standard"
-    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
+    scale_capacity = 16
   },
   {
     deployment_id  = "gpt432k"
@@ -234,6 +234,6 @@ cdn_firewall_policy = {
 
 # CDN SECURITY POLICY (WAF)
 cdn_security_policy = {
-  name                 = "PrivateGPTSecurityPolicy"
-  patterns_to_match    = ["/*"]
+  name              = "PrivateGPTSecurityPolicy"
+  patterns_to_match = ["/*"]
 }
