@@ -105,8 +105,8 @@ ca_container_config = {
 }
 
 ### key vault access ###
-key_vault_access_permission = ["Key Vault Secrets User"] # set to`null` to not grant any permissions
-#key_vault_id = "" (See data.tf for example of how to get key vault id) or specify key vault id here (only required if `var.key_vault_access_permission` is not null)
+key_vault_access_permission = ["Key Vault Secrets User"] # set to `null` to ignore permission grant to a key vault
+#key_vault_id = "kv-to-grant-permission-to" (See `data.tf`) Only required if `var.key_vault_access_permission` not `null`)
 
 ### CDN - Front Door ###
 create_front_door_cdn = true
