@@ -27,9 +27,9 @@ This terraform module helps establishing a secure **ChatGPT-like** interface. Th
 
 ## Description
 
-This flexible terraform module is an **OpneAI accelerator** that can be used to deploy a privately hosted instance of a **ChatBot** similar to **ChatGPT** hosted on Azure using **Azure Container Apps**, **Azure OpenI** and optionally fronted by **Azure CDN/Front Door** with a **WAF / Firewall** and custom allowed IP list.  
+This flexible terraform module is an **OpenAI accelerator** that can be used to deploy a privately hosted instance of a **ChatBot** similar to **ChatGPT** hosted on Azure using **Azure Container Apps**, **Azure OpenAI** and optionally fronted by **Azure CDN/Front Door** with a **WAF / Firewall** and custom allowed IP list.  
 
-## This module can be used to create the following:
+## This module can be used to create the following
 
 ### Create OpenAI Service
 
