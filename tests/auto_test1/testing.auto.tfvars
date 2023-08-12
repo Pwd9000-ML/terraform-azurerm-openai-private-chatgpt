@@ -172,39 +172,3 @@ cdn_route = {
     content_types_to_compress     = []
   }
 }
-
-# CDN FIREWALL POLICIES
-cdn_firewall_policies = [{
-  name                              = "PrivateGPTWAF"
-  enabled                           = true
-  mode                              = "Prevention"
-  custom_block_response_body        = "WW91ciByZXF1ZXN0IGhhcyBiZWVuIGJsb2NrZWQu"
-  custom_block_response_status_code = 403
-  custom_rules = [
-    {
-      name                           = "AllowedIPs"
-      action                         = "Block"
-      enabled                        = true
-      priority                       = 100
-      type                           = "MatchRule"
-      rate_limit_duration_in_minutes = 1
-      rate_limit_threshold           = 10
-      match_conditions = [
-        {
-          negation_condition = true
-          match_values       = ["86.106.76.66"] #Allowd IPs (Replace with your IP Allow list)
-          match_variable     = "RemoteAddr"
-          operator           = "IPMatch"
-          transforms         = []
-        }
-      ]
-    }
-  ]
-}]
-
-# CDN SECURITY POLICY (WAF)
-cdn_security_policy = {
-  name                 = "PrivateGPTSecurityPolicy"
-  firewall_policy_name = "PrivateGPTWAF"
-  patterns_to_match    = ["/*"]
-}

@@ -169,6 +169,7 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "gpt" {
 }
 
 resource "azurerm_cdn_frontdoor_security_policy" "gpt" {
+  count                    = var.cdn_security_policy.link_waf ? 1 : 0
   name                     = var.cdn_security_policy.name
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.gpt.id
 
