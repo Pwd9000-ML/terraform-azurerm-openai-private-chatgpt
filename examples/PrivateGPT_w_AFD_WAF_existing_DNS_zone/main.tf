@@ -26,7 +26,7 @@ resource "azurerm_resource_group" "rg" {
 ##################################################
 module "private-chatgpt-openai" {
   source  = "Pwd9000-ML/openai-private-chatgpt/azurerm"
-  version = ">= 1.0.0"
+  version = ">= 1.1.0"
 
   #common
   location = var.location
