@@ -1,6 +1,6 @@
 # Private ChatGPT with Azure Front Door + Firewall on existing DNS zone
 
-This example will create a Privately hosted instance of ChatGPT on Azure OpenAI. This example will create the following:
+This example will create a Privately hosted instance of ChatBot/ChatGPT on Azure OpenAI with AFD + WAF using an existing DNS zone for the custom domain configuration. This example will create the following:
 
 ## Prerequisites
 

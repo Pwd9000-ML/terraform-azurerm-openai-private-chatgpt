@@ -35,23 +35,7 @@ model_deployment = [
     model_format   = "OpenAI"
     model_version  = "0613"
     scale_type     = "Standard"
-    scale_capacity = 16
-  },
-  {
-    deployment_id  = "gpt35turbo"
-    model_name     = "gpt-35-turbo"
-    model_format   = "OpenAI"
-    model_version  = "0613"
-    scale_type     = "Standard"
-    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
-  },
-  {
-    deployment_id  = "gpt4"
-    model_name     = "gpt-4"
-    model_format   = "OpenAI"
-    model_version  = "0613"
-    scale_type     = "Standard"
-    scale_capacity = 16
+    scale_capacity = 34
   },
   {
     deployment_id  = "gpt432k"
@@ -59,7 +43,7 @@ model_deployment = [
     model_format   = "OpenAI"
     model_version  = "0613"
     scale_type     = "Standard"
-    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
+    scale_capacity = 26
   }
 ]
 

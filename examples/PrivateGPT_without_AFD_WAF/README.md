@@ -1,6 +1,6 @@
 # Private ChatGPT instance only (No AFD WAF / custom DNS integration)
 
-This example will create a Privately hosted instance of ChatGPT on Azure OpenAI only. This example will create the following:
+This example will create a Privately hosted instance of ChatBot/ChatGPT on Azure OpenAI only. This example will create the following:
 
 ## Prerequisites
 
