@@ -21,7 +21,7 @@ This terraform module helps establishing a secure **ChatGPT-like** interface. Th
 
 ## Diagram
 
-![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/main.png)
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/mainflow.png)
 
 ## Description
 
@@ -56,7 +56,7 @@ This flexible terraform module is an **OpneAI accelerator** that can be used to 
     - **Note:** Remember to add the zone to your DNS registrar as the module creates a TXT auth. (Certificates fully managed by AFD)
 
 3. Create a CNAME and TXT record in the custom DNS zone. (e.g. `privategpt.existingzone.com`)
-4. Setup and apply an ADF WAF policy with `IPAllow list` for allowed IPs to connect using a custom rule.
+4. Setup and apply an AFD WAF policy with `IPAllow list` for allowed IPs to connect using a custom rule.
 
 ## ChatBot Demo
 

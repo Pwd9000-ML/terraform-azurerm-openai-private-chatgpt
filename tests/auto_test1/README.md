@@ -33,7 +33,7 @@ This automated test will create a Privately hosted instance of ChatGPT on Azure 
     - **Note:** Remember to add the zone to your DNS registrar as the module creates a TXT auth. (Certificates fully managed by AFD)
 
 3. Create a CNAME and TXT record in the custom DNS zone.
-4. Setup and apply an ADF WAF policy with `IPAllow list` for allowed IPs to connect using a custom rule. (Optional)
+4. Setup and apply an AFD WAF policy with `IPAllow list` for allowed IPs to connect using a custom rule. (Optional)
 
 <!-- BEGIN_TF_DOCS -->
 

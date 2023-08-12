@@ -79,7 +79,7 @@ module "privategpt_chatbot_container_apps" {
 # 10.) Setup a custom domain with AFD managed certificate.
 # 11.) Optionally create an Azure DNS Zone or use an existing one for the custom domain. (e.g PrivateGPT.mydomain.com)
 # 12.) Create a CNAME and TXT record in the custom DNS zone.
-# 13.) Setup and apply ADF WAF policy for the front door with allowed IPs custom rule. (Optional)
+# 13.) Setup and apply AFD WAF policy for the front door with allowed IPs custom rule. (Optional)
 module "azure_frontdoor_cdn" {
   count  = var.create_front_door_cdn ? 1 : 0
   source = "./modules/cdn_frontdoor"

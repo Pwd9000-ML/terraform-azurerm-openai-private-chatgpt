@@ -10,7 +10,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-      time: "04:00"
+      time: "23:00"
       timezone: "Europe/London"
 
   - package-ecosystem: "github-actions" # See documentation for possible values
@@ -18,5 +18,5 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
-      time: "04:00"
+      time: "23:00"
       timezone: "Europe/London"
