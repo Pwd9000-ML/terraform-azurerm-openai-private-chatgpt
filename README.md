@@ -25,9 +25,11 @@ This terraform module helps establishing a secure **ChatGPT-like** interface. Th
 
 ## Description
 
-This flexible terraform module is an **OpneAI accelerator** that can be used to deploy a privately hosted instance of a **ChatBot** similar to **ChatGPT** hosted on Azure using **Azure Container Apps**, **Azure OpenI** and optionally fronted by **Azure CDN/Front Door** with a **WAF / Firewall** and custom allowed IP list. This module can be used to create the following:
+This flexible terraform module is an **OpneAI accelerator** that can be used to deploy a privately hosted instance of a **ChatBot** similar to **ChatGPT** hosted on Azure using **Azure Container Apps**, **Azure OpenI** and optionally fronted by **Azure CDN/Front Door** with a **WAF / Firewall** and custom allowed IP list.  
 
-## Create OpenAI Service
+## This module can be used to create the following:
+
+### Create OpenAI Service
 
 1. Create an Azure Key Vault to store the OpenAI account details.
 2. Create an OpenAI service account.  
@@ -37,7 +39,7 @@ This flexible terraform module is an **OpneAI accelerator** that can be used to 
 3. Create OpenAI language model deployments on the OpenAI service. (e.g. GPT-3, GPT-4, etc.)
 4. Store the OpenAI account and model details in the key vault for consumption.
 
-## Create a container app ChatBot UI linked with OpenAI service hosted in Azure
+### Create a container app ChatBot UI linked with OpenAI service hosted in Azure
 
 1. Create a container app log analytics workspace (to link with container app).
 2. Create a container app environment.
@@ -45,7 +47,7 @@ This flexible terraform module is an **OpneAI accelerator** that can be used to 
 4. Link chatbot-ui with corresponding OpenAI account and language model deployment.
 5. Grant the container app access to the key vault to retrieve secrets (optional).
 
-## Front solution with an Azure front door (optional)
+### Front solution with an Azure front door (optional)
 
 1. Deploy Azure Front Door to front solution with CDN + WAF.
 2. Setup a custom domain in Azure Front Door with AFD managed certificate.
