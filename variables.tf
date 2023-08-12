@@ -581,8 +581,9 @@ variable "cdn_route" {
   DESCRIPTION
 }
 
-variable "cdn_firewall_policies" {
-  type = list(object({
+variable "cdn_firewall_policy" {
+  type = object({
+    create_waf                        = bool
     name                              = string
     enabled                           = optional(bool, true)
     mode                              = optional(string, "Prevention")
@@ -606,8 +607,9 @@ variable "cdn_firewall_policies" {
         transforms         = optional(list(string))
       }))
     })))
-  }))
-  default = [{
+  })
+  default = {
+    create_waf                        = true
     name                              = "PrivateGPTFirewallPolicy"
     enabled                           = true
     mode                              = "Prevention"
@@ -635,28 +637,22 @@ variable "cdn_firewall_policies" {
         ]
       }
     ]
-  }]
+  }
   description = "The CDN firewall policies to create."
 }
 
 variable "cdn_security_policy" {
   type = object({
-    link_waf             = bool
-    name                 = string
-    firewall_policy_name = string
-    patterns_to_match    = list(string)
+    name              = string
+    patterns_to_match = list(string)
   })
   default = {
-    link_waf             = true
-    name                 = "PrivateGPTSecurityPolicy"
-    firewall_policy_name = "PrivateGPTFirewallPolicy"
-    patterns_to_match    = ["/*"]
+    name              = "PrivateGPTSecurityPolicy"
+    patterns_to_match = ["/*"]
   }
   description = <<-DESCRIPTION
     type = object({
-      link_waf             = (Required) Link the created WAF to the security policy. `true` or `false`
       name                 = (Required) The name of the CDN security policy to create.
-      firewall_policy_name = (Required) The name of the CDN firewall policy to associate with this security policy.
       patterns_to_match    = (Required) The list of patterns to match for this policy. Defaults to `["/*"]`.
     })
   DESCRIPTION

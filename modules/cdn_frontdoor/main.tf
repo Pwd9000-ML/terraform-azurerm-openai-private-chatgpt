@@ -127,21 +127,20 @@ resource "azurerm_dns_txt_record" "gpt" {
   depends_on = [azurerm_cdn_frontdoor_route.gpt]
 }
 
-# Enable Firewall Policy
+# Create WAF Firewall Policy
 resource "azurerm_cdn_frontdoor_firewall_policy" "gpt" {
-  for_each = { for each in var.cdn_firewall_policies : each.name => each if each.enabled == true }
-
-  name                              = each.value.name
+  count                             = var.cdn_firewall_policy.create_waf == true ? 1 : 0
+  name                              = var.cdn_firewall_policy.name
   resource_group_name               = var.cdn_resource_group_name
   sku_name                          = var.cdn_sku_name
-  enabled                           = each.value.enabled
-  mode                              = each.value.mode
-  redirect_url                      = each.value.redirect_url
-  custom_block_response_status_code = each.value.custom_block_response_status_code
-  custom_block_response_body        = each.value.custom_block_response_body
+  enabled                           = var.cdn_firewall_policy.enabled
+  mode                              = var.cdn_firewall_policy.mode
+  redirect_url                      = var.cdn_firewall_policy.redirect_url
+  custom_block_response_status_code = var.cdn_firewall_policy.custom_block_response_status_code
+  custom_block_response_body        = var.cdn_firewall_policy.custom_block_response_body
 
   dynamic "custom_rule" {
-    for_each = each.value.custom_rules
+    for_each = var.cdn_firewall_policy.custom_rules
     content {
       name                           = custom_rule.value.name
       enabled                        = custom_rule.value.enabled
@@ -169,13 +168,13 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "gpt" {
 }
 
 resource "azurerm_cdn_frontdoor_security_policy" "gpt" {
-  count                    = var.cdn_security_policy.link_waf ? 1 : 0
+  count                    = var.cdn_firewall_policy.create_waf == true ? 1 : 0
   name                     = var.cdn_security_policy.name
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.gpt.id
 
   security_policies {
     firewall {
-      cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.gpt[var.cdn_security_policy.firewall_policy_name].id
+      cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.gpt[0].id
 
       association {
         domain {

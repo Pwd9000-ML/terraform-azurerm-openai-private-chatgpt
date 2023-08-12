@@ -99,8 +99,8 @@ module "azure_frontdoor_cdn" {
   cdn_route               = var.cdn_route
 
   #deploy firewall policy
-  cdn_firewall_policies = var.cdn_firewall_policies
-  cdn_security_policy   = var.cdn_security_policy
-  tags                  = var.tags
-  depends_on            = [module.privategpt_chatbot_container_apps]
+  cdn_firewall_policy = var.cdn_firewall_policy
+  cdn_security_policy = var.cdn_security_policy
+  tags                = var.tags
+  depends_on          = [module.privategpt_chatbot_container_apps]
 }
