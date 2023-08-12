@@ -4,6 +4,8 @@
 
 **NOTE:** Your Azure subscription will need to be whitelisted for **Azure Open AI**. At the release time of this module (August 2023) you will need to request access via this **[form](https://aka.ms/oai/access)** and a further form for **[GPT 4](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xURjE4QlhVUERGQ1NXOTlNT0w1NldTWjJCMSQlQCN0PWcu)**. Once you have access deploy either **GPT-35-Turbo**, **GPT-35-Turbo-16k** or if you have access to **GPT-4-32k**, go forward with that model.  
 
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/chatbotui1.png)  
+
 ## Introduction
 
 Under **OpenAI's** terms when using the public version of **ChatGPT**, any questions you pose—referred to as **"prompts"**—may contribute to the further training of OpenAI's Large Language Model (LLM). Given this, it's crucial to ask: Are you comfortable with this precious data flow leaving your organization? If you're a decision-maker or hold responsibility over your organization's security measures, what steps are you taking to ensure proprietary information remains confidential?  
@@ -21,7 +23,7 @@ This terraform module helps establishing a secure **ChatGPT-like** interface. Th
 
 ## Diagram
 
-![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/mainflow.png)
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/mainflow1.png)
 
 ## Description
 
@@ -59,8 +61,6 @@ This flexible terraform module is an **OpneAI accelerator** that can be used to 
 4. Setup and apply an AFD WAF policy with `IPAllow list` for allowed IPs to connect using a custom rule.
 
 ## ChatBot Demo
-
-![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/chatbotui1.png)
 
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/chatbotui2.png)
 
