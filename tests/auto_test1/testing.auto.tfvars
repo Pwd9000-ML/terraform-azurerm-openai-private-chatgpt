@@ -1,5 +1,5 @@
 ### Common Variables ###
-resource_group_name = "Terraform-PrivateGPT1"
+resource_group_name = "TF-Module-Automated-Tests-Cognitive-GPT"
 location            = "uksouth"
 tags = {
   Terraform   = "True"
@@ -9,10 +9,6 @@ tags = {
 }
 
 ### OpenAI Service Module Inputs ###
-kv_config = {
-  name = "openaikv9001"
-  sku  = "standard"
-}
 keyvault_firewall_default_action             = "Deny"
 keyvault_firewall_bypass                     = "AzureServices"
 keyvault_firewall_allowed_ips                = ["0.0.0.0/0"] #for testing purposes only - allow all IPs
@@ -20,8 +16,8 @@ keyvault_firewall_virtual_network_subnet_ids = []
 
 ### Create OpenAI Service ###
 create_openai_service                     = true
-openai_account_name                       = "pwd9001"
-openai_custom_subdomain_name              = "pwd9001" #translates to "https://pwd9001.openai.azure.com/"
+openai_account_name                       = "gptopenai"
+openai_custom_subdomain_name              = "gptopenai"
 openai_sku_name                           = "S0"
 openai_local_auth_enabled                 = true
 openai_outbound_network_access_restricted = false
@@ -52,15 +48,15 @@ model_deployment = [
 ]
 
 ### log analytics workspace for container apps ###
-laws_name              = "gptlaws9001"
+laws_name              = "gptlaws"
 laws_sku               = "PerGB2018"
 laws_retention_in_days = 30
 
 ### Container App Enviornment ###
-cae_name = "gptcae9001"
+cae_name = "gptcae"
 
 ### Container App ###
-ca_name          = "gptca9001"
+ca_name          = "gptca"
 ca_revision_mode = "Single"
 ca_identity = {
   type = "SystemAssigned"
@@ -109,36 +105,27 @@ ca_container_config = {
 }
 
 ### key vault access ###
-key_vault_access_permission = null
+key_vault_access_permission = ["Key Vault Secrets User"] # set to`null` to not grant any permissions
+#key_vault_id = "" (See data.tf for example of how to get key vault id) or specify key vault id here (only required if `var.key_vault_access_permission` is not null)
 
 ### CDN - Front Door ###
-create_front_door_cdn   = true
-create_dns_zone         = false #Set to false if you already have a DNS zone
-dns_resource_group_name = "pwd9000-eb-network"
-custom_domain_config = {
-  zone_name = "pwd9000.com"
-  host_name = "monkeyGPT"
-  ttl       = 600
-  tls = [{
-    certificate_type    = "ManagedCertificate"
-    minimum_tls_version = "TLS12"
-  }]
-}
+create_front_door_cdn = true
+create_dns_zone       = true #Set to false if you already have a DNS zone, remember to add this DNS zone to your domain registrar
 
 # CDN PROFILE
-cdn_profile_name = "fd9001"
+cdn_profile_name = "cdnfd"
 cdn_sku_name     = "Standard_AzureFrontDoor"
 
 # CDN ENDPOINTS
 cdn_endpoint = {
-  name    = "PrivateGPT1"
+  name    = "PrivateGPT"
   enabled = true
 }
 
 # CDN ORIGIN GROUPS
 cdn_origin_groups = [
   {
-    name                                                      = "PrivateGPT1OriginGroup"
+    name                                                      = "PrivateGPTOriginGroup"
     session_affinity_enabled                                  = false
     restore_traffic_time_to_healed_or_new_endpoint_in_minutes = 5
     health_probe = {
@@ -157,8 +144,8 @@ cdn_origin_groups = [
 
 # GPT CDN ORIGIN
 cdn_gpt_origin = {
-  name                           = "PrivateGPT1Origin"
-  origin_group_name              = "PrivateGPT1OriginGroup"
+  name                           = "PrivateGPTOrigin"
+  origin_group_name              = "PrivateGPTOriginGroup"
   enabled                        = true
   certificate_name_check_enabled = true
   http_port                      = 80
@@ -169,7 +156,7 @@ cdn_gpt_origin = {
 
 # CDN ROUTE RULES
 cdn_route = {
-  name                       = "PrivateGPT1Route"
+  name                       = "PrivateGPTRoute"
   enabled                    = true
   forwarding_protocol        = "HttpsOnly"
   https_redirect_enabled     = true
@@ -188,14 +175,14 @@ cdn_route = {
 
 # CDN FIREWALL POLICIES
 cdn_firewall_policies = [{
-  name                              = "PrivateGPTFirewallPolicy"
+  name                              = "PrivateGPTWAF"
   enabled                           = true
   mode                              = "Prevention"
   custom_block_response_body        = "WW91ciByZXF1ZXN0IGhhcyBiZWVuIGJsb2NrZWQu"
   custom_block_response_status_code = 403
   custom_rules = [
     {
-      name                           = "PrivateGPTAllowedIPs"
+      name                           = "AllowedIPs"
       action                         = "Block"
       enabled                        = true
       priority                       = 100
@@ -205,7 +192,7 @@ cdn_firewall_policies = [{
       match_conditions = [
         {
           negation_condition = true
-          match_values       = ["81.103.78.62"]
+          match_values       = ["86.106.76.66"] #Allowd IPs (Replace with your IP Allow list)
           match_variable     = "RemoteAddr"
           operator           = "IPMatch"
           transforms         = []
@@ -218,6 +205,6 @@ cdn_firewall_policies = [{
 # CDN SECURITY POLICY (WAF)
 cdn_security_policy = {
   name                 = "PrivateGPTSecurityPolicy"
-  firewall_policy_name = "PrivateGPTFirewallPolicy"
+  firewall_policy_name = "PrivateGPTWAF"
   patterns_to_match    = ["/*"]
 }
