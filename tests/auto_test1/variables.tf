@@ -318,7 +318,7 @@ variable "key_vault_access_permission" {
 variable "key_vault_id" {
   type        = string
   default     = ""
-  description = "(Required) - The id of the key vault to grant access to."
+  description = "(Optional) - The id of the key vault to grant access to. Only required if `key_vault_access_permission` is set."
 }
 
 # DNS zone #

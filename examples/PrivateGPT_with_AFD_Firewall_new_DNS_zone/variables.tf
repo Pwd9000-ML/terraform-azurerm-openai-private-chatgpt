@@ -1,6 +1,3 @@
-##################################################
-# VARIABLES                                      #
-##################################################
 ### common ###
 variable "location" {
   type        = string
@@ -14,23 +11,22 @@ variable "tags" {
   description = "A map of key value pairs that is used to tag resources created."
 }
 
-####################################
-### OpenAI service Module params ###
-####################################
-### key vault ###
-variable "keyvault_resource_group_name" {
+### solution resource group ###
+variable "resource_group_name" {
   type        = string
-  description = "Name of the resource group to create the Key Vault that will store OpenAI service account details."
+  description = "Name of the resource group to create where the cognitive account OpenAI service is hosted."
   nullable    = false
 }
 
+### OpenAI service Module params ###
+### key vault ###
 variable "kv_config" {
   type = object({
     name = string
     sku  = string
   })
   default = {
-    name = "kvname"
+    name = "gptkv"
     sku  = "standard"
   }
   description = "Key Vault configuration object to create azure key vault to store openai account details."
@@ -40,34 +36,28 @@ variable "kv_config" {
 variable "keyvault_firewall_default_action" {
   type        = string
   default     = "Deny"
-  description = "Default action for key vault firewall rules."
+  description = "Default action for keyvault firewall rules."
 }
 
 variable "keyvault_firewall_bypass" {
   type        = string
   default     = "AzureServices"
-  description = "List of key vault firewall rules to bypass."
+  description = "List of keyvault firewall rules to bypass."
 }
 
 variable "keyvault_firewall_allowed_ips" {
   type        = list(string)
   default     = []
-  description = "value of key vault firewall allowed ip rules."
+  description = "value of keyvault firewall allowed ip rules."
 }
 
 variable "keyvault_firewall_virtual_network_subnet_ids" {
   type        = list(string)
   default     = []
-  description = "value of key vault firewall allowed virtual network subnet ids."
+  description = "value of keyvault firewall allowed virtual network subnet ids."
 }
 
 ### openai service ###
-variable "openai_resource_group_name" {
-  type        = string
-  description = "Name of the resource group to create the OpenAI service / or where an existing service is hosted."
-  nullable    = false
-}
-
 variable "create_openai_service" {
   type        = bool
   description = "Create the OpenAI service."
@@ -167,15 +157,6 @@ variable "model_deployment" {
   nullable    = false
 }
 
-###################################
-### Container App Module params ###
-###################################
-variable "ca_resource_group_name" {
-  type        = string
-  description = "Name of the resource group to create the Container App and supporting solution resources in."
-  nullable    = false
-}
-
 ### log analytics workspace ###
 variable "laws_name" {
   type        = string
@@ -201,7 +182,6 @@ variable "cae_name" {
   description = "Name of the container app environment to create."
   default     = "gptcae"
 }
-
 
 ### container app ###
 variable "ca_name" {
@@ -327,6 +307,7 @@ variable "ca_secrets" {
   DESCRIPTION  
 }
 
+# Key Vault Access #
 ### key vault access ###
 variable "key_vault_access_permission" {
   type        = list(string)
@@ -336,14 +317,11 @@ variable "key_vault_access_permission" {
 
 variable "key_vault_id" {
   type        = string
-  description = "(Optional) - The id of the key vault to grant access to. Only required if `key_vault_access_permission` is set."
   default     = ""
+  description = "(Optional) - The id of the key vault to grant access to. Only required if `key_vault_access_permission` is set."
 }
 
-####################################
-### CDN Front Door Module params ###
-####################################
-# DNS zone ## DNS zone #
+# DNS zone #
 variable "create_dns_zone" {
   description = "Create a DNS zone for the CDN profile. If set to false, an existing DNS zone must be provided."
   type        = bool
@@ -389,18 +367,11 @@ variable "custom_domain_config" {
   DESCRIPTION
 }
 
-
 # Front Door #
 variable "create_front_door_cdn" {
   description = "Create a Front Door profile."
   type        = bool
   default     = false
-}
-
-variable "cdn_resource_group_name" {
-  type        = string
-  description = "Name of the resource group to create the CDN Front Door in."
-  nullable    = false
 }
 
 variable "cdn_profile_name" {
