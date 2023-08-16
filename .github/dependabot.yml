@@ -8,9 +8,7 @@ updates:
   - package-ecosystem: "terraform" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "23:00"
+      interval: "monthly"
       timezone: "Europe/London"
 
   - package-ecosystem: "github-actions" # See documentation for possible values
