@@ -103,7 +103,7 @@ jobs:
 
       - name: Create new release and push to registry 
         id: release
-        uses: ncipollo/release-action@v1.12.0
+        uses: ncipollo/release-action@v1.13.0
         with:
           generateReleaseNotes: true
           name: "v${{ steps.version.outputs.version }}"
