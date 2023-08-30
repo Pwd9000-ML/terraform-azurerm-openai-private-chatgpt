@@ -16,5 +16,5 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
-      time: "23:00"
+      time: "22:00"
       timezone: "Europe/London"
