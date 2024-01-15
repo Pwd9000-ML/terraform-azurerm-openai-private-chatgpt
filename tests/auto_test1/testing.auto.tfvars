@@ -79,7 +79,7 @@ cosmosdb_geo_locations = [
     failover_priority = 0
   }
 ]
-cosmosdb_capabilities                      = ["MongoDB"]
+cosmosdb_capabilities                      = ["MongoDBv3.4"]
 cosmosdb_is_virtual_network_filter_enabled = true
 cosmosdb_public_network_access_enabled     = true
 

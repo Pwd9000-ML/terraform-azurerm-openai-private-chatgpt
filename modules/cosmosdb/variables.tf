@@ -75,9 +75,7 @@ variable "geo_locations" {
 variable "capabilities" {
   description = "The capabilities for the Cosmos DB account"
   type        = list(string)
-  default = [
-    "MongoDB"
-  ]
+  default     = ["MongoDBv3.4"]
 }
 
 variable "virtual_network_subnets" {

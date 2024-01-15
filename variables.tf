@@ -302,7 +302,7 @@ variable "cosmosdb_geo_locations" {
 variable "cosmosdb_capabilities" {
   description = "The capabilities for the Cosmos DB account"
   type        = list(string)
-  default     = ["MongoDB"]
+  default     = ["MongoDBv3.4"]
 }
 
 variable "cosmosdb_virtual_network_subnets" {
