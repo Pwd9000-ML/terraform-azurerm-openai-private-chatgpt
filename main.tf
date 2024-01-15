@@ -68,7 +68,7 @@ module "openai_cosmosdb" {
   cosmosdb_max_staleness_prefix     = var.cosmosdb_max_staleness_prefix
   geo_locations                     = var.geo_locations
   capabilities                      = var.capabilities
-  virtual_network_subnets           = var.create_openai_networking == true ? [module.openai_networking[0].subnet_ids[var.cosmosdb_subnet_name].id] : [data.azurerm_subnet.subnet[var.cosmosdb_subnet_name].id]
+  virtual_network_subnets           = var.create_openai_networking == true ? module.openai_networking[0].subnet_ids : [data.azurerm_subnet.subnet[var.cosmosdb_subnet_name].id]
   is_virtual_network_filter_enabled = var.is_virtual_network_filter_enabled
   public_network_access_enabled     = var.public_network_access_enabled
   tags                              = var.tags
