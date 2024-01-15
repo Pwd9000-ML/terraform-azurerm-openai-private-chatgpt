@@ -51,7 +51,28 @@ module "openai_networking" {
   tags                        = var.tags
 }
 
-### Create a CosmosDB account running MongoDB to store chat data ###
+### Create a CosmosDB account running MongoDB to store chat data (Optional) ###
+# 6.) Create a CosmosDB account running MongoDB to store chat data (Optional).
+module "openai_cosmosdb" {
+  count                             = var.create_cosmosdb ? 1 : 0
+  source                            = "./modules/cosmosdb"
+  cosmosdb_name                     = join("", var.cosmosdb_name)
+  cosmosdb_resource_group_name      = var.cosmosdb_resource_group_name
+  location                          = var.location
+  cosmosdb_offer_type               = var.cosmosdb_offer_type
+  cosmosdb_kind                     = var.cosmosdb_kind
+  cosmosdb_automatic_failover       = var.cosmosdb_automatic_failover
+  use_cosmosdb_free_tier            = var.use_cosmosdb_free_tier
+  cosmosdb_consistency_level        = var.cosmosdb_consistency_level
+  cosmosdb_max_interval_in_seconds  = var.cosmosdb_max_interval_in_seconds
+  cosmosdb_max_staleness_prefix     = var.cosmosdb_max_staleness_prefix
+  geo_locations                     = var.geo_locations
+  capabilities                      = var.capabilities
+  virtual_network_subnets           = var.create_openai_networking == true ? module.openai_networking.subnet_ids[var.cosmosdb_subnet_name].id : data.azurerm_subnet.subnet[var.cosmosdb_subnet_name].id
+  is_virtual_network_filter_enabled = var.is_virtual_network_filter_enabled
+  public_network_access_enabled     = var.public_network_access_enabled
+  tags                              = var.tags
+}
 
 ### Vreate the Web App ###
 
