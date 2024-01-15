@@ -98,27 +98,27 @@ module "openai_networking" {
 # 11.) Optionally create an Azure DNS Zone or use an existing one for the custom domain. (e.g PrivateGPT.mydomain.com)
 # 12.) Create a CNAME and TXT record in the custom DNS zone.
 # 13.) Setup and apply AFD WAF policy for the front door with allowed IPs custom rule. (Optional)
-module "azure_frontdoor_cdn" {
-  count  = var.create_front_door_cdn ? 1 : 0
-  source = "./modules/cdn_frontdoor"
+#module "azure_frontdoor_cdn" {
+#  count  = var.create_front_door_cdn ? 1 : 0
+#  source = "./modules/cdn_frontdoor"
 
   #create_dns_zone
-  create_dns_zone         = var.create_dns_zone
-  dns_resource_group_name = var.dns_resource_group_name
-  custom_domain_config    = var.custom_domain_config
+#  create_dns_zone         = var.create_dns_zone
+#  dns_resource_group_name = var.dns_resource_group_name
+#  custom_domain_config    = var.custom_domain_config
 
   #deploy front door
-  cdn_resource_group_name = var.cdn_resource_group_name
-  cdn_profile_name        = var.cdn_profile_name
-  cdn_sku_name            = var.cdn_sku_name
-  cdn_endpoint            = var.cdn_endpoint
-  cdn_origin_groups       = var.cdn_origin_groups
-  cdn_gpt_origin          = local.cdn_gpt_origin
-  cdn_route               = var.cdn_route
+#  cdn_resource_group_name = var.cdn_resource_group_name
+#  cdn_profile_name        = var.cdn_profile_name
+#  cdn_sku_name            = var.cdn_sku_name
+##  cdn_endpoint            = var.cdn_endpoint
+ # cdn_origin_groups       = var.cdn_origin_groups
+ # cdn_gpt_origin          = local.cdn_gpt_origin
+ # cdn_route               = var.cdn_route
 
   #deploy firewall policy
-  cdn_firewall_policy = var.cdn_firewall_policy
-  cdn_security_policy = var.cdn_security_policy
-  tags                = var.tags
-  depends_on          = [module.privategpt_chatbot_container_apps]
-}
+#  cdn_firewall_policy = var.cdn_firewall_policy
+#  cdn_security_policy = var.cdn_security_policy
+#  tags                = var.tags
+#  depends_on          = [module.privategpt_chatbot_container_apps]
+#}
