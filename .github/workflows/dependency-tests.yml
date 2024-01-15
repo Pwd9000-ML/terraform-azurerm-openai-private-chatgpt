@@ -1,0 +1,116 @@
+### This workflow will run only when Dependabot opens a PR on master ###
+### Full integration test is done by doing a plan, build and destroy of config under ./tests/auto_test1 ###
+### If tests are successful the PR is automatically merged to master ###
+### If the merge was completed the next patch version is released and the patch is bumped and pushed to terraform registry ###
+
+name: "Automated-Dependency-Tests-and-Release"
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+# Dependabot will open a PR on terraform version changes, this 'dependabot' job is only used to test TF version changes by running a plan, apply and destroy in sequence.
+  dependabot_plan_apply_destroy:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+      actions: read
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: Run Dependency Tests - Plan AND Apply AND Destroy
+        uses: Pwd9000-ML/terraform-azurerm-tests@v1.0.6
+        with:
+          test_type: plan-apply-destroy      ## (Required) Valid options are "plan", "plan-apply", "plan-apply-destroy". Default="plan"
+          path: "tests/auto_test1"           ## (Optional) Specify path to test module to run.
+          tf_version: latest                 ## (Optional) Specifies version of Terraform to use. e.g: 1.1.0 Default="latest"
+          tf_vars_file: testing.auto.tfvars  ## (Required) Specifies Terraform TFVARS file name inside module path (Testing vars)
+          tf_key: tf-mod-tests-openai-gptui  ## (Required) AZ backend - Specifies name that will be given to terraform state file and plan artifact (testing state)
+          az_resource_group: Terraform-GitHub-Backend      ## (Required) AZ backend - AZURE Resource Group hosting terraform backend storage account
+          az_storage_acc: tfgithubbackendsa  ## (Required) AZ backend - AZURE terraform backend storage account
+          az_container_name: gh-openai-gpt   ## (Required) AZ backend - AZURE storage container hosting state files 
+          arm_client_id: ${{ secrets.ARM_CLIENT_ID }}             ## (Required - Dependabot Secrets) ARM Client ID 
+          arm_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}     ## (Required - Dependabot Secrets) ARM Client Secret
+          arm_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }} ## (Required - Dependabot Secrets) ARM Subscription ID
+          arm_tenant_id: ${{ secrets.ARM_TENANT_ID }}             ## (Required - Dependabot Secrets) ARM Tenant ID
+          github_token: ${{ secrets.GITHUB_TOKEN }} ## (Required) Needed to comment output on PR's. ${{ secrets.GITHUB_TOKEN }} already has permissions.
+
+##### If dependency tests are successful update all readme documentation using terraform-docs #####
+  update_docs:
+    needs: dependabot_plan_apply_destroy
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      repository-projects: write
+      contents: write
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Render terraform docs inside the README.md and push changes back to PR branch
+        uses: terraform-docs/gh-actions@v1.0.0
+        with:
+            find-dir: .
+            output-file: README.md
+            output-method: inject
+            git-push: "true"
+
+##### If dependency tests are successful merge the pull request #####
+  merge_pr:
+    needs: update_docs
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      repository-projects: write
+      contents: write
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.6.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Auto-merge PR after tests
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+##### Create and automate new release based on next patch version of releases #####
+  release_new_version:
+    needs: merge_pr
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Determine version 
+        id: version
+        uses: zwaldowski/semver-release-action@v3
+        with:
+          bump: patch
+          dry_run: true
+          github_token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Create new release and push to registry 
+        id: release
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          generateReleaseNotes: true
+          name: "v${{ steps.version.outputs.version }}"
+          tag: ${{ steps.version.outputs.version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
