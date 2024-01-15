@@ -72,7 +72,7 @@ module "openai_cosmosdb" {
   is_virtual_network_filter_enabled = var.cosmosdb_is_virtual_network_filter_enabled
   public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
   tags                              = var.tags
-  depends_on                        = [module.openai_networking]
+  #depends_on                        = [module.openai_networking]
 }
 
 ### Vreate the Web App ###
