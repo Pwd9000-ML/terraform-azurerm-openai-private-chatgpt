@@ -56,7 +56,7 @@ module "openai_networking" {
 module "openai_cosmosdb" {
   count                             = var.create_cosmosdb ? 1 : 0
   source                            = "./modules/cosmosdb"
-  cosmosdb_name                     = join("", var.cosmosdb_name)
+  cosmosdb_name                     = var.cosmosdb_name
   cosmosdb_resource_group_name      = var.cosmosdb_resource_group_name
   location                          = var.location
   cosmosdb_offer_type               = var.cosmosdb_offer_type
@@ -66,12 +66,13 @@ module "openai_cosmosdb" {
   cosmosdb_consistency_level        = var.cosmosdb_consistency_level
   cosmosdb_max_interval_in_seconds  = var.cosmosdb_max_interval_in_seconds
   cosmosdb_max_staleness_prefix     = var.cosmosdb_max_staleness_prefix
-  geo_locations                     = var.geo_locations
-  capabilities                      = var.capabilities
-  virtual_network_subnets           = var.create_openai_networking == true ? module.openai_networking[0].subnet_ids : data.azurerm_subnet.subnet.*.id
-  is_virtual_network_filter_enabled = var.is_virtual_network_filter_enabled
-  public_network_access_enabled     = var.public_network_access_enabled
+  geo_locations                     = var.cosmosdb_geo_locations
+  capabilities                      = var.cosmosdb_capabilities
+  virtual_network_subnets           = var.create_openai_networking == true ? [module.openai_networking.subnet_ids[0]] : var.cosmosdb_virtual_network_subnets
+  is_virtual_network_filter_enabled = var.cosmosdb_is_virtual_network_filter_enabled
+  public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
   tags                              = var.tags
+  depends_on                        = [module.openai_networking]
 }
 
 ### Vreate the Web App ###

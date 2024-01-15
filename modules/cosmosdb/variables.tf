@@ -81,7 +81,7 @@ variable "capabilities" {
 }
 
 variable "virtual_network_subnets" {
-  description = "The virtual network subnet ID for the Cosmos DB account"
+  description = "The virtual network subnet ID for the Cosmos DB account (Service Endpoint)"
   type        = list(string)
   default     = []
 }

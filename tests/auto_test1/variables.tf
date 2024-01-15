@@ -223,8 +223,8 @@ variable "create_cosmosdb" {
 
 variable "cosmosdb_name" {
   description = "The name of the Cosmos DB account"
-  type        = list(string)
-  default     = ["openaicosmosdb"]
+  type        = string
+  default     = "openaicosmosdb"
 }
 
 variable "cosmosdb_resource_group_name" {
@@ -275,7 +275,7 @@ variable "cosmosdb_max_staleness_prefix" {
   default     = 200
 }
 
-variable "geo_locations" {
+variable "cosmosdb_geo_locations" {
   description = "The geo-locations for the Cosmos DB account"
   type = list(object({
     location          = string
@@ -289,29 +289,28 @@ variable "geo_locations" {
   ]
 }
 
-variable "capabilities" {
+variable "cosmosdb_capabilities" {
   description = "The capabilities for the Cosmos DB account"
   type        = list(string)
-  default = [
-    "MongoDB"
-  ]
+  default     = ["MongoDB"]
 }
 
-variable "is_virtual_network_filter_enabled" {
+variable "cosmosdb_virtual_network_subnets" {
+  description = "The virtual network subnets to associate with the Cosmos DB account"
+  type        = list(string)
+  default     = null
+}
+
+variable "cosmosdb_is_virtual_network_filter_enabled" {
   description = "Whether to enable virtual network filtering for the Cosmos DB account"
   type        = bool
   default     = true
 }
 
-variable "public_network_access_enabled" {
+variable "cosmosdb_public_network_access_enabled" {
   description = "Whether to enable public network access for the Cosmos DB account"
   type        = bool
   default     = true
-}
-variable "cosmosdb_subnet_name" {
-  description = "The name of the subnet to create the Cosmos DB account in"
-  type        = string
-  default     = "app-cosmos-sub"
 }
 
 ### log analytics workspace ###

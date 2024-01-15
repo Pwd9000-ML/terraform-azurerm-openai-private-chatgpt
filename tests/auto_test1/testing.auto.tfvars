@@ -64,7 +64,7 @@ subnet_config = [
 
 ### cosmosdb ###
 create_cosmosdb                  = true
-cosmosdb_name                    = ["gptcosmos251"]
+cosmosdb_name                    = "gptcosmos"
 cosmosdb_resource_group_name     = "TF-Module-Automated-Tests-Cognitive-GPT"
 cosmosdb_offer_type              = "Standard"
 cosmosdb_kind                    = "MongoDB"
@@ -73,16 +73,15 @@ use_cosmosdb_free_tier           = true
 cosmosdb_consistency_level       = "BoundedStaleness"
 cosmosdb_max_interval_in_seconds = 10
 cosmosdb_max_staleness_prefix    = 200
-geo_locations = [
+cosmosdb_geo_locations = [
   {
     location          = "uksouth"
     failover_priority = 0
   }
 ]
-capabilities                      = ["MongoDB"]
-is_virtual_network_filter_enabled = true
-public_network_access_enabled     = true
-cosmosdb_subnet_name              = "app-cosmos-sub"
+cosmosdb_capabilities                      = ["MongoDB"]
+cosmosdb_is_virtual_network_filter_enabled = true
+cosmosdb_public_network_access_enabled     = true
 
 ### log analytics workspace for container apps ###
 #laws_name              = "gptlaws"
