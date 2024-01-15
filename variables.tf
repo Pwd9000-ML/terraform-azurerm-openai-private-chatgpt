@@ -306,7 +306,7 @@ variable "cosmosdb_capabilities" {
 }
 
 variable "cosmosdb_virtual_network_subnets" {
-  description = "The virtual network subnets to associate with the Cosmos DB account"
+  description = "The virtual network subnets to associate with the Cosmos DB account (Service Endpoint). If networking is created as part of the module, this will be automatically populated."
   type        = list(string)
   default     = null
 }
