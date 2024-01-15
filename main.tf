@@ -102,21 +102,21 @@ module "openai_networking" {
 #  count  = var.create_front_door_cdn ? 1 : 0
 #  source = "./modules/cdn_frontdoor"
 
-  #create_dns_zone
+#create_dns_zone
 #  create_dns_zone         = var.create_dns_zone
 #  dns_resource_group_name = var.dns_resource_group_name
 #  custom_domain_config    = var.custom_domain_config
 
-  #deploy front door
+#deploy front door
 #  cdn_resource_group_name = var.cdn_resource_group_name
 #  cdn_profile_name        = var.cdn_profile_name
 #  cdn_sku_name            = var.cdn_sku_name
 ##  cdn_endpoint            = var.cdn_endpoint
- # cdn_origin_groups       = var.cdn_origin_groups
- # cdn_gpt_origin          = local.cdn_gpt_origin
- # cdn_route               = var.cdn_route
+# cdn_origin_groups       = var.cdn_origin_groups
+# cdn_gpt_origin          = local.cdn_gpt_origin
+# cdn_route               = var.cdn_route
 
-  #deploy firewall policy
+#deploy firewall policy
 #  cdn_firewall_policy = var.cdn_firewall_policy
 #  cdn_security_policy = var.cdn_security_policy
 #  tags                = var.tags
