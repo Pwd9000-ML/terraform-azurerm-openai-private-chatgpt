@@ -38,41 +38,59 @@ module "openai" {
   model_deployment        = var.model_deployment
 }
 
+### Create openai networking for CosmosDB and Web App (Optional) ###
+# 5.) Create networking for CosmosDB and Web App (Optional)
+module "openai_networking" {
+  count                       = var.create_openai_networking ? 1 : 0
+  source                      = "./modules/networking"
+  network_resource_group_name = var.network_resource_group_name
+  location                    = var.location
+  virtual_network_name        = var.virtual_network_name
+  vnet_address_space          = var.vnet_address_space
+  subnet_config               = var.subnet_config
+  tags                        = var.tags
+}
+
+### Create a CosmosDB account running MongoDB to store chat data ###
+
+### Vreate the Web App ###
+
 ### Create a container app ChatBot UI linked with OpenAI service hosted in Azure ###
 # 5.) Create a container app log analytics workspace.
 # 6.) Create a container app environment.
 # 7.) Create a container app instance.
 # 8.) grant the container app access a the key vault (optional).
-module "privategpt_chatbot_container_apps" {
-  source = "./modules/container_app"
 
-  #common
-  ca_resource_group_name = var.ca_resource_group_name
-  location               = var.location
-  tags                   = var.tags
-
-  #log analytics workspace
-  laws_name              = var.laws_name
-  laws_sku               = var.laws_sku
-  laws_retention_in_days = var.laws_retention_in_days
-
-  #container app environment
-  cae_name = var.cae_name
-
-  #container app
-  ca_name             = var.ca_name
-  ca_revision_mode    = var.ca_revision_mode
-  ca_identity         = var.ca_identity
-  ca_ingress          = var.ca_ingress
-  ca_container_config = var.ca_container_config
-  ca_secrets          = var.ca_secrets
-
-  #key vault access
-  key_vault_access_permission = var.key_vault_access_permission #Set to `null` if no Key Vault access is needed on CA identity.
-  key_vault_id                = var.key_vault_id                #Provide the key vault id if key_vault_access_permission is not null.
-
-  depends_on = [module.openai]
-}
+##module "privategpt_chatbot_container_apps" {
+##  source = "./modules/container_app"
+##
+##  #common
+##  ca_resource_group_name = var.ca_resource_group_name
+##  location               = var.location
+##  tags                   = var.tags
+##
+##  #log analytics workspace
+##  laws_name              = var.laws_name
+##  laws_sku               = var.laws_sku
+##  laws_retention_in_days = var.laws_retention_in_days
+##
+##  #container app environment
+##  cae_name = var.cae_name
+##
+##  #container app
+##  ca_name             = var.ca_name
+##  ca_revision_mode    = var.ca_revision_mode
+##  ca_identity         = var.ca_identity
+##  ca_ingress          = var.ca_ingress
+##  ca_container_config = var.ca_container_config
+##  ca_secrets          = var.ca_secrets
+##
+##  #key vault access
+##  key_vault_access_permission = var.key_vault_access_permission #Set to `null` if no Key Vault access is needed on CA identity.
+##  key_vault_id                = var.key_vault_id                #Provide the key vault id if key_vault_access_permission is not null.
+##
+##  depends_on = [module.openai]
+##}
 
 ### Front solution with an Azure front door (optional) ###
 # 9.) Deploy Azure Front Door.

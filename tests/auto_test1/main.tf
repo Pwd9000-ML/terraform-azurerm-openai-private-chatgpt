@@ -60,27 +60,34 @@ module "private-chatgpt-openai" {
   create_model_deployment = var.create_model_deployment
   model_deployment        = var.model_deployment
 
+  #Create networking for CosmosDB and Web App (Optional)
+  create_openai_networking    = var.create_openai_networking
+  network_resource_group_name = azurerm_resource_group.rg.name
+  virtual_network_name        = var.virtual_network_name
+  vnet_address_space          = var.vnet_address_space
+  subnet_config               = var.subnet_config
+
   #Create a solution log analytics workspace to store logs from our container apps instance
-  laws_name              = "${var.laws_name}${random_integer.number.result}"
-  laws_sku               = var.laws_sku
-  laws_retention_in_days = var.laws_retention_in_days
+  #laws_name              = "${var.laws_name}${random_integer.number.result}"
+  #laws_sku               = var.laws_sku
+  #laws_retention_in_days = var.laws_retention_in_days
 
   #Create Container App Enviornment
-  cae_name = "${var.cae_name}${random_integer.number.result}"
+  #cae_name = "${var.cae_name}${random_integer.number.result}"
 
   #Create a container app instance
-  ca_resource_group_name = azurerm_resource_group.rg.name
-  ca_name                = "${var.ca_name}${random_integer.number.result}"
-  ca_revision_mode       = var.ca_revision_mode
-  ca_identity            = var.ca_identity
-  ca_container_config    = var.ca_container_config
+  #ca_resource_group_name = azurerm_resource_group.rg.name
+  #ca_name                = "${var.ca_name}${random_integer.number.result}"
+  #ca_revision_mode       = var.ca_revision_mode
+  #ca_identity            = var.ca_identity
+  #ca_container_config    = var.ca_container_config
 
   #Create a container app secrets
-  ca_secrets = local.ca_secrets
+  #ca_secrets = local.ca_secrets
 
   #key vault access
-  key_vault_access_permission = var.key_vault_access_permission
-  key_vault_id                = data.azurerm_key_vault.gpt.id
+  #key_vault_access_permission = var.key_vault_access_permission
+  #key_vault_id                = data.azurerm_key_vault.gpt.id
 
   #Create front door CDN
   create_front_door_cdn   = var.create_front_door_cdn

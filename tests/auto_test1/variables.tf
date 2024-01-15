@@ -157,169 +157,226 @@ variable "model_deployment" {
   nullable    = false
 }
 
-### log analytics workspace ###
-variable "laws_name" {
+### networking ###
+variable "create_openai_networking" {
+  description = "Create a virtual network and subnet/s for networked services"
+  type        = bool
+  default     = false
+}
+
+variable "network_resource_group_name" {
   type        = string
-  description = "Name of the log analytics workspace to create."
-  default     = "gptlaws"
+  description = "Name of the resource group to where networking resources will be hosted."
+  nullable    = false
 }
 
-variable "laws_sku" {
+variable "virtual_network_name" {
   type        = string
-  description = "SKU of the log analytics workspace to create."
-  default     = "PerGB2018"
-}
-
-variable "laws_retention_in_days" {
-  type        = number
-  description = "Retention in days of the log analytics workspace to create."
-  default     = 30
-}
-
-### container app environment ###
-variable "cae_name" {
-  type        = string
-  description = "Name of the container app environment to create."
-  default     = "gptcae"
-}
-
-### container app ###
-variable "ca_name" {
-  type        = string
-  description = "Name of the container app to create."
-  default     = "gptca"
-}
-
-variable "ca_revision_mode" {
-  type        = string
-  description = "Revision mode of the container app to create."
-  default     = "Single"
-}
-
-variable "ca_identity" {
-  type = object({
-    type         = string
-    identity_ids = optional(list(string))
-  })
   default     = null
-  description = <<-DESCRIPTION
-    type = object({
-      type         = (Required) The type of the Identity. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned`.
-      identity_ids = (Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this OpenAI Account.
-    })
-  DESCRIPTION
+  description = "Name of the virtual network where resources are attached."
 }
 
-variable "ca_ingress" {
-  type = object({
-    allow_insecure_connections = optional(bool)
-    external_enabled           = optional(bool)
-    target_port                = number
-    transport                  = optional(string)
-    traffic_weight = optional(object({
-      percentage      = number
-      latest_revision = optional(bool)
-    }))
-  })
-  default = {
-    allow_insecure_connections = false
-    external_enabled           = true
-    target_port                = 3000
-    transport                  = "auto"
-    traffic_weight = {
-      percentage      = 100
-      latest_revision = true
-    }
-  }
-  description = <<-DESCRIPTION
-    type = object({
-      allow_insecure_connections = (Optional) Allow insecure connections to the container app. Defaults to `false`.
-      external_enabled           = (Optional) Enable external access to the container app. Defaults to `true`.
-      target_port                = (Required) The port to use for the container app. Defaults to `3000`.
-      transport                  = (Optional) The transport protocol to use for the container app. Defaults to `auto`.
-      type = object({
-        percentage      = (Required) The percentage of traffic to route to the container app. Defaults to `100`.
-        latest_revision = (Optional) The percentage of traffic to route to the container app. Defaults to `true`.
-      })
-  DESCRIPTION
+variable "vnet_address_space" {
+  type        = list(string)
+  default     = null
+  description = "value of the address space for the virtual network."
 }
 
-variable "ca_container_config" {
-  type = object({
-    name         = string
-    image        = string
-    cpu          = number
-    memory       = string
-    min_replicas = optional(number, 0)
-    max_replicas = optional(number, 10)
-    env = optional(list(object({
-      name        = string
-      secret_name = optional(string)
-      value       = optional(string)
-    })))
-  })
-  default = {
-    name         = "gpt-chatbot-ui"
-    image        = "ghcr.io/pwd9000-ml/chatbot-ui:main"
-    cpu          = 1
-    memory       = "2Gi"
-    min_replicas = 0
-    max_replicas = 10
-    env          = []
-  }
-  description = <<-DESCRIPTION
-    type = object({
-      name                    = (Required) The name of the container.
-      image                   = (Required) The name of the container image.
-      cpu                     = (Required) The number of CPU cores to allocate to the container.
-      memory                  = (Required) The amount of memory to allocate to the container in GB.
-      min_replicas            = (Optional) The minimum number of replicas to run. Defaults to `0`.
-      max_replicas            = (Optional) The maximum number of replicas to run. Defaults to `10`.
-      env = list(object({
-        name        = (Required) The name of the environment variable.
-        secret_name = (Optional) The name of the secret to use for the environment variable.
-        value       = (Optional) The value of the environment variable.
-      }))
-    })
-  DESCRIPTION
-}
-
-variable "ca_secrets" {
+variable "subnet_config" {
   type = list(object({
-    name  = string
-    value = string
+    subnet_name                                   = string
+    subnet_address_space                          = list(string)
+    service_endpoints                             = list(string)
+    private_endpoint_network_policies_enabled     = bool
+    private_link_service_network_policies_enabled = bool
+    subnets_delegation_settings = map(list(object({
+      name    = string
+      actions = list(string)
+    })))
   }))
   default = [
     {
-      name  = "secret1"
-      value = "value1"
-    },
-    {
-      name  = "secret2"
-      value = "value2"
+      subnet_name                                   = "app-cosmos-sub"
+      subnet_address_space                          = ["10.4.0.0/24"]
+      service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
+      private_endpoint_network_policies_enabled     = false
+      private_link_service_network_policies_enabled = false
+      subnets_delegation_settings = {
+        app-service-plan = [
+          {
+            name    = "Microsoft.Web/serverFarms"
+            actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+          }
+        ]
+      }
     }
   ]
-  description = <<-DESCRIPTION
-    type = list(object({
-      name  = (Required) The name of the secret.
-      value = (Required) The value of the secret.
-    }))
-  DESCRIPTION  
+  description = "A list of subnet configuration objects to create subnets in the virtual network."
 }
+
+### log analytics workspace ###
+#variable "laws_name" {
+#  type        = string
+#  description = "Name of the log analytics workspace to create."
+#  default     = "gptlaws"
+#}
+
+#variable "laws_sku" {
+#  type        = string
+#  description = "SKU of the log analytics workspace to create."
+#  default     = "PerGB2018"
+#}
+
+#variable "laws_retention_in_days" {
+#  type        = number
+#  description = "Retention in days of the log analytics workspace to create."
+#  default     = 30
+#}
+
+### container app environment ###
+#variable "cae_name" {
+#  type        = string
+#  description = "Name of the container app environment to create."
+#  default     = "gptcae"
+#}
+
+### container app ###
+#variable "ca_name" {
+#  type        = string
+#  description = "Name of the container app to create."
+#  default     = "gptca"
+#}
+
+#variable "ca_revision_mode" {
+#  type        = string
+#  description = "Revision mode of the container app to create."
+#  default     = "Single"
+#}
+
+#variable "ca_identity" {
+#  type = object({
+#    type         = string
+#    identity_ids = optional(list(string))
+#  })
+#  default     = null
+#  description = <<-DESCRIPTION
+#    type = object({
+#      type         = (Required) The type of the Identity. Possible values are `SystemAssigned`, `UserAssigned`, `SystemAssigned, UserAssigned`.
+#      identity_ids = (Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this OpenAI Account.
+#    })
+#  DESCRIPTION
+#}
+
+#variable "ca_ingress" {
+#  type = object({
+#    allow_insecure_connections = optional(bool)
+#    external_enabled           = optional(bool)
+#    target_port                = number
+#    transport                  = optional(string)
+#    traffic_weight = optional(object({
+#      percentage      = number
+#      latest_revision = optional(bool)
+#    }))
+#  })
+#  default = {
+#    allow_insecure_connections = false
+#    external_enabled           = true
+#    target_port                = 3000
+#    transport                  = "auto"
+#    traffic_weight = {
+#      percentage      = 100
+#      latest_revision = true
+#    }
+#  }
+#  description = <<-DESCRIPTION
+#    type = object({
+#      allow_insecure_connections = (Optional) Allow insecure connections to the container app. Defaults to `false`.
+#      external_enabled           = (Optional) Enable external access to the container app. Defaults to `true`.
+#      target_port                = (Required) The port to use for the container app. Defaults to `3000`.
+#      transport                  = (Optional) The transport protocol to use for the container app. Defaults to `auto`.
+#      type = object({
+#        percentage      = (Required) The percentage of traffic to route to the container app. Defaults to `100`.
+#        latest_revision = (Optional) The percentage of traffic to route to the container app. Defaults to `true`.
+#      })
+#  DESCRIPTION
+#}
+
+#variable "ca_container_config" {
+#  type = object({
+#    name         = string
+#    image        = string
+#    cpu          = number
+#    memory       = string
+#    min_replicas = optional(number, 0)
+#    max_replicas = optional(number, 10)
+#    env = optional(list(object({
+#      name        = string
+#      secret_name = optional(string)
+#      value       = optional(string)
+#    })))
+#  })
+#  default = {
+#    name         = "gpt-chatbot-ui"
+#    image        = "ghcr.io/pwd9000-ml/chatbot-ui:main"
+#    cpu          = 1
+#    memory       = "2Gi"
+#    min_replicas = 0
+#    max_replicas = 10
+#    env          = []
+#  }
+#  description = <<-DESCRIPTION
+#    type = object({
+#      name                    = (Required) The name of the container.
+#      image                   = (Required) The name of the container image.
+#      cpu                     = (Required) The number of CPU cores to allocate to the container.
+#      memory                  = (Required) The amount of memory to allocate to the container in GB.
+#      min_replicas            = (Optional) The minimum number of replicas to run. Defaults to `0`.
+#      max_replicas            = (Optional) The maximum number of replicas to run. Defaults to `10`.
+#      env = list(object({
+#        name        = (Required) The name of the environment variable.
+#        secret_name = (Optional) The name of the secret to use for the environment variable.
+#        value       = (Optional) The value of the environment variable.
+#      }))
+#    })
+#  DESCRIPTION
+#}
+
+#variable "ca_secrets" {
+#  type = list(object({
+#    name  = string
+#    value = string
+#  }))
+#  default = [
+#    {
+#      name  = "secret1"
+#      value = "value1"
+#    },
+#    {
+#      name  = "secret2"
+#      value = "value2"
+#    }
+#  ]
+#  description = <<-DESCRIPTION
+#    type = list(object({
+#      name  = (Required) The name of the secret.
+#      value = (Required) The value of the secret.
+#    }))
+#  DESCRIPTION  
+#}
 
 # Key Vault Access #
 ### key vault access ###
-variable "key_vault_access_permission" {
-  type        = list(string)
-  default     = ["Key Vault Secrets User"]
-  description = "The permission to grant the container app to the key vault. Set this variable to `null` if no Key Vault access is needed. Defaults to `Key Vault Secrets User`."
-}
+#variable "key_vault_access_permission" {
+#  type        = list(string)
+#  default     = ["Key Vault Secrets User"]
+#  description = "The permission to grant the container app to the key vault. Set this variable to `null` if no Key Vault access is needed. Defaults to `Key Vault Secrets User`."
+#}
 
-variable "key_vault_id" {
-  type        = string
-  default     = ""
-  description = "(Optional) - The id of the key vault to grant access to. Only required if `key_vault_access_permission` is set."
-}
+#variable "key_vault_id" {
+#  type        = string
+#  default     = ""
+#  description = "(Optional) - The id of the key vault to grant access to. Only required if `key_vault_access_permission` is set."
+#}
 
 # DNS zone #
 variable "create_dns_zone" {
