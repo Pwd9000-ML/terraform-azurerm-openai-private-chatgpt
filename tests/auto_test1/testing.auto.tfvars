@@ -15,7 +15,7 @@ keyvault_firewall_allowed_ips                = ["0.0.0.0/0"] #for testing purpos
 keyvault_firewall_virtual_network_subnet_ids = []
 
 ### Create OpenAI Service ###
-create_openai_service                     = true
+create_openai_service                     = false
 openai_account_name                       = "gptopenai"
 openai_custom_subdomain_name              = "gptopenai"
 openai_sku_name                           = "S0"
