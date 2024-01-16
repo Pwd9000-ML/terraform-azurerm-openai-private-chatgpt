@@ -77,7 +77,7 @@ module "openai_cosmosdb" {
 ### Create the Web App ###
 # 7.) Create a Linux Web App running chatbot container.
 module "openai_app" {
-  source                            = "./modules/app"
+  source                            = "./modules/gpt_app"
   app_resource_group_name           = var.cosmosdb_resource_group_name
 }
 
