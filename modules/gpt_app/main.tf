@@ -31,7 +31,6 @@ resource "azurerm_linux_web_app" "openai" {
   }
 
   app_settings = {
-
     #==================================================#
     #               Server Configuration               #
     #==================================================#
@@ -39,7 +38,7 @@ resource "azurerm_linux_web_app" "openai" {
     # CUSTOM_FOOTER="My custom footer"
     HOST          = "0.0.0.0"
     PORT          = 80
-    MONGO_URI     = var.mongodb_connection_string #azurerm_cosmosdb_account.librechat.connection_strings[0]
+    MONGO_URI     = ""
     DOMAIN_CLIENT = "http://localhost:3080"
     DOMAIN_SERVER = "http://localhost:3080"
 
@@ -71,14 +70,15 @@ resource "azurerm_linux_web_app" "openai" {
     #============#
     # Azure      #
     #============#
-    AZURE_API_KEY       = "value"
-    AZURE_OPENAI_MODELS = "gpt-4"
+    AZURE_API_KEY       = ""
+    AZURE_OPENAI_MODELS = "gpt-4-1106-preview,gpt-4,gpt-3.5-turbo,gpt-3.5-turbo-1106,gpt-4-vision-preview"
     # AZURE_OPENAI_DEFAULT_MODEL = "gpt-3.5-turbo"
     # PLUGINS_USE_AZURE = true
-    AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = false
-    AZURE_OPENAI_API_INSTANCE_NAME     = "gpt9000" #split("//", split(".", module.openai.openai_endpoint)[0])[1]
-    AZURE_OPENAI_API_DEPLOYMENT_NAME   = "gpt4p1106"
-    AZURE_OPENAI_API_VERSION           = "1106-Preview"
+
+    AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = true
+    AZURE_OPENAI_API_INSTANCE_NAME     = "gpt9000"
+    # AZURE_OPENAI_API_DEPLOYMENT_NAME =
+    AZURE_OPENAI_API_VERSION = "2023-07-01-preview"
     # AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME =
     # AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  =
 
@@ -107,7 +107,7 @@ resource "azurerm_linux_web_app" "openai" {
     #============#
     # OPENAI_API_KEY = var.openai_key
     # OPENAI_MODELS = "gpt-3.5-turbo-1106,gpt-4-1106-preview,gpt-3.5-turbo,gpt-3.5-turbo-16k,gpt-3.5-turbo-0301,text-davinci-003,gpt-4,gpt-4-0314,gpt-4-0613"
-    # DEBUG_OPENAI = false
+    #DEBUG_OPENAI = false
     # TITLE_CONVO        = false
     # OPENAI_TITLE_MODEL = "gpt-3.5-turbo"
     # OPENAI_SUMMARIZE     = true
@@ -125,8 +125,8 @@ resource "azurerm_linux_web_app" "openai" {
     #============#
     # PLUGIN_MODELS = "gpt-3.5-turbo,gpt-3.5-turbo-16k,gpt-3.5-turbo-0301,gpt-4,gpt-4-0314,gpt-4-0613"
     DEBUG_PLUGINS = true
-    CREDS_KEY     = "dflkghehiuggh"
-    CREDS_IV      = "dflkghehiuggh"
+    CREDS_KEY     = "dfsdgdsffgdsfgds"
+    CREDS_IV      = "dfsdgdsffgdsfgds"
 
     # Azure AI Search
     #-----------------
@@ -168,15 +168,16 @@ resource "azurerm_linux_web_app" "openai" {
     #==================================================#
     #                      Search                      #
     #==================================================#
-    #    SEARCH             = true
-    #    MEILI_NO_ANALYTICS = true
-    #    MEILI_HOST         = "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
+    SEARCH             = true
+    MEILI_NO_ANALYTICS = true
+    MEILI_HOST         = "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
     # MEILI_HTTP_ADDR=0.0.0.0:7700
-    #   MEILI_MASTER_KEY = random_string.meilisearch_master_key.result
+    MEILI_MASTER_KEY = "dfsdgdsffgdsfgds"
 
     #===================================================#
     #                    User System                    #
     #===================================================#
+
     #========================#
     # Moderation             #
     #========================#
@@ -218,10 +219,12 @@ resource "azurerm_linux_web_app" "openai" {
     ALLOW_REGISTRATION        = true
     ALLOW_SOCIAL_LOGIN        = false
     ALLOW_SOCIAL_REGISTRATION = false
-    SESSION_EXPIRY            = 1000 * 60 * 15
-    REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 7
-    JWT_SECRET                = "sdgdsgsd"
-    JWT_REFRESH_SECRET        = "dffgdfgh"
+
+    SESSION_EXPIRY       = 1000 * 60 * 15
+    REFRESH_TOKEN_EXPIRY = (1000 * 60 * 60 * 24) * 7
+
+    JWT_SECRET         = "dfsdgdsffgdsfgds"
+    JWT_REFRESH_SECRET = "dfsdgdsffgdsfgds"
 
     # Discord
     # DISCORD_CLIENT_ID=
@@ -295,10 +298,9 @@ resource "azurerm_linux_web_app" "openai" {
     DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
     NODE_ENV                            = "production"
   }
-  # virtual_network_subnet_id = azurerm_subnet.librechat_subnet.id
+  virtual_network_subnet_id = "/subscriptions/829efd7e-aa80-4c0d-9c1c-7aa2557f8e07/resourceGroups/TF-Module-Automated-Tests-Cognitive-GPT/providers/Microsoft.Network/virtualNetworks/openai-vnet2698/subnets/app-cosmos-sub"
 
-  # depends_on = [azurerm_linux_web_app.meilisearch, azurerm_cosmosdb_account.librechat, module.openai]
-
+  depends_on = [azurerm_linux_web_app.meilisearch]
   # depends_on = [azurerm_linux_web_app.meilisearch]
 }
 
@@ -326,51 +328,51 @@ resource "azurerm_linux_web_app" "openai" {
 #   ]
 # }
 
-# #TODO: privately communicate between librechat and meilisearch, right now it is via public internet
-# resource "azurerm_linux_web_app" "meilisearch" {
-#   name                = "meilisearchapp${random_string.random_postfix.result}"
-#   location            = azurerm_resource_group.this.location
-#   resource_group_name = azurerm_resource_group.this.name
-#   service_plan_id     = azurerm_service_plan.librechat.id
+#TODO: privately communicate between librechat and meilisearch, right now it is via public internet
+resource "azurerm_linux_web_app" "meilisearch" {
+  name                = "meilisearchapp453454345"
+  location            = var.location
+  resource_group_name = var.app_resource_group_name
+  service_plan_id     = azurerm_service_plan.openai.id
 
-#   app_settings = {
-#     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+  app_settings = {
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
 
-#     MEILI_MASTER_KEY   = random_string.meilisearch_master_key.result
-#     MEILI_NO_ANALYTICS = true
+    MEILI_MASTER_KEY   = "dfsdgdsffgdsfgds"
+    MEILI_NO_ANALYTICS = true
 
-#     DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"
-#     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-#     DOCKER_ENABLE_CI                    = false
-#     WEBSITES_PORT                       = 7700
-#     PORT                                = 7700
-#     DOCKER_CUSTOM_IMAGE_NAME            = "getmeili/meilisearch:latest"
-#   }
+    DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+    DOCKER_ENABLE_CI                    = false
+    WEBSITES_PORT                       = 7700
+    PORT                                = 7700
+    DOCKER_CUSTOM_IMAGE_NAME            = "getmeili/meilisearch:latest"
+  }
 
-#   site_config {
-#     always_on = "true"
-#     ip_restriction {
-#       virtual_network_subnet_id = azurerm_subnet.librechat_subnet.id
-#       priority                  = 100
-#       name                      = "Allow from LibreChat subnet"
-#       action                    = "Allow"
-#     }
-#   }
+  site_config {
+    always_on = "true"
+    ip_restriction {
+      virtual_network_subnet_id = "/subscriptions/829efd7e-aa80-4c0d-9c1c-7aa2557f8e07/resourceGroups/TF-Module-Automated-Tests-Cognitive-GPT/providers/Microsoft.Network/virtualNetworks/openai-vnet2698/subnets/app-cosmos-sub"
+      priority                  = 100
+      name                      = "Allow from LibreChat subnet"
+      action                    = "Allow"
+    }
+  }
 
-#   logs {
-#     http_logs {
-#       file_system {
-#         retention_in_days = 7
-#         retention_in_mb   = 35
-#       }
-#     }
-#     application_logs {
-#       file_system_level = "Information"
-#     }
-#   }
+  logs {
+    http_logs {
+      file_system {
+        retention_in_days = 7
+        retention_in_mb   = 35
+      }
+    }
+    application_logs {
+      file_system_level = "Information"
+    }
+  }
 
-#   # identity {
-#   #   type = "SystemAssigned"
-#   # }
+  # identity {
+  #   type = "SystemAssigned"
+  # }
 
-# }
+}
