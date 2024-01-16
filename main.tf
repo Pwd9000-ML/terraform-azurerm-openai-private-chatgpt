@@ -72,15 +72,16 @@ module "openai_cosmosdb" {
   is_virtual_network_filter_enabled = var.cosmosdb_is_virtual_network_filter_enabled
   public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
   tags                              = var.tags
-  #depends_on                        = [module.openai_networking]
 }
 
-### Vreate the Web App ###
+### Create the Web App ###
+# 7.) Create a Linux Web App running chatbot container.
+module "openai_app" {
+  source                            = "./modules/app"
+  app_resource_group_name           = var.cosmosdb_resource_group_name
+}
 
-### Create a container app ChatBot UI linked with OpenAI service hosted in Azure ###
-# 5.) Create a container app log analytics workspace.
-# 6.) Create a container app environment.
-# 7.) Create a container app instance.
+
 # 8.) grant the container app access a the key vault (optional).
 
 ##module "privategpt_chatbot_container_apps" {

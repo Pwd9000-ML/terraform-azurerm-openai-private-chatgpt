@@ -167,7 +167,9 @@ variable "model_deployment" {
   nullable    = false
 }
 
-### Networking ###
+#####################################
+### Network service Module params ###
+#####################################
 variable "create_openai_networking" {
   description = "Create a virtual network and subnet/s for networked services"
   type        = bool
@@ -224,7 +226,9 @@ variable "subnet_config" {
   description = "A list of subnet configuration objects to create subnets in the virtual network."
 }
 
-### CosmosDB ###
+######################################
+### CosmosDB service Module params ###
+######################################
 variable "create_cosmosdb" {
   description = "Create a CosmosDB account running MongoDB to store chat data."
   type        = bool
