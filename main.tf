@@ -79,6 +79,11 @@ module "openai_cosmosdb" {
 module "openai_app" {
   source                            = "./modules/gpt_app"
   app_resource_group_name           = var.cosmosdb_resource_group_name
+  location                          = var.location
+  tags                              = var.tags
+  app_service_name                  = "openai-asp90221"
+  app_service_sku_name              = "B1"
+  app_name                          = "openai-app90221"
 }
 
 

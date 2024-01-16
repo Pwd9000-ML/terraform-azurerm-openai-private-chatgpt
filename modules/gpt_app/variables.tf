@@ -24,7 +24,7 @@ variable "tags" {
 variable "app_service_name" {
   type        = string
   description = "Name of the App Service."
-  default     = "openai-app"
+  default     = "openai-asp"
 }
 
 variable "app_service_sku_name" {
