@@ -15,7 +15,7 @@ keyvault_firewall_allowed_ips                = ["0.0.0.0/0"] #for testing purpos
 keyvault_firewall_virtual_network_subnet_ids = []
 
 ### Create OpenAI Service ###
-create_openai_service                     = false
+create_openai_service                     = true
 openai_account_name                       = "gptopenai"
 openai_custom_subdomain_name              = "gptopenai"
 openai_sku_name                           = "S0"
@@ -30,12 +30,12 @@ openai_identity = {
 create_model_deployment = true
 model_deployment = [
   {
-    deployment_id  = "gpt4p1106"
+    deployment_id  = "gpt-4"
     model_name     = "gpt-4"
     model_format   = "OpenAI"
     model_version  = "1106-Preview"
     scale_type     = "Standard"
-    scale_capacity = 34 # 34K == Roughly 204 RPM (Requests per minute)
+    scale_capacity = 10 # 34K == Roughly 204 RPM (Requests per minute)
   }
 ]
 
