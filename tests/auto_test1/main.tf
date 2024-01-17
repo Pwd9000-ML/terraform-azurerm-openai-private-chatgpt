@@ -20,13 +20,6 @@ resource "random_integer" "number" {
   max = 9999
 }
 
-# ### Resource group to deploy the container apps private ChatGPT instance and supporting resources into
-# resource "azurerm_resource_group" "rg" {
-#   name     = var.resource_group_name
-#   location = var.location
-#   tags     = var.tags
-# }
-
 # ##################################################
 # # MODULE TO TEST                                 #
 # ##################################################

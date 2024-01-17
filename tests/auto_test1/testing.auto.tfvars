@@ -9,7 +9,7 @@ tags = {
 }
 
 ### 02 networking ###
-virtual_network_name = "openai-vnet-9000"
+virtual_network_name = "openaivnet"
 vnet_address_space   = ["10.4.0.0/24"]
 subnet_config = {
   subnet_name                                   = "app-cosmos-sub"
@@ -28,14 +28,14 @@ subnet_config = {
 }
 
 ### 03 KeyVault ###
-kv_name              = "openaikv9000"
+kv_name              = "openaikv"
 kv_sku               = "standard"
 kv_fw_default_action = "Deny"
 kv_fw_bypass         = "AzureServices"
 kv_fw_allowed_ips    = ["0.0.0.0/0"]
 
 ### 04 Create OpenAI Service ###
-oai_account_name                       = "gptopenai"
+oai_account_name                       = "gptopenaiaccount"
 oai_sku_name                           = "S0"
 oai_custom_subdomain_name              = "gptopenai"
 oai_dynamic_throttling_enabled         = true
