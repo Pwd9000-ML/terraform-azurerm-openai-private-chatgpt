@@ -76,22 +76,23 @@ variable "kv_sku" {
   default     = "standard"
 }
 
-variable "kv_net_rules" {
-  type = list(object({
-    default_action             = string
-    bypass                     = string
-    ip_rules                   = list(string)
-    virtual_network_subnet_ids = list(string)
-  }))
-  default = [
-    {
-      default_action             = "Deny"
-      bypass                     = "AzureServices"
-      ip_rules                   = []
-      virtual_network_subnet_ids = []
-    }
-  ]
-  description = "A list of Key Vault network acl configuration objects to create Key Vault firewall rules."
+variable "kv_fw_default_action" {
+  type        = string
+  default     = "Deny"
+  description = "Default action for key vault firewall rules."
+
+}
+
+variable "kv_fw_bypass" {
+  type        = string
+  default     = "AzureServices"
+  description = "List of key vault firewall rules to bypass."
+}
+
+variable "kv_fw_allowed_ips" {
+  type        = list(string)
+  default     = []
+  description = "value of key vault firewall allowed ip rules."
 }
 
 ### 04 OpenAI service ###

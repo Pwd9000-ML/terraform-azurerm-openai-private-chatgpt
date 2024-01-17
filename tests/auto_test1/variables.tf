@@ -73,28 +73,23 @@ variable "kv_sku" {
   default     = "standard"
 }
 
-variable "keyvault_firewall_default_action" {
+variable "kv_fw_default_action" {
   type        = string
   default     = "Deny"
   description = "Default action for key vault firewall rules."
+
 }
 
-variable "keyvault_firewall_bypass" {
+variable "kv_fw_bypass" {
   type        = string
   default     = "AzureServices"
   description = "List of key vault firewall rules to bypass."
 }
 
-variable "keyvault_firewall_allowed_ips" {
+variable "kv_fw_allowed_ips" {
   type        = list(string)
   default     = []
   description = "value of key vault firewall allowed ip rules."
-}
-
-variable "virtual_network_subnet_name" {
-  type        = string
-  default     = ""
-  description = "Name of the subnet to allow access to the key vault (service endpoint)."
 }
 
 # ### OpenAI service Module params ###

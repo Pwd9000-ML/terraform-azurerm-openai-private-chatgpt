@@ -7,14 +7,11 @@ resource "azurerm_key_vault" "az_openai_kv" {
   sku_name                  = var.kv_sku
   enable_rbac_authorization = true
   tenant_id                 = data.azurerm_client_config.current.tenant_id
-  dynamic "network_acls" {
-    for_each = var.kv_net_rules
-    content {
-      default_action             = network_acls.value.default_action
-      bypass                     = network_acls.value.bypass
-      ip_rules                   = network_acls.value.ip_rules
-      virtual_network_subnet_ids = network_acls.value.virtual_network_subnet_ids
-    }
+  network_acls {
+    default_action             = var.kv_fw_default_action
+    bypass                     = var.kv_fw_bypass
+    ip_rules                   = var.kv_fw_allowed_ips
+    virtual_network_subnet_ids = azurerm_subnet.az_openai_subnet.*.id
   }
   tags       = var.tags
   depends_on = [azurerm_subnet.az_openai_subnet]

@@ -44,9 +44,11 @@ module "private-chatgpt-openai" {
   subnet_config        = var.subnet_config
 
   #03 keyvault (Solution Secrets)
-  kv_name      = var.kv_name
-  kv_sku       = var.kv_sku
-  kv_net_rules = local.kv_net_rules
+  kv_name              = var.kv_name
+  kv_sku               = var.kv_sku
+  kv_fw_default_action = var.kv_fw_default_action
+  kv_fw_bypass         = var.kv_fw_bypass
+  kv_fw_allowed_ips    = var.kv_fw_allowed_ips
 }
 
 
