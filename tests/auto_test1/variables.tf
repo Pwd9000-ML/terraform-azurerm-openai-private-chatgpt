@@ -62,8 +62,7 @@ variable "subnet_config" {
   description = "A list of subnet configuration objects to create subnets in the virtual network."
 }
 
-
-### key vault ###
+### 03 key vault ###
 variable "kv_name" {
   type        = string
   description = "Name of the Key Vault to create (solution secrets)."

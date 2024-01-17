@@ -43,10 +43,9 @@ module "private-chatgpt-openai" {
   vnet_address_space   = var.vnet_address_space
   subnet_config        = var.subnet_config
 
-
-  #keyvault (Solution Secrets)
-  #kv_name = var.kv_name
-  #kv_sku  = var.kv_sku_name
+  #03 keyvault (Solution Secrets)
+  kv_name = var.kv_name
+  kv_sku  = var.kv_sku
 
 }
 

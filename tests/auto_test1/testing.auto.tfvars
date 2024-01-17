@@ -29,7 +29,9 @@ subnet_config = [
   }
 ]
 
-### Solution KeyVault ###
+### 03 KeyVault ###
+kv_name                                      = "openaikv9000"
+kv_sku                                       = "standard"
 keyvault_firewall_default_action             = "Deny"
 keyvault_firewall_bypass                     = "AzureServices"
 keyvault_firewall_allowed_ips                = ["0.0.0.0/0"] #for testing purposes only - allow all IPs
