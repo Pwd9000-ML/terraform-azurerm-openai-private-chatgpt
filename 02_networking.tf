@@ -10,7 +10,7 @@ resource "azurerm_virtual_network" "az_openai_vnet" {
 resource "azurerm_subnet" "az_openai_subnet" {
   for_each = { for each in var.subnet_config : each.subnet_name => each }
 
-  resource_group_name                           = var.resource_group_name
+  resource_group_name                           = azurerm_resource_group.az_openai_rg.name
   virtual_network_name                          = azurerm_virtual_network.az_openai_vnet.name
   name                                          = each.value.subnet_name
   address_prefixes                              = each.value.subnet_address_space
