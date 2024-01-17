@@ -17,6 +17,7 @@ resource "azurerm_key_vault" "az_openai_kv" {
     }
   }
   tags = var.tags
+  depends_on = [ azurerm_subnet.az_openai_subnet]
 }
 
 
