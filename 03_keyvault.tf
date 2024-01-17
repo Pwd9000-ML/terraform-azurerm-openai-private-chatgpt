@@ -24,6 +24,6 @@ resource "azurerm_key_vault" "az_openai_kv" {
 resource "azurerm_role_assignment" "kv_role_assigment" {
   for_each             = toset(["Key Vault Administrator"])
   role_definition_name = each.key
-  scope                = azurerm_key_vault.openai_kv.id
+  scope                = azurerm_key_vault.az_openai_kv.id
   principal_id         = data.azurerm_client_config.current.object_id
 }
