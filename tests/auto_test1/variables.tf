@@ -92,6 +92,12 @@ variable "kv_fw_allowed_ips" {
   description = "value of key vault firewall allowed ip rules."
 }
 
+variable "kv_fw_network_subnet_ids" {
+  description = "The virtual network subnets to associate with the Cosmos DB account (Service Endpoint). If networking is created as part of the module, this will be automatically populated."
+  type        = list(string)
+  default     = null
+}
+
 ### 04 openai service ###
 variable "oai_account_name" {
   type        = string

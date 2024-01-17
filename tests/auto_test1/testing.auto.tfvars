@@ -28,11 +28,12 @@ subnet_config = {
 }
 
 ### 03 KeyVault ###
-kv_name              = "openaikv"
-kv_sku               = "standard"
-kv_fw_default_action = "Deny"
-kv_fw_bypass         = "AzureServices"
-kv_fw_allowed_ips    = ["0.0.0.0/0"]
+kv_name                  = "openaikv"
+kv_sku                   = "standard"
+kv_fw_default_action     = "Deny"
+kv_fw_bypass             = "AzureServices"
+kv_fw_allowed_ips        = ["0.0.0.0/0"]
+kv_fw_network_subnet_ids = null
 
 ### 04 Create OpenAI Service ###
 oai_account_name                       = "gptopenaiaccount"

@@ -11,7 +11,7 @@ resource "azurerm_key_vault" "az_openai_kv" {
     default_action             = var.kv_fw_default_action
     bypass                     = var.kv_fw_bypass
     ip_rules                   = var.kv_fw_allowed_ips
-    virtual_network_subnet_ids = azurerm_subnet.az_openai_subnet.*.id
+    virtual_network_subnet_ids = var.kv_fw_network_subnet_ids != null ? var.kv_fw_network_subnet_ids : azurerm_subnet.az_openai_subnet.*.id
   }
   tags       = var.tags
   depends_on = [azurerm_subnet.az_openai_subnet]
