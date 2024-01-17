@@ -45,8 +45,7 @@ variable "subnet_config" {
       actions = list(string)
     })))
   })
-  default =
-    {
+  default = {
       subnet_name                                   = "app-cosmos-sub"
       subnet_address_space                          = ["10.4.0.0/24"]
       service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]

@@ -11,8 +11,7 @@ tags = {
 ### 02 networking ###
 virtual_network_name = "openai-vnet-9000"
 vnet_address_space   = ["10.4.0.0/24"]
-subnet_config = [
-  {
+subnet_config = {
     subnet_name                                   = "app-cosmos-sub"
     subnet_address_space                          = ["10.4.0.0/24"]
     service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
@@ -27,7 +26,6 @@ subnet_config = [
       ]
     }
   }
-]
 
 ### 03 KeyVault ###
 kv_name                                      = "openaikv9000"
