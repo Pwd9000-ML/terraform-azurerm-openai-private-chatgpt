@@ -1,4 +1,4 @@
-# Key Vault - Create Key Vault to save cognitive account details
+# Key Vault - Create Key Vault to save cognitive account, cosmosDB, App details
 resource "azurerm_key_vault" "az_openai_kv" {
   resource_group_name = azurerm_resource_group.az_openai_rg.name
   location            = var.location

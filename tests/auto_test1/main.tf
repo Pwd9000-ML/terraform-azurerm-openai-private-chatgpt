@@ -39,17 +39,35 @@ module "private-chatgpt-openai" {
   resource_group_name = var.resource_group_name
 
   #02 networking
-  virtual_network_name = var.virtual_network_name
+  virtual_network_name = "${var.virtual_network_name}${random_integer.number.result}"
   vnet_address_space   = var.vnet_address_space
   subnet_config        = var.subnet_config
 
   #03 keyvault (Solution Secrets)
-  kv_name              = var.kv_name
+  kv_name              = "${var.kv_name}${random_integer.number.result}"
   kv_sku               = var.kv_sku
   kv_fw_default_action = var.kv_fw_default_action
   kv_fw_bypass         = var.kv_fw_bypass
   kv_fw_allowed_ips    = var.kv_fw_allowed_ips
+
+  #04 openai service
+  oai_account_name                       = "${var.oai_account_name}${random_integer.number.result}"
+  oai_sku_name                           = var.oai_sku_name
+  oai_custom_subdomain_name              = var.oai_custom_subdomain_name
+  oai_dynamic_throttling_enabled         = var.oai_dynamic_throttling_enabled
+  oai_fqdns                              = var.oai_fqdns
+  oai_local_auth_enabled                 = var.oai_local_auth_enabled
+  oai_outbound_network_access_restricted = var.oai_outbound_network_access_restricted
+  oai_public_network_access_enabled      = var.oai_public_network_access_enabled
+  oai_customer_managed_key               = var.oai_customer_managed_key
+  oai_identity                           = var.oai_identity
+  oai_network_acls                       = var.oai_network_acls
+  oai_storage                            = var.oai_storage
+  oai_model_deployment                   = var.oai_model_deployment
 }
+
+
+
 
 
 #   #Create OpenAI Service?

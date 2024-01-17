@@ -1,3 +1,4 @@
+# Create Solution Virtual Network
 resource "azurerm_virtual_network" "az_openai_vnet" {
   name                = var.virtual_network_name
   location            = var.location

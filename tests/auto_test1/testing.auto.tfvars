@@ -34,37 +34,31 @@ kv_fw_default_action = "Deny"
 kv_fw_bypass         = "AzureServices"
 kv_fw_allowed_ips    = ["0.0.0.0/0"]
 
-# ### Create OpenAI Service ###
-# create_openai_service                     = true
-# openai_account_name                       = "gptopenai"
-# openai_custom_subdomain_name              = "gptopenai"
-# openai_sku_name                           = "S0"
-# openai_local_auth_enabled                 = true
-# openai_outbound_network_access_restricted = false
-# openai_public_network_access_enabled      = true
-# openai_identity = {
-#   type = "SystemAssigned"
-# }
-
-# ### Create Model deployment ###
-# create_model_deployment = true
-# model_deployment = [
-#   {
-#     deployment_id  = "gpt-4"
-#     model_name     = "gpt-4"
-#     model_format   = "OpenAI"
-#     model_version  = "1106-Preview"
-#     scale_type     = "Standard"
-#     scale_capacity = 10 # 34K == Roughly 204 RPM (Requests per minute)
-#   }
-# ]
-
-# ### networking ###
-# create_openai_networking    = true
-# network_resource_group_name = "TF-Module-Automated-Tests-Cognitive-GPT"
-# virtual_network_name        = "openai-vnet"
-# vnet_address_space          = ["10.4.0.0/16"]
-
+### 04 Create OpenAI Service ###
+oai_account_name                       = "gptopenai"
+oai_sku_name                           = "S0"
+oai_custom_subdomain_name              = "gptopenai"
+oai_dynamic_throttling_enabled         = true
+oai_fqdns                              = []
+oai_local_auth_enabled                 = true
+oai_outbound_network_access_restricted = false
+oai_public_network_access_enabled      = true
+oai_customer_managed_key               = null
+oai_identity = {
+  type = "SystemAssigned"
+}
+oai_network_acls = null
+oai_storage      = null
+oai_model_deployment = [
+  {
+    deployment_id  = "gpt-4"
+    model_name     = "gpt-4"
+    model_format   = "OpenAI"
+    model_version  = "1106-Preview"
+    scale_type     = "Standard"
+    scale_capacity = 10 # 34K == Roughly 204 RPM (Requests per minute)
+  }
+]
 
 # ### cosmosdb ###
 # create_cosmosdb                  = true
