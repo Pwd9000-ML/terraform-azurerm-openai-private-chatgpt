@@ -1,6 +1,6 @@
 # Key Vault - Create Key Vault to save cognitive account details
 resource "azurerm_key_vault" "az_openai_kv" {
-  resource_group_name = var.resource_group_name
+  resource_group_name = azurerm_resource_group.az_openai_rg.name
   location            = var.location
   #values from variable kv_config object
   name                      = lower(var.kv_name)

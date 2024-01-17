@@ -86,7 +86,6 @@ variable "kv_fw_bypass" {
   description = "List of key vault firewall rules to bypass."
 }
 
-
 variable "kv_fw_allowed_ips" {
   type        = list(string)
   default     = []
