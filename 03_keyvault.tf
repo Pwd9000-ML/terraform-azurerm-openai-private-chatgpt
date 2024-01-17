@@ -19,6 +19,7 @@ resource "azurerm_key_vault" "az_openai_kv" {
   tags = var.tags
 }
 
+
 # Add "self" permission to key vault RBAC (to manange key vault secrets)
 resource "azurerm_role_assignment" "kv_role_assigment" {
   for_each             = toset(["Key Vault Administrator"])
