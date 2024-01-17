@@ -46,20 +46,20 @@ variable "subnet_config" {
     })))
   })
   default = {
-      subnet_name                                   = "app-cosmos-sub"
-      subnet_address_space                          = ["10.4.0.0/24"]
-      service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
-      private_endpoint_network_policies_enabled     = false
-      private_link_service_network_policies_enabled = false
-      subnets_delegation_settings = {
-        app-service-plan = [
-          {
-            name    = "Microsoft.Web/serverFarms"
-            actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-          }
-        ]
-      }
+    subnet_name                                   = "app-cosmos-sub"
+    subnet_address_space                          = ["10.4.0.0/24"]
+    service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
+    private_endpoint_network_policies_enabled     = false
+    private_link_service_network_policies_enabled = false
+    subnets_delegation_settings = {
+      app-service-plan = [
+        {
+          name    = "Microsoft.Web/serverFarms"
+          actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+        }
+      ]
     }
+  }
   description = "A list of subnet configuration objects to create subnets in the virtual network."
 }
 
