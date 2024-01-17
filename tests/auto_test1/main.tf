@@ -46,7 +46,7 @@ module "private-chatgpt-openai" {
   #04 openai service
   oai_account_name                       = "${var.oai_account_name}${random_integer.number.result}"
   oai_sku_name                           = var.oai_sku_name
-  oai_custom_subdomain_name              = var.oai_custom_subdomain_name
+  oai_custom_subdomain_name              = "${var.oai_custom_subdomain_name}${random_integer.number.result}"
   oai_dynamic_throttling_enabled         = var.oai_dynamic_throttling_enabled
   oai_fqdns                              = var.oai_fqdns
   oai_local_auth_enabled                 = var.oai_local_auth_enabled
