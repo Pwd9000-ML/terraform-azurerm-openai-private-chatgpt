@@ -41,12 +41,12 @@ resource "azurerm_cosmosdb_account" "mongo" {
 }
 
 # Add "self" permission to key vault RBAC (to manange key vault secrets)
-resource "azurerm_role_assignment" "kv_role_assigment" {
-  for_each             = toset(["Key Vault Administrator"])
-  role_definition_name = each.key
-  scope                = var.openai_keyvault_id
-  principal_id         = data.azurerm_client_config.current.object_id
-}
+# resource "azurerm_role_assignment" "kv_role_assigment" {
+#   for_each             = toset(["Key Vault Administrator"])
+#   role_definition_name = each.key
+#   scope                = var.openai_keyvault_id
+#   principal_id         = data.azurerm_client_config.current.object_id
+# }
 
 ### Save CosmosDB details to Key Vault for consumption by other services (e.g. LibreChat App)
 resource "azurerm_key_vault_secret" "openai_cosmos_uri" {
