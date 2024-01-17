@@ -1,6 +1,6 @@
 resource "azurerm_cosmosdb_account" "mongo" {
   name                      = var.cosmosdb_name
-  resource_group_name       = var.cosmosdb_resource_group_name
+  resource_group_name       = azurerm_resource_group.az_openai_rg.name
   location                  = var.location
   offer_type                = var.cosmosdb_offer_type
   kind                      = var.cosmosdb_kind
@@ -15,7 +15,7 @@ resource "azurerm_cosmosdb_account" "mongo" {
   }
 
   dynamic "geo_location" {
-    for_each = var.geo_locations
+    for_each = var.cosmosdb_geo_locations
     content {
       location          = geo_location.value.location
       failover_priority = geo_location.value.failover_priority
@@ -23,26 +23,26 @@ resource "azurerm_cosmosdb_account" "mongo" {
   }
 
   dynamic "capabilities" {
-    for_each = var.capabilities
+    for_each = var.cosmosdb_capabilities
     content {
       name = capabilities.value
     }
   }
 
   dynamic "virtual_network_rule" {
-    for_each = var.virtual_network_subnets
+    for_each = var.cosmosdb_virtual_network_subnets != null ? var.cosmosdb_virtual_network_subnets : azurerm_subnet.az_openai_subnet.*.id
     content {
       id = virtual_network_rule.value
     }
   }
 
-  is_virtual_network_filter_enabled = var.is_virtual_network_filter_enabled
-  public_network_access_enabled     = var.public_network_access_enabled
+  is_virtual_network_filter_enabled = var.cosmosdb_is_virtual_network_filter_enabled
+  public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
 }
 
 ### Save CosmosDB details to Key Vault for consumption by other services (e.g. LibreChat App)
 resource "azurerm_key_vault_secret" "openai_cosmos_uri" {
   name         = "${var.cosmosdb_name}-cosmos-uri"
   value        = azurerm_cosmosdb_account.mongo.primary_mongodb_connection_string
-  key_vault_id = var.openai_keyvault_id
+  key_vault_id = azurerm_key_vault.az_openai_kv.id
 }

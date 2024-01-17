@@ -57,6 +57,22 @@ module "private-chatgpt-openai" {
   oai_network_acls                       = var.oai_network_acls
   oai_storage                            = var.oai_storage
   oai_model_deployment                   = var.oai_model_deployment
+
+  #05 cosmosdb
+  cosmosdb_name                              = "${var.cosmosdb_name}${random_integer.number.result}"
+  cosmosdb_offer_type                        = var.cosmosdb_offer_type
+  cosmosdb_kind                              = var.cosmosdb_kind
+  cosmosdb_automatic_failover                = var.cosmosdb_automatic_failover
+  use_cosmosdb_free_tier                     = var.use_cosmosdb_free_tier
+  cosmosdb_consistency_level                 = var.cosmosdb_consistency_level
+  cosmosdb_max_interval_in_seconds           = var.cosmosdb_max_interval_in_seconds
+  cosmosdb_max_staleness_prefix              = var.cosmosdb_max_staleness_prefix
+  cosmosdb_geo_locations                     = var.cosmosdb_geo_locations
+  cosmosdb_capabilities                      = var.cosmosdb_capabilities
+  cosmosdb_virtual_network_subnets           = var.cosmosdb_virtual_network_subnets
+  cosmosdb_is_virtual_network_filter_enabled = var.cosmosdb_is_virtual_network_filter_enabled
+  cosmosdb_public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
+
 }
 
 

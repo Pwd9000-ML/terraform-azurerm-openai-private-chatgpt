@@ -60,26 +60,26 @@ oai_model_deployment = [
   }
 ]
 
-# ### cosmosdb ###
-# create_cosmosdb                  = true
-# cosmosdb_name                    = "gptcosmos"
-# cosmosdb_resource_group_name     = "TF-Module-Automated-Tests-Cognitive-GPT"
-# cosmosdb_offer_type              = "Standard"
-# cosmosdb_kind                    = "MongoDB"
-# cosmosdb_automatic_failover      = false
-# use_cosmosdb_free_tier           = true
-# cosmosdb_consistency_level       = "BoundedStaleness"
-# cosmosdb_max_interval_in_seconds = 10
-# cosmosdb_max_staleness_prefix    = 200
-# cosmosdb_geo_locations = [
-#   {
-#     location          = "uksouth"
-#     failover_priority = 0
-#   }
-# ]
-# cosmosdb_capabilities                      = ["EnableMongo", "MongoDBv3.4"]
-# cosmosdb_is_virtual_network_filter_enabled = true
-# cosmosdb_public_network_access_enabled     = true
+### 05 cosmosdb ###
+
+cosmosdb_name                    = "gptcosmosdb"
+cosmosdb_offer_type              = "Standard"
+cosmosdb_kind                    = "MongoDB"
+cosmosdb_automatic_failover      = false
+use_cosmosdb_free_tier           = true
+cosmosdb_consistency_level       = "BoundedStaleness"
+cosmosdb_max_interval_in_seconds = 10
+cosmosdb_max_staleness_prefix    = 200
+cosmosdb_geo_locations = [
+  {
+    location          = "uksouth"
+    failover_priority = 0
+  }
+]
+cosmosdb_capabilities                      = ["EnableMongo", "MongoDBv3.4"]
+cosmosdb_virtual_network_subnets           = null
+cosmosdb_is_virtual_network_filter_enabled = true
+cosmosdb_public_network_access_enabled     = true
 
 # ### log analytics workspace for container apps ###
 # #laws_name              = "gptlaws"

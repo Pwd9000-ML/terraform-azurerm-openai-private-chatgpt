@@ -243,105 +243,92 @@ variable "oai_model_deployment" {
   nullable    = false
 }
 
+### 05 OpenAI CosmosDB ###
+variable "cosmosdb_name" {
+  description = "The name of the Cosmos DB account"
+  type        = string
+  default     = "openaicosmosdb"
+}
 
-# ### cosmosdb ###
-# variable "create_cosmosdb" {
-#   description = "Create a CosmosDB account running MongoDB to store chat data."
-#   type        = bool
-#   default     = false
-# }
+variable "cosmosdb_offer_type" {
+  description = "The offer type to use for the Cosmos DB account"
+  type        = string
+  default     = "Standard"
+}
 
-# variable "cosmosdb_name" {
-#   description = "The name of the Cosmos DB account"
-#   type        = string
-#   default     = "openaicosmosdb"
-# }
+variable "cosmosdb_kind" {
+  description = "The kind of Cosmos DB to create"
+  type        = string
+  default     = "MongoDB"
+}
 
-# variable "cosmosdb_resource_group_name" {
-#   description = "The name of the resource group in which to create the Cosmos DB account"
-#   type        = string
-#   nullable    = false
-# }
+variable "cosmosdb_automatic_failover" {
+  description = "Whether to enable automatic failover for the Cosmos DB account"
+  type        = bool
+  default     = false
+}
 
-# variable "cosmosdb_offer_type" {
-#   description = "The offer type to use for the Cosmos DB account"
-#   type        = string
-#   default     = "Standard"
-# }
+variable "use_cosmosdb_free_tier" {
+  description = "Whether to enable the free tier for the Cosmos DB account. This needs to be false if another instance already uses free tier."
+  type        = bool
+  default     = true
+}
 
-# variable "cosmosdb_kind" {
-#   description = "The kind of Cosmos DB to create"
-#   type        = string
-#   default     = "MongoDB"
-# }
+variable "cosmosdb_consistency_level" {
+  description = "The consistency level of the Cosmos DB account"
+  type        = string
+  default     = "BoundedStaleness"
+}
 
-# variable "cosmosdb_automatic_failover" {
-#   description = "Whether to enable automatic failover for the Cosmos DB account"
-#   type        = bool
-#   default     = false
-# }
+variable "cosmosdb_max_interval_in_seconds" {
+  description = "The maximum staleness interval in seconds for the Cosmos DB account"
+  type        = number
+  default     = 10
+}
 
-# variable "use_cosmosdb_free_tier" {
-#   description = "Whether to enable the free tier for the Cosmos DB account. This needs to be false if another instance already uses free tier."
-#   type        = bool
-#   default     = true
-# }
+variable "cosmosdb_max_staleness_prefix" {
+  description = "The maximum staleness prefix for the Cosmos DB account"
+  type        = number
+  default     = 200
+}
 
-# variable "cosmosdb_consistency_level" {
-#   description = "The consistency level of the Cosmos DB account"
-#   type        = string
-#   default     = "BoundedStaleness"
-# }
+variable "cosmosdb_geo_locations" {
+  description = "The geo-locations for the Cosmos DB account"
+  type = list(object({
+    location          = string
+    failover_priority = number
+  }))
+  default = [
+    {
+      location          = "uksouth"
+      failover_priority = 0
+    }
+  ]
+}
 
-# variable "cosmosdb_max_interval_in_seconds" {
-#   description = "The maximum staleness interval in seconds for the Cosmos DB account"
-#   type        = number
-#   default     = 10
-# }
+variable "cosmosdb_capabilities" {
+  description = "The capabilities for the Cosmos DB account"
+  type        = list(string)
+  default     = ["EnableMongo", "MongoDBv3.4"]
+}
 
-# variable "cosmosdb_max_staleness_prefix" {
-#   description = "The maximum staleness prefix for the Cosmos DB account"
-#   type        = number
-#   default     = 200
-# }
+variable "cosmosdb_virtual_network_subnets" {
+  description = "The virtual network subnets to associate with the Cosmos DB account (Service Endpoint). If networking is created as part of the module, this will be automatically populated."
+  type        = list(string)
+  default     = null
+}
 
-# variable "cosmosdb_geo_locations" {
-#   description = "The geo-locations for the Cosmos DB account"
-#   type = list(object({
-#     location          = string
-#     failover_priority = number
-#   }))
-#   default = [
-#     {
-#       location          = "uksouth"
-#       failover_priority = 0
-#     }
-#   ]
-# }
+variable "cosmosdb_is_virtual_network_filter_enabled" {
+  description = "Whether to enable virtual network filtering for the Cosmos DB account"
+  type        = bool
+  default     = true
+}
 
-# variable "cosmosdb_capabilities" {
-#   description = "The capabilities for the Cosmos DB account"
-#   type        = list(string)
-#   default     = ["EnableMongo", "MongoDBv3.4"]
-# }
-
-# variable "cosmosdb_virtual_network_subnets" {
-#   description = "The virtual network subnets to associate with the Cosmos DB account"
-#   type        = list(string)
-#   default     = null
-# }
-
-# variable "cosmosdb_is_virtual_network_filter_enabled" {
-#   description = "Whether to enable virtual network filtering for the Cosmos DB account"
-#   type        = bool
-#   default     = true
-# }
-
-# variable "cosmosdb_public_network_access_enabled" {
-#   description = "Whether to enable public network access for the Cosmos DB account"
-#   type        = bool
-#   default     = true
-# }
+variable "cosmosdb_public_network_access_enabled" {
+  description = "Whether to enable public network access for the Cosmos DB account"
+  type        = bool
+  default     = true
+}
 
 # ### log analytics workspace ###
 # #variable "laws_name" {
