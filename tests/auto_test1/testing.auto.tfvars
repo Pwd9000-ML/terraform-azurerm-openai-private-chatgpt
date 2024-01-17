@@ -28,12 +28,9 @@ subnet_config = {
 }
 
 ### 03 KeyVault ###
-kv_name                                      = "openaikv9000"
-kv_sku                                       = "standard"
-keyvault_firewall_default_action             = "Deny"
-keyvault_firewall_bypass                     = "AzureServices"
-keyvault_firewall_allowed_ips                = ["0.0.0.0/0"] #for testing purposes only - allow all IPs
-keyvault_firewall_virtual_network_subnet_ids = []
+kv_name = "openaikv9000"
+kv_sku  = "standard"
+
 
 # ### Create OpenAI Service ###
 # create_openai_service                     = true

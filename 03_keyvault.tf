@@ -8,7 +8,7 @@ resource "azurerm_key_vault" "az_openai_kv" {
   enable_rbac_authorization = true
   tenant_id                 = data.azurerm_client_config.current.tenant_id
   dynamic "network_acls" {
-    for_each = local.kv_net_rules
+    for_each = var.kv_net_rules
     content {
       default_action             = network_acls.value.default_action
       bypass                     = network_acls.value.bypass
@@ -23,6 +23,6 @@ resource "azurerm_key_vault" "az_openai_kv" {
 resource "azurerm_role_assignment" "kv_role_assigment" {
   for_each             = toset(["Key Vault Administrator"])
   role_definition_name = each.key
-  scope                = azurerm_key_vault.az_openai_kv.id
+  scope                = azurerm_key_vault.openai_kv.id
   principal_id         = data.azurerm_client_config.current.object_id
 }
