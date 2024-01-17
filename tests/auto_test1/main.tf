@@ -74,6 +74,11 @@ module "private-chatgpt-openai" {
   cosmosdb_is_virtual_network_filter_enabled = var.cosmosdb_is_virtual_network_filter_enabled
   cosmosdb_public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
 
+  #06 app services (librechat app + meilisearch)
+  app_service_name                          = "${var.app_service_name}${random_integer.number.result}"
+  app_service_sku_name                      = var.app_service_sku_name
+  meilisearch_app_name                      = "${var.meilisearch_app_name}${random_integer.number.result}"
+  meilisearch_app_virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id
 }
 
 

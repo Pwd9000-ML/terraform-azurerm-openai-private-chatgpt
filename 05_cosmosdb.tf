@@ -1,4 +1,5 @@
-resource "azurerm_cosmosdb_account" "mongo" {
+# Create CosmosDB Account running MongoDB
+resource "azurerm_cosmosdb_account" "az_openai_mongodb" {
   name                      = var.cosmosdb_name
   resource_group_name       = azurerm_resource_group.az_openai_rg.name
   location                  = var.location
@@ -40,9 +41,9 @@ resource "azurerm_cosmosdb_account" "mongo" {
   public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
 }
 
-### Save CosmosDB details to Key Vault for consumption by other services (e.g. LibreChat App)
+### Save MongoDB URI details to Key Vault for consumption by other services (e.g. LibreChat App)
 resource "azurerm_key_vault_secret" "openai_cosmos_uri" {
   name         = "${var.cosmosdb_name}-cosmos-uri"
-  value        = azurerm_cosmosdb_account.mongo.primary_mongodb_connection_string
+  value        = azurerm_cosmosdb_account.az_openai_mongodb.primary_mongodb_connection_string
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }

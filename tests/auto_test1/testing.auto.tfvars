@@ -62,7 +62,6 @@ oai_model_deployment = [
 ]
 
 ### 05 cosmosdb ###
-
 cosmosdb_name                    = "gptcosmosdb"
 cosmosdb_offer_type              = "Standard"
 cosmosdb_kind                    = "MongoDB"
@@ -82,66 +81,11 @@ cosmosdb_virtual_network_subnets           = null
 cosmosdb_is_virtual_network_filter_enabled = true
 cosmosdb_public_network_access_enabled     = true
 
-# ### log analytics workspace for container apps ###
-# #laws_name              = "gptlaws"
-# #laws_sku               = "PerGB2018"
-# #laws_retention_in_days = 30
-
-# ### Container App Enviornment ###
-# #cae_name = "gptcae"
-
-# ### Container App ###
-# #ca_name          = "gptca"
-# #ca_revision_mode = "Single"
-# #ca_identity = {
-# #  type = "SystemAssigned"
-# #}
-# #ca_ingress = {
-# #  allow_insecure_connections = false
-# #  external_enabled           = true
-# #  target_port                = 3000
-# #  transport                  = "auto"
-# #  traffic_weight = {
-# #    latest_revision = true
-# #    percentage      = 100
-# #  }
-# #}
-# #ca_container_config = {
-# #  name         = "gpt-chatbot-ui"
-# #  image        = "ghcr.io/pwd9000-ml/chatbot-ui:main"
-# #  cpu          = 2
-# #  memory       = "4Gi"
-# #  min_replicas = 0
-# #  max_replicas = 5
-
-# ## Environment Variables (Required)##
-# #  env = [
-# #    {
-# #      name        = "OPENAI_API_KEY"
-# #      secret_name = "openai-api-key" #see locals.tf (Can also be added from key vault created by module, or existing key)
-# #    },
-# #    {
-# #      name        = "OPENAI_API_HOST"
-# #      secret_name = "openai-api-host" #see locals.tf (Can also be added from key vault created by module, or existing host/endpoint)
-# #    },
-# #    {
-# #      name  = "OPENAI_API_TYPE"
-# #      value = "azure"
-# #    },
-# #    {
-# #      name  = "AZURE_DEPLOYMENT_ID" #see model_deployment variable (deployment_id)
-# #      value = "gpt432k"
-# #    },
-# #    {
-# #      name  = "DEFAULT_MODEL" #see model_deployment variable (model_name)
-# #      value = "gpt-4-32k"
-# #    }
-# #  ]
-# #}
-
-# ### key vault access ###
-# #key_vault_access_permission = ["Key Vault Secrets User"] # set to `null` to ignore permission grant to a key vault
-# #key_vault_id = "kv-to-grant-permission-to" (See `data.tf`) Only required if `var.key_vault_access_permission` not `null`)
+### 06 app services (librechat app + meilisearch) ###
+app_service_name                          = "openaiasp"
+app_service_sku_name                      = "B1"
+meilisearch_app_name                      = "meilisearchapp"
+meilisearch_app_virtual_network_subnet_id = null
 
 # ### CDN - Front Door ###
 # create_front_door_cdn = true

@@ -340,21 +340,31 @@ variable "cosmosdb_public_network_access_enabled" {
   default     = true
 }
 
-# ###################################
-# ### LibreChat App Module params ###
-# ###################################
-# ### App Service Plan ###
-# variable "app_service_name" {
-#   type        = string
-#   description = "Name of the App Service."
-#   default     = "openai-asp9000"
-# }
+### 06 LibreChat App Services ###
+variable "app_service_name" {
+  type        = string
+  description = "Name of the Linux App Service Plan."
+  default     = "openaiasp9000"
+}
 
-# variable "app_service_sku_name" {
-#   type        = string
-#   description = "The SKU name of the App Service Plan."
-#   default     = "B1"
-# }
+variable "app_service_sku_name" {
+  type        = string
+  description = "The SKU name of the App Service Plan."
+  default     = "B1"
+}
+
+variable "meilisearch_app_name" {
+  type        = string
+  description = "Name of the meilisearch App Service."
+  default     = "meilisearchapp9000"
+
+}
+
+variable "meilisearch_app_virtual_network_subnet_id" {
+  type        = string
+  description = "The ID of the subnet to deploy the meilisearch App Service in."
+  default     = null
+}
 
 # ### App Service ###
 # variable "app_name" {
