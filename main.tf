@@ -7,9 +7,7 @@
 # 3.) Create an OpenAI language model deployments. (GPT-3, GPT-4, etc.)
 # 4.) Store the OpenAI account and model details in the key vault.
 module "openai" {
-  source  = "Pwd9000-ML/openai-service/azurerm"
-  version = ">= 1.1.0"
-
+source                  = "./modules/openai"
   #common
   location = var.location
   tags     = var.tags
@@ -77,7 +75,7 @@ module "openai_cosmosdb" {
 ### Create the Web App ###
 # 7.) Create a Linux Web App running chatbot container.
 module "openai_app" {
-  source                  = "./modules/gpt_app"
+  source                  = "./modules/librechat_app"
   app_resource_group_name = var.cosmosdb_resource_group_name
   location                = var.location
   tags                    = var.tags
