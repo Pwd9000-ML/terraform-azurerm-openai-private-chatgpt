@@ -31,7 +31,7 @@ subnet_config = {
 kv_name              = "openaikv9000"
 kv_sku               = "standard"
 kv_fw_default_action = "Deny"
-kv_fw_bypass         = ["AzureServices"]
+kv_fw_bypass         = "AzureServices"
 kv_fw_allowed_ips    = ["0.0.0.0/0"]
 
 # ### Create OpenAI Service ###
