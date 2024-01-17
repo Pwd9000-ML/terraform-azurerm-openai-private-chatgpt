@@ -41,7 +41,7 @@ resource "azurerm_role_assignment" "kv_role_assigment" {
 
 ### OpenAI Service
 module "create_openai_service" {
-  source = "./modules/openai_service"
+  source = "./openai_service"
   # Only deploy a new openai service 'var.create_openai_service' is true
   count                              = var.create_openai_service == true ? 1 : 0
   resource_group_name                = var.openai_resource_group_name
@@ -63,7 +63,7 @@ module "create_openai_service" {
 
 ### Model Deployments
 module "create_model_deployment" {
-  source = "./modules/model_deployment"
+  source = "./model_deployment"
   # Only deploy new model if 'var.create_model_deployment' is true (else use existing cognitive account)
   count                      = var.create_model_deployment == true ? 1 : 0
   openai_resource_group_name = var.create_openai_service == true ? module.create_openai_service[0].openai_resource_group_name : var.openai_resource_group_name
