@@ -19,6 +19,8 @@ resource "azurerm_service_plan" "az_openai_asp" {
   sku_name            = var.app_service_sku_name
 }
 
+# Create meilisearch app
+# TODO: Add support for private endpoints instead of subnet access
 resource "azurerm_linux_web_app" "meilisearch" {
   name                = var.meilisearch_app_name
   location            = var.location
@@ -66,6 +68,7 @@ resource "azurerm_linux_web_app" "meilisearch" {
   }
 }
 
+# Grant kv access to meilisearch app to reference the master key secret
 resource "azurerm_role_assignment" "meilisearch_app_kv_access" {
   scope                = azurerm_key_vault.az_openai_kv.id
   principal_id         = azurerm_linux_web_app.meilisearch.identity[0].principal_id
