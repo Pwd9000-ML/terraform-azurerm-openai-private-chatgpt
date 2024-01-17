@@ -31,7 +31,7 @@ variable "vnet_address_space" {
 }
 
 variable "subnet_config" {
-  type = list(object({
+  type = object({
     subnet_name                                   = string
     subnet_address_space                          = list(string)
     service_endpoints                             = list(string)
@@ -41,9 +41,8 @@ variable "subnet_config" {
       name    = string
       actions = list(string)
     })))
-  }))
-  default = [
-    {
+  })
+    default = {
       subnet_name                                   = "app-cosmos-sub"
       subnet_address_space                          = ["10.4.0.0/24"]
       service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
@@ -58,7 +57,6 @@ variable "subnet_config" {
         ]
       }
     }
-  ]
   description = "A list of subnet configuration objects to create subnets in the virtual network."
 }
 

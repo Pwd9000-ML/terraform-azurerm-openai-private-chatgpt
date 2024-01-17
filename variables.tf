@@ -34,7 +34,7 @@ variable "vnet_address_space" {
 }
 
 variable "subnet_config" {
-  type = list(object({
+  type = object({
     subnet_name                                   = string
     subnet_address_space                          = list(string)
     service_endpoints                             = list(string)
@@ -44,8 +44,8 @@ variable "subnet_config" {
       name    = string
       actions = list(string)
     })))
-  }))
-  default = [
+  })
+  default =
     {
       subnet_name                                   = "app-cosmos-sub"
       subnet_address_space                          = ["10.4.0.0/24"]
@@ -61,11 +61,10 @@ variable "subnet_config" {
         ]
       }
     }
-  ]
   description = "A list of subnet configuration objects to create subnets in the virtual network."
 }
 
-### key vault ###
+### 03 key vault ###
 variable "kv_name" {
   type        = string
   description = "Name of the Key Vault to create (solution secrets)."
@@ -100,6 +99,13 @@ variable "keyvault_firewall_virtual_network_subnet_ids" {
   type        = list(string)
   default     = []
   description = "value of key vault firewall allowed virtual network subnet ids."
+}
+
+### 04 OpenAI service ###
+variable "account_name" {
+  type        = string
+  default     = "az-openai-account"
+  description = "The name of the OpenAI service."
 }
 
 # ####################################
