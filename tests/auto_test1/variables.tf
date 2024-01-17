@@ -81,10 +81,11 @@ variable "kv_fw_default_action" {
 }
 
 variable "kv_fw_bypass" {
-  type        = string
-  default     = "AzureServices"
+  type        = list(string)
+  default     = ["AzureServices"]
   description = "List of key vault firewall rules to bypass."
 }
+
 
 variable "kv_fw_allowed_ips" {
   type        = list(string)
