@@ -1,4 +1,4 @@
-### Common Variables ###
+### 01 Common Variables + RG ###
 resource_group_name = "TF-Module-Automated-Tests-Cognitive-GPT"
 location            = "uksouth"
 tags = {
@@ -8,11 +8,32 @@ tags = {
   GitHub      = "https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt"
 }
 
-# ### OpenAI Service Module Inputs ###
-# keyvault_firewall_default_action             = "Deny"
-# keyvault_firewall_bypass                     = "AzureServices"
-# keyvault_firewall_allowed_ips                = ["0.0.0.0/0"] #for testing purposes only - allow all IPs
-# keyvault_firewall_virtual_network_subnet_ids = []
+### 02 networking ###
+virtual_network_name = "openai-vnet-9000"
+vnet_address_space   = ["10.4.0.0/24"]
+subnet_config = [
+  {
+    subnet_name                                   = "app-cosmos-sub"
+    subnet_address_space                          = ["10.4.0.0/24"]
+    service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
+    private_endpoint_network_policies_enabled     = false
+    private_link_service_network_policies_enabled = false
+    subnets_delegation_settings = {
+      app-service-plan = [
+        {
+          name    = "Microsoft.Web/serverFarms"
+          actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+        }
+      ]
+    }
+  }
+]
+
+### Solution KeyVault ###
+keyvault_firewall_default_action             = "Deny"
+keyvault_firewall_bypass                     = "AzureServices"
+keyvault_firewall_allowed_ips                = ["0.0.0.0/0"] #for testing purposes only - allow all IPs
+keyvault_firewall_virtual_network_subnet_ids = []
 
 # ### Create OpenAI Service ###
 # create_openai_service                     = true
@@ -44,23 +65,7 @@ tags = {
 # network_resource_group_name = "TF-Module-Automated-Tests-Cognitive-GPT"
 # virtual_network_name        = "openai-vnet"
 # vnet_address_space          = ["10.4.0.0/16"]
-# subnet_config = [
-#   {
-#     subnet_name                                   = "app-cosmos-sub"
-#     subnet_address_space                          = ["10.4.0.0/24"]
-#     service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
-#     private_endpoint_network_policies_enabled     = false
-#     private_link_service_network_policies_enabled = false
-#     subnets_delegation_settings = {
-#       app-service-plan = [
-#         {
-#           name    = "Microsoft.Web/serverFarms"
-#           actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-#         }
-#       ]
-#     }
-#   }
-# ]
+
 
 # ### cosmosdb ###
 # create_cosmosdb                  = true

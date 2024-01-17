@@ -1,6 +1,8 @@
 ##################################################
 # DATA                                           #
 ##################################################
+data "azurerm_client_config" "current" {}
+
 # Data sources to get Subnet ID/s for CosmosDB and App Service
 # Usage in Module example: subnet_id = data.azurerm_subnet.subnet["app-cosmos-sub"].id
 # data "azurerm_subnet" "subnet" {

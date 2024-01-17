@@ -33,10 +33,21 @@ resource "random_integer" "number" {
 module "private-chatgpt-openai" {
   source = "../.."
 
-  #common
+  #01 common + RG
   location            = var.location
   tags                = var.tags
   resource_group_name = var.resource_group_name
+
+  #02 networking
+  virtual_network_name = var.virtual_network_name
+  vnet_address_space   = var.vnet_address_space
+  subnet_config        = var.subnet_config
+
+
+  #keyvault (Solution Secrets)
+  #kv_name = var.kv_name
+  #kv_sku  = var.kv_sku_name
+
 }
 
 #   #keyvault (OpenAI Service Account details)

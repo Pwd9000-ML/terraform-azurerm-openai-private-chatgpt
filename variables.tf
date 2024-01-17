@@ -1,7 +1,7 @@
 # ##################################################
 # # VARIABLES                                      #
 # ##################################################
-### common ###
+### 01 common + Resource Group ###
 variable "location" {
   type        = string
   default     = "uksouth"
@@ -18,6 +18,88 @@ variable "resource_group_name" {
   type        = string
   description = "Name of the resource group to create the OpenAI service / or where an existing service is hosted."
   nullable    = false
+}
+
+### 02 Networking ###
+variable "virtual_network_name" {
+  type        = string
+  default     = "openai-vnet-9000"
+  description = "Name of the virtual network where resources are attached."
+}
+
+variable "vnet_address_space" {
+  type        = list(string)
+  default     = ["10.4.0.0/24"]
+  description = "value of the address space for the virtual network."
+}
+
+variable "subnet_config" {
+  type = list(object({
+    subnet_name                                   = string
+    subnet_address_space                          = list(string)
+    service_endpoints                             = list(string)
+    private_endpoint_network_policies_enabled     = bool
+    private_link_service_network_policies_enabled = bool
+    subnets_delegation_settings = map(list(object({
+      name    = string
+      actions = list(string)
+    })))
+  }))
+  default = [
+    {
+      subnet_name                                   = "app-cosmos-sub"
+      subnet_address_space                          = ["10.4.0.0/24"]
+      service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
+      private_endpoint_network_policies_enabled     = false
+      private_link_service_network_policies_enabled = false
+      subnets_delegation_settings = {
+        app-service-plan = [
+          {
+            name    = "Microsoft.Web/serverFarms"
+            actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+          }
+        ]
+      }
+    }
+  ]
+  description = "A list of subnet configuration objects to create subnets in the virtual network."
+}
+
+### key vault ###
+variable "kv_name" {
+  type        = string
+  description = "Name of the Key Vault to create (solution secrets)."
+  default     = "openaikv9000"
+}
+
+variable "kv_sku" {
+  type        = string
+  description = "SKU of the Key Vault to create."
+  default     = "standard"
+}
+
+variable "keyvault_firewall_default_action" {
+  type        = string
+  default     = "Deny"
+  description = "Default action for key vault firewall rules."
+}
+
+variable "keyvault_firewall_bypass" {
+  type        = string
+  default     = "AzureServices"
+  description = "List of key vault firewall rules to bypass."
+}
+
+variable "keyvault_firewall_allowed_ips" {
+  type        = list(string)
+  default     = []
+  description = "value of key vault firewall allowed ip rules."
+}
+
+variable "keyvault_firewall_virtual_network_subnet_ids" {
+  type        = list(string)
+  default     = []
+  description = "value of key vault firewall allowed virtual network subnet ids."
 }
 
 # ####################################
