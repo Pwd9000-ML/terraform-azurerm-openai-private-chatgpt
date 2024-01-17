@@ -42,7 +42,7 @@ resource "azurerm_linux_web_app" "meilisearch" {
   site_config {
     always_on = "true"
     ip_restriction {
-      virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id != null ? var.meilisearch_app_virtual_network_subnet_id : element(values(azurerm_subnet.az_openai_subnet)[0].id, 0)
+      virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id != null ? var.meilisearch_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet[var.subnet_config.subnet_name].id
       priority                  = 100
       name                      = "Allow from LibreChat app subnet"
       action                    = "Allow"
