@@ -7,7 +7,7 @@
 # 3.) Create an OpenAI language model deployments. (GPT-3, GPT-4, etc.)
 # 4.) Store the OpenAI account and model details in the key vault.
 module "openai" {
-source                  = "./modules/openai"
+  source = "./modules/openai"
   #common
   location = var.location
   tags     = var.tags
@@ -69,20 +69,26 @@ module "openai_cosmosdb" {
   virtual_network_subnets           = var.create_openai_networking == true ? toset(values(module.openai_networking[0].subnet_ids)) : var.cosmosdb_virtual_network_subnets
   is_virtual_network_filter_enabled = var.cosmosdb_is_virtual_network_filter_enabled
   public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
+  openai_keyvault_id                = var.create_openai_service == true ? module.openai.key_vault_id : var.openai_keyvault_id
   tags                              = var.tags
 }
 
 ### Create the Web App ###
-# 7.) Create a Linux Web App running chatbot container.
-module "openai_app" {
-  source                  = "./modules/librechat_app"
-  app_resource_group_name = var.cosmosdb_resource_group_name
-  location                = var.location
-  tags                    = var.tags
-  app_service_name        = "openai-asp90221"
-  app_service_sku_name    = "B1"
-  app_name                = "openai-app90221"
-}
+# # 7.) Create a Linux Web App running chatbot container.
+# module "openai_app" {
+#   source                  = "./modules/librechat_app"
+#   app_resource_group_name = var.cosmosdb_resource_group_name
+#   location                = var.location
+#   tags                    = var.tags
+
+#   app_service_sku_name = var.app_service_sku_name
+#   app_service_name     = var.app_service_name
+#   app_name             = var.app_name
+#   app_title            = var.app_title
+#   app_custom_footer    = var.app_custom_footer
+
+
+# }
 
 
 # 8.) grant the container app access a the key vault (optional).

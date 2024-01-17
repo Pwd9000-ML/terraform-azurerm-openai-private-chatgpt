@@ -11,7 +11,7 @@ resource "azurerm_linux_web_app" "openai" {
   location                      = var.location
   resource_group_name           = var.app_resource_group_name
   service_plan_id               = azurerm_service_plan.openai.id
-  public_network_access_enabled = true
+  public_network_access_enabled = var.public_network_access_enabled
   https_only                    = true
 
   site_config {
@@ -34,10 +34,10 @@ resource "azurerm_linux_web_app" "openai" {
     #==================================================#
     #               Server Configuration               #
     #==================================================#
-    APP_TITLE = var.app_title
-    # CUSTOM_FOOTER="My custom footer"
-    HOST          = "0.0.0.0"
-    PORT          = 80
+    APP_TITLE     = var.app_title
+    CUSTOM_FOOTER = var.app_custom_footer
+    HOST          = var.app_host
+    PORT          = var.app_port
     MONGO_URI     = ""
     DOMAIN_CLIENT = "http://localhost:3080"
     DOMAIN_SERVER = "http://localhost:3080"

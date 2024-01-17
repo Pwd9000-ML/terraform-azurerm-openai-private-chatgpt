@@ -1,8 +1,7 @@
 ##################################################
 # DATA                                           #
 ##################################################
-
-# Data sources to get Subnet ID/ss for CosmosDB and App Service
+# Data sources to get Subnet ID/s for CosmosDB and App Service
 # Usage in Module example: subnet_id = data.azurerm_subnet.subnet["app-cosmos-sub"].id
 # data "azurerm_subnet" "subnet" {
 #   for_each             = { for each in var.subnet_config : each.subnet_name => each if var.create_openai_networking == false }

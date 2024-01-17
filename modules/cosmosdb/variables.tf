@@ -106,3 +106,9 @@ variable "tags" {
   }
   description = "A map of key value pairs that is used to tag resources created."
 }
+
+### keyvault access###
+variable "openai_keyvault_id" {
+  type        = string
+  description = "The ID of the Key Vault to store the CosmosDB account details."
+}

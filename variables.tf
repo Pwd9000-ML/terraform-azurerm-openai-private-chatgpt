@@ -327,6 +327,49 @@ variable "cosmosdb_public_network_access_enabled" {
   default     = true
 }
 
+variable "openai_keyvault_id" {
+  type        = string
+  description = "The ID of the Key Vault to store the CosmosDB account details."
+  default     = null
+}
+
+###################################
+### LibreChat App Module params ###
+###################################
+### App Service Plan ###
+variable "app_service_name" {
+  type        = string
+  description = "Name of the App Service."
+  default     = "openai-asp9000"
+}
+
+variable "app_service_sku_name" {
+  type        = string
+  description = "The SKU name of the App Service Plan."
+  default     = "B1"
+}
+
+### App Service ###
+variable "app_name" {
+  type        = string
+  description = "Name of the App."
+  default     = "openai-app-9000"
+}
+
+variable "app_title" {
+  type        = string
+  description = "Title of the App."
+  default     = "PrivateGPT"
+}
+
+variable "app_custom_footer" {
+  type        = string
+  description = "Custom footer for the App."
+  default     = "Privately hosted chat app powered by Azure OpenAI"
+}
+
+
+
 ###################################
 ### Container App Module params ###
 ###################################

@@ -39,17 +39,48 @@ variable "app_name" {
   default     = "openai-app"
 }
 
-##Pull from KV potentially
+variable "public_network_access_enabled " {
+  type        = bool
+  description = "Whether or not public network access is allowed for this App Service."
+  default     = false
+}
+
+### App Settings ###
+## Server Configuration ## 
 variable "app_title" {
   type        = string
   description = "Title of the App."
   default     = "PrivateGPT"
 }
 
+variable "app_custom_footer" {
+  type        = string
+  description = "Custom footer for the App."
+  default     = "Privately hosted chat app powered by Azure OpenAI"
+}
+
+variable "app_host" {
+  type        = string
+  description = "The server will listen to localhost:3080 by default. You can change the target IP as you want. If you want to make this server available externally, for example to share the server with others or expose this from a Docker container, set host to 0.0.0.0 or your external IP interface. Setting host to 0.0.0.0 means listening on all interfaces. It's not a real IP."
+  default     = "0.0.0.0"
+}
+
+variable "app_port" {
+  type        = number
+  description = "The port to listen on."
+  default     = 80
+}
+
+variable "public_network_access_enabled" {
+  type        = bool
+  description = "Whether or not public network access is allowed for this App Service."
+  default     = false
+}
+
+###31
 variable "mongodb_connection_string" {
   type        = string
   description = "Connection string to the MongoDB database."
   sensitive   = true
-  default     = "value"
 }
 
