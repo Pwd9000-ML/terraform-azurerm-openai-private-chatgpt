@@ -91,6 +91,12 @@ variable "keyvault_firewall_allowed_ips" {
   description = "value of key vault firewall allowed ip rules."
 }
 
+variable "virtual_network_subnet_name" {
+  type        = string
+  default     = ""
+  description = "Name of the subnet to allow access to the key vault (service endpoint)."
+}
+
 # ### OpenAI service Module params ###
 # ### key vault ###
 # variable "kv_config" {

@@ -16,8 +16,8 @@ resource "azurerm_key_vault" "az_openai_kv" {
       virtual_network_subnet_ids = network_acls.value.virtual_network_subnet_ids
     }
   }
-  tags = var.tags
-  depends_on = [ azurerm_subnet.az_openai_subnet]
+  tags       = var.tags
+  depends_on = [azurerm_subnet.az_openai_subnet]
 }
 
 

@@ -3,6 +3,13 @@
 ##################################################
 data "azurerm_client_config" "current" {}
 
+data "azurerm_subnet" "openai_subnet" {
+  name                 = var.subnet_config.subnet_name
+  virtual_network_name = var.virtual_network_name
+  resource_group_name  = var.resource_group_name
+  depends_on           = [azurerm_subnet.az_openai_subnet]
+}
+
 # Data sources to get Subnet ID/s for CosmosDB and App Service
 # Usage in Module example: subnet_id = data.azurerm_subnet.subnet["app-cosmos-sub"].id
 # data "azurerm_subnet" "subnet" {
