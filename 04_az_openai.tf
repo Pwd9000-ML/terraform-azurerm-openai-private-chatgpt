@@ -58,7 +58,7 @@ resource "azurerm_cognitive_account" "az_openai" {
 resource "azurerm_cognitive_deployment" "az_openai_models" {
   for_each = { for each in var.oai_model_deployment : each.deployment_id => each }
 
-  cognitive_account_id = data.azurerm_cognitive_account.openai.id
+  cognitive_account_id = azurerm_cognitive_account.az_openai.id
   name                 = each.value.deployment_id
   rai_policy_name      = each.value.rai_policy_name
 
@@ -93,7 +93,7 @@ resource "azurerm_key_vault_secret" "openai_primary_key" {
 
 resource "azurerm_key_vault_secret" "openai_model_deployment_id" {
   for_each     = { for each in var.oai_model_deployment : each.deployment_id => each }
-  name         = "${var.var.oai_account_name}-model-${each.value.deployment_id}-id"
+  name         = "${var.oai_account_name}-model-${each.value.deployment_id}-id"
   value        = each.value.deployment_id
   key_vault_id = azurerm_key_vault.az_openai_kv.id
   depends_on   = [azurerm_role_assignment.kv_role_assigment]
@@ -101,7 +101,7 @@ resource "azurerm_key_vault_secret" "openai_model_deployment_id" {
 
 resource "azurerm_key_vault_secret" "openai_model" {
   for_each     = { for each in var.oai_model_deployment : each.deployment_id => each }
-  name         = "${var.var.oai_account_name}-model-${each.value.deployment_id}-name"
+  name         = "${var.oai_account_name}-model-${each.value.deployment_id}-name"
   value        = each.value.model_name
   key_vault_id = azurerm_key_vault.az_openai_kv.id
   depends_on   = [azurerm_role_assignment.kv_role_assigment]
