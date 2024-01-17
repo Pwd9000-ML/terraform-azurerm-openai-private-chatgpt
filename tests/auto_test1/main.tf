@@ -1,24 +1,24 @@
- terraform {
-   backend "azurerm" {}
-   #backend "local" { path = "terraform-test1.tfstate" }
- }
+terraform {
+  backend "azurerm" {}
+  #backend "local" { path = "terraform-test1.tfstate" }
+}
 
- provider "azurerm" {
-   features {
-     key_vault {
-       purge_soft_delete_on_destroy = true
-     }
-   }
- }
+provider "azurerm" {
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy = true
+    }
+  }
+}
 
 # #################################################
 # # PRE-REQS                                      #
 # #################################################
- ### Random integer to generate unique names
- resource "random_integer" "number" {
-   min = 0001
-   max = 9999
- }
+### Random integer to generate unique names
+resource "random_integer" "number" {
+  min = 0001
+  max = 9999
+}
 
 # ### Resource group to deploy the container apps private ChatGPT instance and supporting resources into
 # resource "azurerm_resource_group" "rg" {
@@ -30,14 +30,14 @@
 # ##################################################
 # # MODULE TO TEST                                 #
 # ##################################################
- module "private-chatgpt-openai" {
-   source = "../.."
+module "private-chatgpt-openai" {
+  source = "../.."
 
-   #common
-   location = var.location
-   tags     = var.tags
-   resource_group_name = var.resource_group_name
- }
+  #common
+  location            = var.location
+  tags                = var.tags
+  resource_group_name = var.resource_group_name
+}
 
 #   #keyvault (OpenAI Service Account details)
 #   kv_config                                    = local.kv_config

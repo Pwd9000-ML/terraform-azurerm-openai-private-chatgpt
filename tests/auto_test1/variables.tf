@@ -1,22 +1,22 @@
 ### common ###
 variable "location" {
-   type        = string
-   default     = "uksouth"
-   description = "Azure region where resources will be hosted."
+  type        = string
+  default     = "uksouth"
+  description = "Azure region where resources will be hosted."
 }
 
- variable "tags" {
-   type        = map(string)
-   default     = {}
-   description = "A map of key value pairs that is used to tag resources created."
- }
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "A map of key value pairs that is used to tag resources created."
+}
 
- ### solution resource group ###
- variable "resource_group_name" {
-   type        = string
-   description = "Name of the resource group to create where the cognitive account OpenAI service is hosted."
-   nullable    = false
- }
+### solution resource group ###
+variable "resource_group_name" {
+  type        = string
+  description = "Name of the resource group to create where the cognitive account OpenAI service is hosted."
+  nullable    = false
+}
 
 # ### OpenAI service Module params ###
 # ### key vault ###

@@ -2,10 +2,10 @@
 resource_group_name = "TF-Module-Automated-Tests-Cognitive-GPT"
 location            = "uksouth"
 tags = {
-   Terraform   = "True"
-   Description = "Private ChatGPT hosted on Azure OpenAI (Librechat)"
-   Author      = "Marcel Lupo"
-   GitHub      = "https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt"
+  Terraform   = "True"
+  Description = "Private ChatGPT hosted on Azure OpenAI (Librechat)"
+  Author      = "Marcel Lupo"
+  GitHub      = "https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt"
 }
 
 # ### OpenAI Service Module Inputs ###
