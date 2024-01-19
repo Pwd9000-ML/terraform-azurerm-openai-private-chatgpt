@@ -366,6 +366,24 @@ variable "meilisearch_app_virtual_network_subnet_id" {
   default     = null
 }
 
+variable "libre_app_name" {
+  type        = string
+  description = "Name of the LibreChat App Service."
+  default     = "librechatapp9000"
+}
+
+variable "libre_app_public_network_access_enabled" {
+  type        = bool
+  description = "Whether or not public network access is enabled. Defaults to `false`."
+  default     = true
+}
+
+variable "libre_app_virtual_network_subnet_id" {
+  type        = string
+  description = "The ID of the subnet to deploy the LibreChat App Service in."
+  default     = null
+}
+
 # ### App Service ###
 # variable "app_name" {
 #   type        = string
