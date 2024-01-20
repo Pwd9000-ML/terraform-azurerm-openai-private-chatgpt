@@ -122,7 +122,7 @@ resource "azurerm_role_assignment" "meilisearch_app_kv_access" {
   role_definition_name = "Key Vault Secrets User" # Read secret contents. Only works for key vaults that use the 'Azure role-based access control' permission model.
 }
 
-resource "azurerm_linux_web_app" "az_openai_librechat" {
+resource "azurerm_linux_web_app" "librechat" {
   name                          = var.libre_app_name
   location                      = var.location
   resource_group_name           = azurerm_resource_group.az_openai_rg.name
@@ -146,6 +146,10 @@ resource "azurerm_linux_web_app" "az_openai_librechat" {
     }
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   app_settings              = local.libre_app_settings
   virtual_network_subnet_id = var.libre_app_virtual_network_subnet_id != null ? var.libre_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
 
@@ -153,9 +157,15 @@ resource "azurerm_linux_web_app" "az_openai_librechat" {
 }
 
 # Grant kv access to librechat app to reference environment variables (stored as secrets in key vault)
-resource "azurerm_role_assignment" "libre_app_kv_access" {
+#resource "azurerm_role_assignment" "libre_app_kv_access" {
+#  scope                = azurerm_key_vault.az_openai_kv.id 
+#  principal_id         = azurerm_linux_web_app.az_openai_librechat.identity[0].principal_id
+#  role_definition_name = "Key Vault Secrets User" # Read secret contents. Only works for key vaults that use the 'Azure role-based access control' permission model.
+#}
+
+resource "azurerm_role_assignment" "librechat_app_kv_access" {
   scope                = azurerm_key_vault.az_openai_kv.id
-  principal_id         = azurerm_linux_web_app.az_openai_librechat.identity[0].principal_id
+  principal_id         = azurerm_linux_web_app.librechat.identity[0].principal_id
   role_definition_name = "Key Vault Secrets User" # Read secret contents. Only works for key vaults that use the 'Azure role-based access control' permission model.
 }
 
