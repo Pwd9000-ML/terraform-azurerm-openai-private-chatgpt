@@ -1,6 +1,6 @@
 ### 01 Common Variables + RG ###
 resource_group_name = "TF-Module-Automated-Tests-Cognitive-GPT"
-location            = "eastus"
+location            = "westus"
 tags = {
   Terraform   = "True"
   Description = "Private ChatGPT hosted on Azure OpenAI (Librechat)"
