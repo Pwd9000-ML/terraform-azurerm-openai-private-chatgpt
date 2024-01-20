@@ -1,5 +1,15 @@
 locals {
   libre_app_settings = {
+    ### App Service Configuration ###
+    WEBSITE_RUN_FROM_PACKAGE = "1"
+    # DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+    DOCKER_ENABLE_CI                    = false
+    WEBSITES_PORT                       = var.libre_app_port
+    PORT                                = var.libre_app_port
+    DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
+    #NODE_ENV                            = "production"
+
     ### Server Configuration ###
     APP_TITLE     = var.libre_app_title
     CUSTOM_FOOTER = var.libre_app_custom_footer
@@ -37,27 +47,17 @@ locals {
     MEILI_MASTER_KEY   = var.libre_app_meili_key != null ? var.libre_app_meili_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
 
     ### User - Balance ###
-    CHECK_BALANCE = false
+    #CHECK_BALANCE = false
 
     ### User - Registration and Login ###
-    ALLOW_EMAIL_LOGIN         = true
-    ALLOW_REGISTRATION        = true
-    ALLOW_SOCIAL_LOGIN        = false
-    ALLOW_SOCIAL_REGISTRATION = false
-    SESSION_EXPIRY            = 1000 * 60 * 15            #15 minutes
-    REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 7 #7 days
-    JWT_SECRET                = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_secret.id})"
-    JWT_REFRESH_SECRET        = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_refresh_secret.id})"
-
-    ### App Service Configuration ###
-    WEBSITE_RUN_FROM_PACKAGE            = "1"
-    DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"
-    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-    DOCKER_ENABLE_CI                    = false
-    WEBSITES_PORT                       = 80
-    PORT                                = 80
-    DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
-    NODE_ENV                            = "production"
+    ALLOW_EMAIL_LOGIN         = var.libre_app_allow_email_login         #true
+    ALLOW_REGISTRATION        = var.libre_app_allow_registration        #true
+    ALLOW_SOCIAL_LOGIN        = var.libre_app_allow_social_login        #false
+    ALLOW_SOCIAL_REGISTRATION = var.libre_app_allow_social_registration #false
+    SESSION_EXPIRY            = 1000 * 60 * 15                          #15 minutes
+    REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 7               #7 days
+    JWT_SECRET                = var.libre_app_jwt_secret != null ? var.libre_app_jwt_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_secret.id})"
+    JWT_REFRESH_SECRET        = var.libre_app_jwt_refresh_secret != null ? var.libre_app_jwt_refresh_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_refresh_secret.id})"
   }
 }
 

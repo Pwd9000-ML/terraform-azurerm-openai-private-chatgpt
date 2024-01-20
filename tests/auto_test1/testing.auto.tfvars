@@ -130,6 +130,14 @@ libre_app_disable_meilisearch_analytics = true
 libre_app_meili_host                    = null
 libre_app_meili_key                     = null
 
+# User Registration
+libre_app_allow_email_login         = true
+libre_app_allow_registration        = true
+libre_app_allow_social_login        = false
+libre_app_allow_social_registration = false
+libre_app_jwt_secret                = null
+libre_app_jwt_refresh_secret        = null
+
 # ### CDN - Front Door ###
 # create_front_door_cdn = true
 # create_dns_zone       = true #Set to false if you already have a DNS zone, remember to add this DNS zone to your domain registrar

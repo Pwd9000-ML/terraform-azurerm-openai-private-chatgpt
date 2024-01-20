@@ -527,6 +527,46 @@ variable "libre_app_meili_key" {
   sensitive   = true
 }
 
+# User Registration
+variable "libre_app_allow_email_login" {
+  type        = bool
+  description = "Allow Email Login"
+  default     = true
+}
+
+variable "libre_app_allow_registration" {
+  type        = bool
+  description = "Allow Registration"
+  default     = true
+}
+
+variable "libre_app_allow_social_login" {
+  type        = bool
+  description = "Allow Social Login"
+  default     = false
+}
+
+variable "libre_app_allow_social_registration" {
+  type        = bool
+  description = "Allow Social Registration"
+  default     = false
+}
+
+variable "libre_app_jwt_secret" {
+  type        = string
+  description = "JWT Secret"
+  default     = null
+  sensitive   = true
+}
+
+variable "libre_app_jwt_refresh_secret" {
+  type        = string
+  description = "JWT Refresh Secret"
+  default     = null
+  sensitive   = true
+}
+
+
 # LibreChat App Service App Settings
 
 # # DNS zone #
