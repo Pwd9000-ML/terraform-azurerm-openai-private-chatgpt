@@ -82,10 +82,47 @@ cosmosdb_is_virtual_network_filter_enabled = true
 cosmosdb_public_network_access_enabled     = true
 
 ### 06 app services (librechat app + meilisearch) ###
-app_service_name                          = "openaiasp"
-app_service_sku_name                      = "B1"
+# App Service Plan
+app_service_name     = "openaiasp"
+app_service_sku_name = "B1"
+
+# Meilisearch App
 meilisearch_app_name                      = "meilisearchapp"
 meilisearch_app_virtual_network_subnet_id = null
+
+# LibreChat App Service
+libre_app_name                          = "librechatapp"
+libre_app_public_network_access_enabled = true
+libre_app_virtual_network_subnet_id     = null
+
+### LibreChat App Settings ###
+# Server Config
+libre_app_title         = "Azure OpenAI LibreChat"
+libre_app_custom_footer = "Privately hosted chat app powered by Azure OpenAI and LibreChat"
+libre_app_host          = "0.0.0.0"
+libre_app_port          = 3080
+libre_app_mongo_uri     = null
+libre_app_domain_client = "https://localhost:3080"
+libre_app_domain_server = "https://localhost:3080"
+
+# debug logging
+libre_app_debug_logging = false
+libre_app_debug_console = false
+
+# Endpoints
+libre_app_endpoints = "AzureOpenAI"
+
+# Azure OpenAI
+libre_app_az_oai_api_key                      = null
+libre_app_az_oai_models                       = "gpt-4-1106-Preview"
+libre_app_az_oai_use_model_as_deployment_name = true
+libre_app_az_oai_instance_name                = null
+libre_app_az_oai_api_version                  = "2023-07-01-preview"
+
+# Plugins
+libre_app_debug_plugins     = false
+libre_app_plugins_creds_key = null
+libre_app_plugins_creds_iv  = null
 
 # ### CDN - Front Door ###
 # create_front_door_cdn = true

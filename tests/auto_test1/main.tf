@@ -26,17 +26,20 @@ resource "random_integer" "number" {
 module "private-chatgpt-openai" {
   source = "../.."
 
-  #01 common + RG
+  # 01 common + RG #
+  #================#
   location            = var.location
   tags                = var.tags
   resource_group_name = var.resource_group_name
 
-  #02 networking
+  # 02 networking #
+  #===============#
   virtual_network_name = "${var.virtual_network_name}${random_integer.number.result}"
   vnet_address_space   = var.vnet_address_space
   subnet_config        = var.subnet_config
 
-  #03 keyvault (Solution Secrets)
+  # 03 keyvault (Solution Secrets)
+  #==============================#
   kv_name                  = "${var.kv_name}${random_integer.number.result}"
   kv_sku                   = var.kv_sku
   kv_fw_default_action     = var.kv_fw_default_action
@@ -44,7 +47,8 @@ module "private-chatgpt-openai" {
   kv_fw_allowed_ips        = var.kv_fw_allowed_ips
   kv_fw_network_subnet_ids = var.kv_fw_network_subnet_ids
 
-  #04 openai service
+  # 04 openai service
+  #==================#
   oai_account_name                       = "${var.oai_account_name}${random_integer.number.result}"
   oai_sku_name                           = var.oai_sku_name
   oai_custom_subdomain_name              = "${var.oai_custom_subdomain_name}${random_integer.number.result}"
@@ -59,7 +63,8 @@ module "private-chatgpt-openai" {
   oai_storage                            = var.oai_storage
   oai_model_deployment                   = var.oai_model_deployment
 
-  #05 cosmosdb
+  # 05 cosmosdb
+  #============#
   cosmosdb_name                              = "${var.cosmosdb_name}${random_integer.number.result}"
   cosmosdb_offer_type                        = var.cosmosdb_offer_type
   cosmosdb_kind                              = var.cosmosdb_kind
@@ -74,11 +79,54 @@ module "private-chatgpt-openai" {
   cosmosdb_is_virtual_network_filter_enabled = var.cosmosdb_is_virtual_network_filter_enabled
   cosmosdb_public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
 
-  #06 app services (librechat app + meilisearch)
-  app_service_name                          = "${var.app_service_name}${random_integer.number.result}"
-  app_service_sku_name                      = var.app_service_sku_name
+  # 06 app services (librechat app + meilisearch)
+  #=============================================#
+  # App Service Plan
+  app_service_name     = "${var.app_service_name}${random_integer.number.result}"
+  app_service_sku_name = var.app_service_sku_name
+
+  # MeiSearch App
   meilisearch_app_name                      = "${var.meilisearch_app_name}${random_integer.number.result}"
   meilisearch_app_virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id
+
+  # LibreChat App
+  libre_app_name                          = "${var.libre_app_name}${random_integer.number.result}"
+  libre_app_virtual_network_subnet_id     = var.libre_app_virtual_network_subnet_id
+  libre_app_public_network_access_enabled = var.libre_app_public_network_access_enabled
+
+  ### LibreChat App Settings ###
+  # Server Config
+  libre_app_title         = var.libre_app_title
+  libre_app_custom_footer = var.libre_app_custom_footer
+  libre_app_host          = var.libre_app_host
+  libre_app_port          = var.libre_app_port
+  libre_app_mongo_uri     = var.libre_app_mongo_uri
+  libre_app_domain_client = var.libre_app_domain_client
+  libre_app_domain_server = var.libre_app_domain_server
+
+  # Debug Config
+  libre_app_debug_logging = var.libre_app_debug_logging
+  libre_app_debug_console = var.libre_app_debug_console
+
+  # Endpoints
+  libre_app_endpoints = var.libre_app_endpoints
+
+  # Azure OpenAI Config
+  libre_app_az_oai_api_key                      = var.libre_app_az_oai_api_key
+  libre_app_az_oai_models                       = var.libre_app_az_oai_models
+  libre_app_az_oai_use_model_as_deployment_name = var.libre_app_az_oai_use_model_as_deployment_name
+  libre_app_az_oai_instance_name                = var.libre_app_az_oai_use_model_as_deployment_name
+  libre_app_az_oai_api_version                  = var.libre_app_az_oai_api_version
+
+  # Plugins
+  libre_app_debug_plugins     = var.libre_app_debug_plugins
+  libre_app_plugins_creds_key = var.libre_app_plugins_creds_key
+  libre_app_plugins_creds_iv  = var.libre_app_plugins_creds_iv
+
+
+
+
+
 }
 
 

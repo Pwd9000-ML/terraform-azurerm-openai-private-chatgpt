@@ -337,6 +337,7 @@ variable "cosmosdb_public_network_access_enabled" {
 }
 
 ### 06 app services (librechat app + meilisearch) ###
+# App service Plan
 variable "app_service_name" {
   type        = string
   description = "Name of the Linux App Service Plan."
@@ -349,6 +350,7 @@ variable "app_service_sku_name" {
   default     = "B1"
 }
 
+# Meilisearch App Service
 variable "meilisearch_app_name" {
   type        = string
   description = "Name of the meilisearch App Service."
@@ -361,6 +363,145 @@ variable "meilisearch_app_virtual_network_subnet_id" {
   description = "The ID of the subnet to deploy the meilisearch App Service in."
   default     = null
 }
+
+# LibreChat App Service
+variable "libre_app_name" {
+  type        = string
+  description = "Name of the LibreChat App Service."
+  default     = "librechatapp9000"
+}
+
+variable "libre_app_public_network_access_enabled" {
+  type        = bool
+  description = "Whether or not public network access is enabled. Defaults to `false`."
+  default     = true
+}
+
+variable "libre_app_virtual_network_subnet_id" {
+  type        = string
+  description = "The ID of the subnet to deploy the LibreChat App Service in."
+  default     = null
+}
+
+# LibreChat App Service App Settings
+# Server Config
+variable "libre_app_title" {
+  type        = string
+  description = "Add a custom title for the App."
+  default     = "PrivateGPT"
+}
+
+variable "libre_app_custom_footer" {
+  type        = string
+  description = "Add a custom footer for the App."
+  default     = "Privately hosted chat app powered by Azure OpenAI and LibreChat."
+}
+
+variable "libre_app_host" {
+  type        = string
+  description = "he server will listen to localhost:3080 by default. You can change the target IP as you want. If you want to make this server available externally, for example to share the server with others or expose this from a Docker container, set host to 0.0.0.0 or your external IP interface."
+  default     = "0.0.0.0"
+}
+
+variable "libre_app_port" {
+  type        = number
+  description = "The host port to listen on."
+  default     = 3080
+}
+
+variable "libre_app_mongo_uri" {
+  type        = string
+  description = "The MongoDB Connection String to connect to."
+  default     = null
+  sensitive   = true
+}
+
+variable "libre_app_domain_client" {
+  type        = string
+  description = "To use locally, set DOMAIN_CLIENT and DOMAIN_SERVER to http://localhost:3080 (3080 being the port previously configured).When deploying to a custom domain, set DOMAIN_CLIENT and DOMAIN_SERVER to your deployed URL, e.g. https://mydomain.example.com"
+  default     = "http://localhost:3080"
+}
+
+variable "libre_app_domain_server" {
+  type        = string
+  description = "To use locally, set DOMAIN_CLIENT and DOMAIN_SERVER to http://localhost:3080 (3080 being the port previously configured).When deploying to a custom domain, set DOMAIN_CLIENT and DOMAIN_SERVER to your deployed URL, e.g. https://mydomain.example.com"
+  default     = "http://localhost:3080"
+}
+
+# Debug logging
+variable "libre_app_debug_logging" {
+  type        = bool
+  description = "LibreChat has central logging built into its backend (api). Log files are saved in /api/logs. Error logs are saved by default. Debug logs are enabled by default but can be turned off if not desired."
+  default     = false
+}
+
+variable "libre_app_debug_console" {
+  type        = bool
+  description = "Enable verbose server output in the console, though it's not recommended due to high verbosity."
+  default     = false
+}
+
+# Endpoints
+variable "libre_app_endpoints" {
+  type        = string
+  description = "endpoints and models selection. E.g. 'openAI,azureOpenAI,bingAI,chatGPTBrowser,google,gptPlugins,anthropic'"
+  default     = "azureOpenAI"
+}
+
+# Azure OpenAI
+variable "libre_app_az_oai_api_key" {
+  type        = string
+  description = "Azure OpenAI API Key"
+  default     = null
+  sensitive   = true
+}
+
+variable "libre_app_az_oai_models" {
+  type        = string
+  description = "Azure OpenAI Models. E.g. 'gpt-4-1106-preview,gpt-4,gpt-3.5-turbo,gpt-3.5-turbo-1106,gpt-4-vision-preview'"
+  default     = "gpt-4-1106-preview"
+}
+
+variable "libre_app_az_oai_use_model_as_deployment_name" {
+  type        = bool
+  description = "Azure OpenAI Use Model as Deployment Name"
+  default     = true
+}
+
+variable "libre_app_az_oai_instance_name" {
+  type        = string
+  description = "Azure OpenAI Instance Name"
+  default     = null
+}
+
+variable "libre_app_az_oai_api_version" {
+  type        = string
+  description = "Azure OpenAI API Version"
+  default     = "2023-07-01-preview"
+}
+
+# Plugins
+variable "libre_app_debug_plugins" {
+  type        = bool
+  description = "Enable debug mode for Libre App plugins."
+  default     = false
+}
+
+variable "libre_app_plugins_creds_key" {
+  type        = string
+  description = "Libre App Plugins Creds Key"
+  default     = null
+  sensitive   = true
+}
+
+variable "libre_app_plugins_creds_iv" {
+  type        = string
+  description = "Libre App Plugins Creds IV"
+  default     = null
+  sensitive   = true
+}
+
+# LibreChat App Service App Settings
 
 # # DNS zone #
 # variable "create_dns_zone" {

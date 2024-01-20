@@ -5,30 +5,30 @@ locals {
     CUSTOM_FOOTER = var.libre_app_custom_footer
     HOST          = var.libre_app_host
     PORT          = var.libre_app_port
-    MONGO_URI     = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_cosmos_uri.id})"
-    DOMAIN_CLIENT = var.libre_app_domain_client #"http://localhost:3080"
-    DOMAIN_SERVER = var.libre_app_domain_server #"http://localhost:3080"
+    MONGO_URI     = var.libre_app_mongo_uri != null ? var.libre_app_mongo_uri : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_cosmos_uri.id})"
+    DOMAIN_CLIENT = var.libre_app_domain_client
+    DOMAIN_SERVER = var.libre_app_domain_server
 
     ### Debug Logging ###
-    DEBUG_LOGGING = var.libre_app_debug_logging #true
-    DEBUG_CONSOLE = var.libre_app_debug_console #false
+    DEBUG_LOGGING = var.libre_app_debug_logging
+    DEBUG_CONSOLE = var.libre_app_debug_console
 
     ### Endpoints ###
     ENDPOINTS = var.libre_app_endpoints #"azureOpenAI"
 
     ### Azure OpenAI ###
-    AZURE_API_KEY                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
-    AZURE_OPENAI_MODELS                = var.libre_app_azure_openai_models                                           # "gpt-4-1106-preview"
-    AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = var.libre_app_azure_use_model_as_deployment_name                            #true
-    AZURE_OPENAI_API_INSTANCE_NAME     = split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1] # "gpt9000"
-    AZURE_OPENAI_API_VERSION           = var.libre_app_azure_openai_api_version                                      #"2023-07-01-preview"
+    AZURE_API_KEY                      = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
+    AZURE_OPENAI_MODELS                = var.libre_app_az_oai_models
+    AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = var.libre_app_az_oai_use_model_as_deployment_name
+    AZURE_OPENAI_API_INSTANCE_NAME     = var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]
+    AZURE_OPENAI_API_VERSION           = var.libre_app_az_oai_api_version
 
     ### Plugins ###
     # NOTE: You need a fixed key and IV. a 32-byte key (64 characters in hex) and 16-byte IV (32 characters in hex) 
     # Warning: If you don't set them, the app will crash on startup.
-    DEBUG_PLUGINS = false
-    CREDS_KEY     = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
-    CREDS_IV      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
+    DEBUG_PLUGINS = var.libre_app_debug_plugins
+    CREDS_KEY     = var.libre_app_plugins_creds_key != null ? var.libre_app_plugins_creds_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
+    CREDS_IV      = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
 
     ### Search ###
     SEARCH             = var.enable_meilisearch            #true
