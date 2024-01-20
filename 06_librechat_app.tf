@@ -22,13 +22,13 @@ resource "random_string" "libre_app_creds_iv" {
 }
 
 resource "azurerm_key_vault_secret" "libre_app_creds_key" {
-  name         = "${libre_app_name}-key"
+  name         = "${var.libre_app_name}-key"
   value        = random_string.libre_app_creds_key.result
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }
 
 resource "azurerm_key_vault_secret" "libre_app_creds_iv" {
-  name         = "${libre_app_name}-iv"
+  name         = "${var.libre_app_name}-iv"
   value        = random_string.libre_app_creds_iv.result
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }
@@ -45,13 +45,13 @@ resource "random_string" "libre_app_jwt_refresh_secret" {
 }
 
 resource "azurerm_key_vault_secret" "libre_app_jwt_secret" {
-  name         = "${libre_app_name}-jwt-secret"
+  name         = "${var.libre_app_name}-jwt-secret"
   value        = random_string.libre_app_jwt_secret.result
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }
 
 resource "azurerm_key_vault_secret" "libre_app_jwt_refresh_secret" {
-  name         = "${libre_app_name}-jwt-refresh-secret"
+  name         = "${var.libre_app_name}-jwt-refresh-secret"
   value        = random_string.libre_app_jwt_refresh_secret.result
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }
