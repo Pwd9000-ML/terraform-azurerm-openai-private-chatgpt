@@ -1,58 +1,58 @@
 # Generate random strings as keys for meilisearch and librechat (Stored securely in Azure Key Vault)
-resource "random_string" "meilisearch_master_key" {
+resource "random_password" "meilisearch_master_key" {
   length  = 20
   special = false
 }
 
 resource "azurerm_key_vault_secret" "meilisearch_master_key" {
   name         = "${var.meilisearch_app_name}-master-key"
-  value        = random_string.meilisearch_master_key.result
+  value        = random_password.meilisearch_master_key.result
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }
 
 # LibreChat CREDS key (64 characters in hex) and 16-byte IV (32 characters in hex)
-resource "random_string" "libre_app_creds_key" {
+resource "random_password" "libre_app_creds_key" {
   length  = 64
   special = false
 }
 
-resource "random_string" "libre_app_creds_iv" {
+resource "random_password" "libre_app_creds_iv" {
   length  = 32
   special = false
 }
 
 resource "azurerm_key_vault_secret" "libre_app_creds_key" {
   name         = "${var.libre_app_name}-key"
-  value        = random_string.libre_app_creds_key.result
+  value        = random_password.libre_app_creds_key.result
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }
 
 resource "azurerm_key_vault_secret" "libre_app_creds_iv" {
   name         = "${var.libre_app_name}-iv"
-  value        = random_string.libre_app_creds_iv.result
+  value        = random_password.libre_app_creds_iv.result
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }
 
 # LibreChat JWT Secret (64 characters in hex) and JWT Refresh Secret (64 characters in hex)
-resource "random_string" "libre_app_jwt_secret" {
+resource "random_password" "libre_app_jwt_secret" {
   length  = 64
   special = false
 }
 
-resource "random_string" "libre_app_jwt_refresh_secret" {
+resource "random_password" "libre_app_jwt_refresh_secret" {
   length  = 64
   special = false
 }
 
 resource "azurerm_key_vault_secret" "libre_app_jwt_secret" {
   name         = "${var.libre_app_name}-jwt-secret"
-  value        = random_string.libre_app_jwt_secret.result
+  value        = random_password.libre_app_jwt_secret.result
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }
 
 resource "azurerm_key_vault_secret" "libre_app_jwt_refresh_secret" {
   name         = "${var.libre_app_name}-jwt-refresh-secret"
-  value        = random_string.libre_app_jwt_refresh_secret.result
+  value        = random_password.libre_app_jwt_refresh_secret.result
   key_vault_id = azurerm_key_vault.az_openai_kv.id
 }
 
