@@ -123,6 +123,13 @@ module "private-chatgpt-openai" {
   libre_app_plugins_creds_key = var.libre_app_plugins_creds_key
   libre_app_plugins_creds_iv  = var.libre_app_plugins_creds_iv
 
+  # Search
+  libre_app_enable_meilisearch            = var.libre_app_enable_meilisearch
+  libre_app_disable_meilisearch_analytics = var.libre_app_disable_meilisearch_analytics
+  libre_app_meili_host                    = var.libre_app_meili_host
+  libre_app_meili_key                     = var.libre_app_meili_key
+
+
 
 
 

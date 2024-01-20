@@ -1,6 +1,6 @@
 ### 01 Common Variables + RG ###
 resource_group_name = "TF-Module-Automated-Tests-Cognitive-GPT"
-location            = "uksouth"
+location            = "eastus"
 tags = {
   Terraform   = "True"
   Description = "Private ChatGPT hosted on Azure OpenAI (Librechat)"
@@ -123,6 +123,12 @@ libre_app_az_oai_api_version                  = "2023-07-01-preview"
 libre_app_debug_plugins     = false
 libre_app_plugins_creds_key = null
 libre_app_plugins_creds_iv  = null
+
+# Search
+libre_app_enable_meilisearch            = true
+libre_app_disable_meilisearch_analytics = true
+libre_app_meili_host                    = null
+libre_app_meili_key                     = null
 
 # ### CDN - Front Door ###
 # create_front_door_cdn = true

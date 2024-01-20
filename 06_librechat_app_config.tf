@@ -31,32 +31,10 @@ locals {
     CREDS_IV      = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
 
     ### Search ###
-    SEARCH             = var.enable_meilisearch            #true
-    MEILI_NO_ANALYTICS = var.disable_meilisearch_analytics #true
-    MEILI_HOST         = "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
-    MEILI_MASTER_KEY   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
-
-    ### User - Moderation ###
-    BAN_VIOLATIONS               = true
-    BAN_DURATION                 = 1000 * 60 * 60 * 2
-    BAN_INTERVAL                 = 20
-    LOGIN_VIOLATION_SCORE        = 1
-    REGISTRATION_VIOLATION_SCORE = 1
-    CONCURRENT_VIOLATION_SCORE   = 1
-    MESSAGE_VIOLATION_SCORE      = 1
-    NON_BROWSER_VIOLATION_SCORE  = 20
-    LOGIN_MAX                    = 7
-    LOGIN_WINDOW                 = 5
-    REGISTER_MAX                 = 5
-    REGISTER_WINDOW              = 60
-    LIMIT_CONCURRENT_MESSAGES    = true
-    CONCURRENT_MESSAGE_MAX       = 2
-    LIMIT_MESSAGE_IP             = true
-    MESSAGE_IP_MAX               = 40
-    MESSAGE_IP_WINDOW            = 1
-    LIMIT_MESSAGE_USER           = false
-    MESSAGE_USER_MAX             = 40
-    MESSAGE_USER_WINDOW          = 1
+    SEARCH             = var.libre_app_enable_meilisearch
+    MEILI_NO_ANALYTICS = var.libre_app_disable_meilisearch_analytics
+    MEILI_HOST         = var.libre_app_meili_host != null ? var.libre_app_meili_host : "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
+    MEILI_MASTER_KEY   = var.libre_app_meili_key != null ? var.libre_app_meili_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
 
     ### User - Balance ###
     CHECK_BALANCE = false
@@ -234,6 +212,10 @@ locals {
 #  #=============#
 #  # Moderation  #
 #  #=============#
+#  OPENAI_MODERATION=true
+#  OPENAI_MODERATION_API_KEY=sk-1234
+#  OPENAI_MODERATION_REVERSE_PROXY=false
+#
 #  BAN_VIOLATIONS = true
 #  BAN_DURATION   = 1000 * 60 * 60 * 2
 #  BAN_INTERVAL   = 20

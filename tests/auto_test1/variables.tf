@@ -501,6 +501,32 @@ variable "libre_app_plugins_creds_iv" {
   sensitive   = true
 }
 
+# Search
+variable "libre_app_enable_meilisearch" {
+  type        = bool
+  description = "Enable Meilisearch"
+  default     = true
+}
+
+variable "libre_app_disable_meilisearch_analytics" {
+  type        = bool
+  description = "Disable Meilisearch Analytics"
+  default     = true
+}
+
+variable "libre_app_meili_host" {
+  type        = string
+  description = "For the API server to connect to the search server. E.g. https://meilisearch.example.com"
+  default     = null
+}
+
+variable "libre_app_meili_key" {
+  type        = string
+  description = "Meilisearch API Key"
+  default     = null
+  sensitive   = true
+}
+
 # LibreChat App Service App Settings
 
 # # DNS zone #
