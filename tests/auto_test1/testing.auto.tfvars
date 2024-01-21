@@ -108,10 +108,10 @@ libre_app_virtual_network_subnet_id     = null
 libre_app_title         = "Azure OpenAI LibreChat"
 libre_app_custom_footer = "Privately hosted chat app powered by Azure OpenAI and LibreChat"
 libre_app_host          = "0.0.0.0"
-libre_app_port          = 80
+libre_app_port          = 3080
 libre_app_mongo_uri     = null
-libre_app_domain_client = "http://localhost:3080"
-libre_app_domain_server = "http://localhost:3080"
+#libre_app_domain_client = "http://localhost:3080"
+#libre_app_domain_server = "http://localhost:3080"
 
 # debug logging
 libre_app_debug_logging = true
