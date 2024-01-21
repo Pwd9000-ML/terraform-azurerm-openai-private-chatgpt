@@ -114,7 +114,7 @@ libre_app_domain_client = "https://localhost:3080"
 libre_app_domain_server = "https://localhost:3080"
 
 # debug logging
-libre_app_debug_logging = false
+libre_app_debug_logging = true
 libre_app_debug_console = false
 
 # Endpoints
@@ -128,7 +128,7 @@ libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
 
 # Plugins
-libre_app_debug_plugins     = false
+libre_app_debug_plugins     = true
 libre_app_plugins_creds_key = null
 libre_app_plugins_creds_iv  = null
 
