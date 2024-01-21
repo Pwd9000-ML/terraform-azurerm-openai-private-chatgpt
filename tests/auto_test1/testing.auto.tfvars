@@ -110,8 +110,8 @@ libre_app_custom_footer = "Privately hosted chat app powered by Azure OpenAI and
 libre_app_host          = "0.0.0.0"
 libre_app_port          = 80
 libre_app_mongo_uri     = null
-libre_app_domain_client = "http://localhost:3080"
-libre_app_domain_server = "http://localhost:3080"
+libre_app_domain_client = "http://localhost" #:3080"
+libre_app_domain_server = "http://localhost" #:3080"
 
 # debug logging
 libre_app_debug_logging = true
@@ -122,7 +122,7 @@ libre_app_endpoints = "azureOpenAI"
 
 # Azure OpenAI
 libre_app_az_oai_api_key                      = null
-libre_app_az_oai_models                       = "gpt-4-1106-preview,gpt-4-vision-preview"
+libre_app_az_oai_models                       = "gpt-4,gpt-4-1106-preview,gpt-4-vision-preview"
 libre_app_az_oai_use_model_as_deployment_name = true
 libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
