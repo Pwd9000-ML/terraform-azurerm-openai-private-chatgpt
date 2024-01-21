@@ -107,7 +107,7 @@ locals {
 #   # Azure      #
 #   #============#
 #    AZURE_API_KEY = ""
-#    AZURE_OPENAI_MODELS = "gpt-3.5-turbo,gpt-4"
+#    AZURE_OPENAI_MODELS = "gpt-4-1106-preview,gpt-4,gpt-3.5-turbo,gpt-3.5-turbo-1106,gpt-4-vision-preview"
 #    AZURE_OPENAI_DEFAULT_MODEL = "gpt-3.5-turbo"
 #    PLUGINS_USE_AZURE = true
 #    AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = true

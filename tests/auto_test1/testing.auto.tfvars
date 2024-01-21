@@ -52,12 +52,20 @@ oai_network_acls = null
 oai_storage      = null
 oai_model_deployment = [
   {
-    deployment_id  = "gpt-4"
-    model_name     = "gpt-4"
+    deployment_id  = "gpt-4-1106-Preview"
+    model_name     = "gpt-4-1106-Preview"
     model_format   = "OpenAI"
     model_version  = "1106-Preview"
     scale_type     = "Standard"
-    scale_capacity = 10 # 34K == Roughly 204 RPM (Requests per minute)
+    scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
+  },
+  {
+    deployment_id  = "gpt-4-vision-preview"
+    model_name     = "gpt-4-vision-preview"
+    model_format   = "OpenAI"
+    model_version  = "vision-preview"
+    scale_type     = "Standard"
+    scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
   }
 ]
 
