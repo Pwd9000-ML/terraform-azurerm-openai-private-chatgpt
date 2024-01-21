@@ -118,7 +118,7 @@ libre_app_debug_logging = true
 libre_app_debug_console = false
 
 # Endpoints
-libre_app_endpoints = "AzureOpenAI"
+libre_app_endpoints = "azureOpenAI"
 
 # Azure OpenAI
 libre_app_az_oai_api_key                      = null
