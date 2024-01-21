@@ -143,7 +143,7 @@ variable "oai_outbound_network_access_restricted" {
 
 variable "oai_public_network_access_enabled" {
   type        = bool
-  default     = true
+  default     = false
   description = "Whether or not public network access is enabled. Defaults to `false`."
 }
 
