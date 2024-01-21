@@ -2,6 +2,7 @@
 resource "random_password" "meilisearch_master_key" {
   length  = 20
   special = false
+  upper   = false
 }
 
 resource "azurerm_key_vault_secret" "meilisearch_master_key" {
@@ -14,11 +15,13 @@ resource "azurerm_key_vault_secret" "meilisearch_master_key" {
 resource "random_password" "libre_app_creds_key" {
   length  = 64
   special = false
+  upper   = false
 }
 
 resource "random_password" "libre_app_creds_iv" {
   length  = 32
   special = false
+  upper   = false
 }
 
 resource "azurerm_key_vault_secret" "libre_app_creds_key" {
@@ -37,11 +40,13 @@ resource "azurerm_key_vault_secret" "libre_app_creds_iv" {
 resource "random_password" "libre_app_jwt_secret" {
   length  = 64
   special = false
+  upper   = false
 }
 
 resource "random_password" "libre_app_jwt_refresh_secret" {
   length  = 64
   special = false
+  upper   = false
 }
 
 resource "azurerm_key_vault_secret" "libre_app_jwt_secret" {

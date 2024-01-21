@@ -1,8 +1,8 @@
 locals {
   libre_app_settings = {
     ### App Service Configuration ###
-    WEBSITE_RUN_FROM_PACKAGE = "1"
-    DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"#######
+    WEBSITE_RUN_FROM_PACKAGE            = "1"
+    DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io" #######
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
     DOCKER_ENABLE_CI                    = false
     WEBSITES_PORT                       = var.libre_app_port
