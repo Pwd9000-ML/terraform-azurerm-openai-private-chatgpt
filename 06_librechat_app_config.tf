@@ -7,9 +7,9 @@ locals {
     DOCKER_ENABLE_CI                    = false
     WEBSITES_PORT                       = var.libre_app_port
     PORT                                = var.libre_app_port
-    WEBSITES_CONTAINER_START_TIME_LIMIT = 1500
-    #DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:d7b4ed3079e357e316e2398093acc456f128dc6e"
-    DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev:latest"
+    WEBSITES_CONTAINER_START_TIME_LIMIT = 2000
+    DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
+    #DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-:latest"
     NODE_ENV                            = "production" #######
 
     ### Server Configuration ###

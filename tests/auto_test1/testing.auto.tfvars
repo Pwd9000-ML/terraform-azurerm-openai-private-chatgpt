@@ -92,7 +92,7 @@ cosmosdb_public_network_access_enabled     = true
 ### 06 app services (librechat app + meilisearch) ###
 # App Service Plan
 app_service_name     = "openaiasp"
-app_service_sku_name = "B1"
+app_service_sku_name = "B3"
 
 # Meilisearch App
 meilisearch_app_name                      = "meilisearchapp"
