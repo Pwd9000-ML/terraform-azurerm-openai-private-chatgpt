@@ -53,20 +53,20 @@ oai_storage      = null
 oai_model_deployment = [
   {
     deployment_id  = "gpt-4-1106-Preview"
-    model_name     = "gpt-4-1106-Preview"
+    model_name     = "gpt-4"
     model_format   = "OpenAI"
     model_version  = "1106-Preview"
     scale_type     = "Standard"
-    scale_capacity = 10 # 34K == Roughly 204 RPM (Requests per minute)
-  }                     #,
-  # {
-  #   deployment_id  = "gpt-4-vision-preview"
-  #   model_name     = "gpt-4-vision-preview"
-  #  model_format   = "OpenAI"
-  #   model_version  = "vision-preview"
-  # scale_type     = "Standard"
-  # scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
-  #}
+    scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
+  },
+  {
+    deployment_id  = "gpt-4-vision-preview"
+    model_name     = "gpt-4"
+    model_format   = "OpenAI"
+    model_version  = "vision-preview"
+    scale_type     = "Standard"
+    scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
+  }
 ]
 
 ### 05 cosmosdb ###
@@ -122,7 +122,7 @@ libre_app_endpoints = "AzureOpenAI"
 
 # Azure OpenAI
 libre_app_az_oai_api_key                      = null
-libre_app_az_oai_models                       = "gpt-4-1106-Preview"
+libre_app_az_oai_models                       = "gpt-4-1106-Preview,gpt-4-vision-preview"
 libre_app_az_oai_use_model_as_deployment_name = true
 libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
