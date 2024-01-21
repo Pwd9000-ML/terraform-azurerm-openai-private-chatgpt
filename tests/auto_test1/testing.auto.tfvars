@@ -38,7 +38,7 @@ kv_fw_network_subnet_ids = null
 ### 04 Create OpenAI Service ###
 oai_account_name                       = "gptopenaiaccount"
 oai_sku_name                           = "S0"
-oai_custom_subdomain_name              = "gptopenai"
+oai_custom_subdomain_name              = "gptopenaiaccount"
 oai_dynamic_throttling_enabled         = false
 oai_fqdns                              = []
 oai_local_auth_enabled                 = true
