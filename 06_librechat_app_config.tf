@@ -49,6 +49,32 @@ locals {
     ### User - Balance ###
     #CHECK_BALANCE = false
 
+    BAN_VIOLATIONS = true
+    BAN_DURATION   = 1000 * 60 * 60 * 2
+    BAN_INTERVAL   = 20
+
+    LOGIN_VIOLATION_SCORE        = 1
+    REGISTRATION_VIOLATION_SCORE = 1
+    CONCURRENT_VIOLATION_SCORE   = 1
+    MESSAGE_VIOLATION_SCORE      = 1
+    NON_BROWSER_VIOLATION_SCORE  = 20
+
+    LOGIN_MAX       = 7
+    LOGIN_WINDOW    = 5
+    REGISTER_MAX    = 5
+    REGISTER_WINDOW = 60
+
+    LIMIT_CONCURRENT_MESSAGES = true
+    CONCURRENT_MESSAGE_MAX    = 2
+
+    LIMIT_MESSAGE_IP  = true
+    MESSAGE_IP_MAX    = 40
+    MESSAGE_IP_WINDOW = 1
+
+    LIMIT_MESSAGE_USER  = false
+    MESSAGE_USER_MAX    = 40
+    MESSAGE_USER_WINDOW = 1
+
     ### User - Registration and Login ###
     ALLOW_EMAIL_LOGIN         = var.libre_app_allow_email_login         #true
     ALLOW_REGISTRATION        = var.libre_app_allow_registration        #true
