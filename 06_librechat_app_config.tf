@@ -1,91 +1,91 @@
-# locals {
-#   libre_app_settings = {
-#     ### App Service Configuration ###
-#     WEBSITE_RUN_FROM_PACKAGE = "1"
-#     DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"#######
-#     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-#     DOCKER_ENABLE_CI                    = false
-#     WEBSITES_PORT                       = var.libre_app_port
-#     PORT                                = var.libre_app_port
-#     DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
-#     NODE_ENV                            = "production" #######
+locals {
+  libre_app_settings = {
+    ### App Service Configuration ###
+    WEBSITE_RUN_FROM_PACKAGE = "1"
+    DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"#######
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+    DOCKER_ENABLE_CI                    = false
+    WEBSITES_PORT                       = var.libre_app_port
+    PORT                                = var.libre_app_port
+    DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
+    NODE_ENV                            = "production" #######
 
-#     ### Server Configuration ###
-#     APP_TITLE     = var.libre_app_title
-#     CUSTOM_FOOTER = var.libre_app_custom_footer
-#     HOST          = var.libre_app_host
-#     PORT          = var.libre_app_port
-#     MONGO_URI     = var.libre_app_mongo_uri != null ? var.libre_app_mongo_uri : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_cosmos_uri.id})"
-#     DOMAIN_CLIENT = var.libre_app_domain_client
-#     DOMAIN_SERVER = var.libre_app_domain_server
+    ### Server Configuration ###
+    APP_TITLE     = var.libre_app_title
+    CUSTOM_FOOTER = var.libre_app_custom_footer
+    HOST          = var.libre_app_host
+    PORT          = var.libre_app_port
+    MONGO_URI     = var.libre_app_mongo_uri != null ? var.libre_app_mongo_uri : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_cosmos_uri.id})"
+    DOMAIN_CLIENT = var.libre_app_domain_client
+    DOMAIN_SERVER = var.libre_app_domain_server
 
-#     ### Debug Logging ###
-#     DEBUG_LOGGING = var.libre_app_debug_logging
-#     DEBUG_CONSOLE = var.libre_app_debug_console
+    ### Debug Logging ###
+    DEBUG_LOGGING = var.libre_app_debug_logging
+    DEBUG_CONSOLE = var.libre_app_debug_console
 
-#     ### Endpoints ###
-#     ENDPOINTS = var.libre_app_endpoints #"azureOpenAI"
+    ### Endpoints ###
+    ENDPOINTS = var.libre_app_endpoints #"azureOpenAI"
 
-#     ### Azure OpenAI ###
-#     AZURE_API_KEY                      = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
-#     AZURE_OPENAI_MODELS                = var.libre_app_az_oai_models
-#     AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = var.libre_app_az_oai_use_model_as_deployment_name
-#     AZURE_OPENAI_API_INSTANCE_NAME     = var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]
-#     AZURE_OPENAI_API_VERSION           = var.libre_app_az_oai_api_version
+    ### Azure OpenAI ###
+    AZURE_API_KEY                      = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
+    AZURE_OPENAI_MODELS                = var.libre_app_az_oai_models
+    AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = var.libre_app_az_oai_use_model_as_deployment_name
+    AZURE_OPENAI_API_INSTANCE_NAME     = var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]
+    AZURE_OPENAI_API_VERSION           = var.libre_app_az_oai_api_version
 
-#     ### Plugins ###
-#     # NOTE: You need a fixed key and IV. a 32-byte key (64 characters in hex) and 16-byte IV (32 characters in hex) 
-#     # Warning: If you don't set them, the app will crash on startup.
-#     DEBUG_PLUGINS = var.libre_app_debug_plugins
-#     CREDS_KEY     = var.libre_app_plugins_creds_key != null ? var.libre_app_plugins_creds_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
-#     CREDS_IV      = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
+    ### Plugins ###
+    # NOTE: You need a fixed key and IV. a 32-byte key (64 characters in hex) and 16-byte IV (32 characters in hex) 
+    # Warning: If you don't set them, the app will crash on startup.
+    DEBUG_PLUGINS = var.libre_app_debug_plugins
+    CREDS_KEY     = var.libre_app_plugins_creds_key != null ? var.libre_app_plugins_creds_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
+    CREDS_IV      = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
 
-#     ### Search ###
-#     SEARCH             = var.libre_app_enable_meilisearch
-#     MEILI_NO_ANALYTICS = var.libre_app_disable_meilisearch_analytics
-#     MEILI_HOST         = var.libre_app_meili_host != null ? var.libre_app_meili_host : "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
-#     MEILI_MASTER_KEY   = var.libre_app_meili_key != null ? var.libre_app_meili_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
+    ### Search ###
+    SEARCH             = var.libre_app_enable_meilisearch
+    MEILI_NO_ANALYTICS = var.libre_app_disable_meilisearch_analytics
+    MEILI_HOST         = var.libre_app_meili_host != null ? var.libre_app_meili_host : "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
+    MEILI_MASTER_KEY   = var.libre_app_meili_key != null ? var.libre_app_meili_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
 
-#     ### User - Balance ###
-#     CHECK_BALANCE = false #######
+    ### User - Balance ###
+    CHECK_BALANCE = false #######
 
-#     BAN_VIOLATIONS = true
-#     BAN_DURATION   = 1000 * 60 * 60 * 2
-#     BAN_INTERVAL   = 20
+    BAN_VIOLATIONS = true
+    BAN_DURATION   = 1000 * 60 * 60 * 2
+    BAN_INTERVAL   = 20
 
-#     LOGIN_VIOLATION_SCORE        = 1
-#     REGISTRATION_VIOLATION_SCORE = 1
-#     CONCURRENT_VIOLATION_SCORE   = 1
-#     MESSAGE_VIOLATION_SCORE      = 1
-#     NON_BROWSER_VIOLATION_SCORE  = 20
+    LOGIN_VIOLATION_SCORE        = 1
+    REGISTRATION_VIOLATION_SCORE = 1
+    CONCURRENT_VIOLATION_SCORE   = 1
+    MESSAGE_VIOLATION_SCORE      = 1
+    NON_BROWSER_VIOLATION_SCORE  = 20
 
-#     LOGIN_MAX       = 7
-#     LOGIN_WINDOW    = 5
-#     REGISTER_MAX    = 5
-#     REGISTER_WINDOW = 60
+    LOGIN_MAX       = 7
+    LOGIN_WINDOW    = 5
+    REGISTER_MAX    = 5
+    REGISTER_WINDOW = 60
 
-#     LIMIT_CONCURRENT_MESSAGES = true
-#     CONCURRENT_MESSAGE_MAX    = 2
+    LIMIT_CONCURRENT_MESSAGES = true
+    CONCURRENT_MESSAGE_MAX    = 2
 
-#     LIMIT_MESSAGE_IP  = true
-#     MESSAGE_IP_MAX    = 40
-#     MESSAGE_IP_WINDOW = 1
+    LIMIT_MESSAGE_IP  = true
+    MESSAGE_IP_MAX    = 40
+    MESSAGE_IP_WINDOW = 1
 
-#     LIMIT_MESSAGE_USER  = false
-#     MESSAGE_USER_MAX    = 40
-#     MESSAGE_USER_WINDOW = 1
+    LIMIT_MESSAGE_USER  = false
+    MESSAGE_USER_MAX    = 40
+    MESSAGE_USER_WINDOW = 1
 
-#     ### User - Registration and Login ###
-#     ALLOW_EMAIL_LOGIN         = var.libre_app_allow_email_login         #true
-#     ALLOW_REGISTRATION        = var.libre_app_allow_registration        #true
-#     ALLOW_SOCIAL_LOGIN        = var.libre_app_allow_social_login        #false
-#     ALLOW_SOCIAL_REGISTRATION = var.libre_app_allow_social_registration #false
-#     SESSION_EXPIRY            = 1000 * 60 * 15                          #15 minutes
-#     REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 7               #7 days
-#     JWT_SECRET                = var.libre_app_jwt_secret != null ? var.libre_app_jwt_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_secret.id})"
-#     JWT_REFRESH_SECRET        = var.libre_app_jwt_refresh_secret != null ? var.libre_app_jwt_refresh_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_refresh_secret.id})"
-#   }
-# }
+    ### User - Registration and Login ###
+    ALLOW_EMAIL_LOGIN         = var.libre_app_allow_email_login         #true
+    ALLOW_REGISTRATION        = var.libre_app_allow_registration        #true
+    ALLOW_SOCIAL_LOGIN        = var.libre_app_allow_social_login        #false
+    ALLOW_SOCIAL_REGISTRATION = var.libre_app_allow_social_registration #false
+    SESSION_EXPIRY            = 1000 * 60 * 15                          #15 minutes
+    REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 7               #7 days
+    JWT_SECRET                = var.libre_app_jwt_secret != null ? var.libre_app_jwt_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_secret.id})"
+    JWT_REFRESH_SECRET        = var.libre_app_jwt_refresh_secret != null ? var.libre_app_jwt_refresh_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_refresh_secret.id})"
+  }
+}
 
 #MOVE TO CDN CSETTINGS 
 

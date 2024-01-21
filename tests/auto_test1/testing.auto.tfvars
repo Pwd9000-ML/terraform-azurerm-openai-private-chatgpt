@@ -52,7 +52,7 @@ oai_network_acls = null
 oai_storage      = null
 oai_model_deployment = [
   {
-    deployment_id  = "gpt-4-1106-Preview"
+    deployment_id  = "gpt-4-1106-preview"
     model_name     = "gpt-4"
     model_format   = "OpenAI"
     model_version  = "1106-Preview"
@@ -110,8 +110,8 @@ libre_app_custom_footer = "Privately hosted chat app powered by Azure OpenAI and
 libre_app_host          = "0.0.0.0"
 libre_app_port          = 80
 libre_app_mongo_uri     = null
-libre_app_domain_client = "https://localhost:3080"
-libre_app_domain_server = "https://localhost:3080"
+libre_app_domain_client = "http://localhost:3080"
+libre_app_domain_server = "http://localhost:3080"
 
 # debug logging
 libre_app_debug_logging = true
@@ -122,7 +122,7 @@ libre_app_endpoints = "AzureOpenAI"
 
 # Azure OpenAI
 libre_app_az_oai_api_key                      = null
-libre_app_az_oai_models                       = "gpt-4-1106-Preview,gpt-4-vision-preview"
+libre_app_az_oai_models                       = "gpt-4-1106-preview,gpt-4-vision-preview"
 libre_app_az_oai_use_model_as_deployment_name = true
 libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
