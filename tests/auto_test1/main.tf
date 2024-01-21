@@ -115,7 +115,7 @@ module "private-chatgpt-openai" {
   libre_app_az_oai_api_key                      = var.libre_app_az_oai_api_key
   libre_app_az_oai_models                       = var.libre_app_az_oai_models
   libre_app_az_oai_use_model_as_deployment_name = var.libre_app_az_oai_use_model_as_deployment_name
-  libre_app_az_oai_instance_name                = var.libre_app_az_oai_use_model_as_deployment_name
+  libre_app_az_oai_instance_name                = var.libre_app_az_oai_instance_name
   libre_app_az_oai_api_version                  = var.libre_app_az_oai_api_version
 
   # Plugins
