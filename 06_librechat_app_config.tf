@@ -47,7 +47,7 @@ locals {
     MEILI_MASTER_KEY   = var.libre_app_meili_key != null ? var.libre_app_meili_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
 
     ### User - Balance ###
-    #CHECK_BALANCE = false
+    CHECK_BALANCE = false #######
 
     BAN_VIOLATIONS = true
     BAN_DURATION   = 1000 * 60 * 60 * 2
