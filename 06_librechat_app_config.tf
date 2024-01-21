@@ -24,7 +24,7 @@ locals {
     DEBUG_CONSOLE = var.libre_app_debug_console
 
     ### Endpoints ###
-    ENDPOINTS = var.libre_app_endpoints #"azureOpenAI"
+    ENDPOINTS = var.libre_app_endpoints
 
     ### Azure OpenAI ###
     AZURE_API_KEY                      = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
