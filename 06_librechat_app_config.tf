@@ -14,7 +14,7 @@ locals {
     APP_TITLE     = var.libre_app_title
     #CUSTOM_FOOTER = var.libre_app_custom_footer
     HOST          = var.libre_app_host
-    PORT          = var.libre_app_port
+   # PORT          = var.libre_app_port
     MONGO_URI     = var.libre_app_mongo_uri != null ? var.libre_app_mongo_uri : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_cosmos_uri.id})"
     DOMAIN_CLIENT = var.libre_app_domain_client
     DOMAIN_SERVER = var.libre_app_domain_server
