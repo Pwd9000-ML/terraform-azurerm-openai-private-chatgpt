@@ -32,6 +32,11 @@ locals {
     AZURE_OPENAI_API_INSTANCE_NAME     = var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]
     AZURE_OPENAI_API_VERSION           = var.libre_app_az_oai_api_version
 
+    ### Azure OpenAI DALL-E-3 (Only in 'SwedenCentral' and 'EastUS') ###
+    DALLE3_AZURE_API_VERSION = var.libre_app_az_oai_dall3_api_version
+    DALLE3_BASEURL           = "https://${var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]}.openai.azure.com/openai/deployments/${var.libre_app_az_oai_dall3_deployment_name}/"
+    DALLE3_API_KEY           = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
+
     ### Plugins ###
     # NOTE: You need a fixed key and IV. a 32-byte key (64 characters in hex) and 16-byte IV (32 characters in hex) 
     # Warning: If you don't set them, the app will crash on startup.

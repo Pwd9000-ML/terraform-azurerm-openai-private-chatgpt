@@ -493,6 +493,18 @@ variable "libre_app_az_oai_api_version" {
   default     = "2023-07-01-preview"
 }
 
+variable "libre_app_az_oai_dall3_api_version" {
+  type        = string
+  description = "Azure OpenAI DALL-E API Version"
+  default     = "2023-12-01-preview"
+}
+
+variable "libre_app_az_oai_dall3_deployment_name" {
+  type        = string
+  description = "Azure OpenAI DALL-E Deployment Name"
+  default     = "dall-e-3"
+}
+
 # Plugins
 variable "libre_app_debug_plugins" {
   type        = bool

@@ -136,6 +136,9 @@ libre_app_az_oai_models                       = "gpt-4-1106-preview,gpt-4-vision
 libre_app_az_oai_use_model_as_deployment_name = true
 libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
+libre_app_az_oai_dall3_api_version            = "2023-12-01-preview"
+libre_app_az_oai_dall3_deployment_name        = "dall-e-3"
+
 
 # Plugins
 libre_app_debug_plugins     = false
