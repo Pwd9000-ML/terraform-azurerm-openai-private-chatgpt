@@ -1,6 +1,6 @@
 ### 01 Common Variables + RG ###
 resource_group_name = "TF-Module-Automated-Tests-Cognitive-GPT"
-location            = "westus"
+location            = "uksouth" #"westus"
 tags = {
   Terraform   = "True"
   Description = "Private ChatGPT hosted on Azure OpenAI (Librechat)"
@@ -36,9 +36,9 @@ kv_fw_allowed_ips        = ["0.0.0.0/0"]
 kv_fw_network_subnet_ids = null
 
 ### 04 Create OpenAI Service ###
-oai_account_name                       = "gptopenaiaccount"
+oai_account_name                       = "gptopenai"
 oai_sku_name                           = "S0"
-oai_custom_subdomain_name              = "gptopenaiaccount"
+oai_custom_subdomain_name              = "gptopenai"
 oai_dynamic_throttling_enabled         = false
 oai_fqdns                              = []
 oai_local_auth_enabled                 = true
@@ -59,22 +59,22 @@ oai_model_deployment = [
     scale_type     = "Standard"
     scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
   },
-  {
-    deployment_id  = "gpt-4-1106-preview"
-    model_name     = "gpt-4"
-    model_format   = "OpenAI"
-    model_version  = "1106-Preview"
-    scale_type     = "Standard"
-    scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
-  },
-  {
-    deployment_id  = "gpt-4-vision-preview"
-    model_name     = "gpt-4"
-    model_format   = "OpenAI"
-    model_version  = "vision-preview"
-    scale_type     = "Standard"
-    scale_capacity = 5
-  }
+ # {
+ #   deployment_id  = "gpt-4-1106-preview"
+ #   model_name     = "gpt-4"
+ #   model_format   = "OpenAI"
+ #   model_version  = "1106-Preview"
+ #   scale_type     = "Standard"
+ #   scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
+ # },
+  #{
+  #  deployment_id  = "gpt-4-vision-preview"
+  #  model_name     = "gpt-4"
+  #  model_format   = "OpenAI"
+  #  model_version  = "vision-preview"
+  #  scale_type     = "Standard"
+  #  scale_capacity = 5
+  #}
 ]
 
 ### 05 cosmosdb ###
@@ -100,7 +100,7 @@ cosmosdb_public_network_access_enabled     = true
 ### 06 app services (librechat app + meilisearch) ###
 # App Service Plan
 app_service_name     = "openaiasp"
-app_service_sku_name = "B2"
+app_service_sku_name = "B1"
 
 # Meilisearch App
 meilisearch_app_name                      = "meilisearchapp"
