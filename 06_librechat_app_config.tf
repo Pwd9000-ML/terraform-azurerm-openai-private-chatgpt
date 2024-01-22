@@ -16,7 +16,7 @@ locals {
     APP_TITLE     = var.libre_app_title
     CUSTOM_FOOTER = var.libre_app_custom_footer
     HOST          = var.libre_app_host
-    MONGO_URI     = var.libre_app_mongo_uri != null ? var.libre_app_mongo_uri : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_cosmos_uri.id})"
+    MONGO_URI     = var.libre_app_mongo_uri != null ? var.libre_app_mongo_uri : azurerm_cosmosdb_account.az_openai_mongodb.primary_mongodb_connection_string #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_cosmos_uri.id})"
     DOMAIN_CLIENT = var.libre_app_domain_client
     DOMAIN_SERVER = var.libre_app_domain_server
 
@@ -28,7 +28,7 @@ locals {
     ENDPOINTS = var.libre_app_endpoints
 
     ### Azure OpenAI ###
-    AZURE_API_KEY                      = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
+    AZURE_API_KEY                      = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : azurerm_cognitive_account.az_openai.primary_access_key #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
     AZURE_OPENAI_MODELS                = var.libre_app_az_oai_models
     AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = var.libre_app_az_oai_use_model_as_deployment_name
     AZURE_OPENAI_API_INSTANCE_NAME     = var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]
@@ -38,27 +38,27 @@ locals {
     # NOTE: You need a fixed key and IV. a 32-byte key (64 characters in hex) and 16-byte IV (32 characters in hex) 
     # Warning: If you don't set them, the app will crash on startup.
     DEBUG_PLUGINS = var.libre_app_debug_plugins
-    CREDS_KEY     = var.libre_app_plugins_creds_key != null ? var.libre_app_plugins_creds_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
-    CREDS_IV      = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
+    CREDS_KEY     = var.libre_app_plugins_creds_key != null ? var.libre_app_plugins_creds_key : random_string.libre_app_creds_key.result #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
+    CREDS_IV      = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : random_string.libre_app_creds_iv.result    #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
 
     ### Search ###
     SEARCH             = var.libre_app_enable_meilisearch
     MEILI_NO_ANALYTICS = var.libre_app_disable_meilisearch_analytics
     MEILI_HOST         = var.libre_app_meili_host != null ? var.libre_app_meili_host : "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
-    MEILI_MASTER_KEY   = var.libre_app_meili_key != null ? var.libre_app_meili_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
+    MEILI_MASTER_KEY   = var.libre_app_meili_key != null ? var.libre_app_meili_key : random_string.meilisearch_master_key.result # "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
 
     ### User - Balance ###
     #CHECK_BALANCE = false
 
     ### User - Registration and Login ###
-    ALLOW_EMAIL_LOGIN         = var.libre_app_allow_email_login         #true
-    ALLOW_REGISTRATION        = var.libre_app_allow_registration        #true
-    ALLOW_SOCIAL_LOGIN        = var.libre_app_allow_social_login        #false
-    ALLOW_SOCIAL_REGISTRATION = var.libre_app_allow_social_registration #false
-    SESSION_EXPIRY            = 1000 * 60 * 15                          #15 minutes
-    REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 7               #7 days
-    JWT_SECRET                = var.libre_app_jwt_secret != null ? var.libre_app_jwt_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_secret.id})"
-    JWT_REFRESH_SECRET        = var.libre_app_jwt_refresh_secret != null ? var.libre_app_jwt_refresh_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_refresh_secret.id})"
+    ALLOW_EMAIL_LOGIN         = var.libre_app_allow_email_login                                                                                                 #true
+    ALLOW_REGISTRATION        = var.libre_app_allow_registration                                                                                                #true
+    ALLOW_SOCIAL_LOGIN        = var.libre_app_allow_social_login                                                                                                #false
+    ALLOW_SOCIAL_REGISTRATION = var.libre_app_allow_social_registration                                                                                         #false
+    SESSION_EXPIRY            = 1000 * 60 * 15                                                                                                                  #15 minutes
+    REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 7                                                                                                       #7 days
+    JWT_SECRET                = var.libre_app_jwt_secret != null ? var.libre_app_jwt_secret : random_string.libre_app_jwt_secret.result                         #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_secret.id})"
+    JWT_REFRESH_SECRET        = var.libre_app_jwt_refresh_secret != null ? var.libre_app_jwt_refresh_secret : random_string.libre_app_jwt_refresh_secret.result #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_refresh_secret.id})"
   }
 }
 
