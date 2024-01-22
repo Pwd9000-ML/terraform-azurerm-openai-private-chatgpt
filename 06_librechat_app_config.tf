@@ -42,10 +42,10 @@ locals {
     CREDS_IV      = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : random_string.libre_app_creds_iv.result    #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
 
     ### Search ###
-    SEARCH             = var.libre_app_enable_meilisearch
-    MEILI_NO_ANALYTICS = var.libre_app_disable_meilisearch_analytics
-    MEILI_HOST         = var.libre_app_meili_host != null ? var.libre_app_meili_host : "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
-    MEILI_MASTER_KEY   = var.libre_app_meili_key != null ? var.libre_app_meili_key : random_string.meilisearch_master_key.result # "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
+    SEARCH = false #var.libre_app_enable_meilisearch
+    #  MEILI_NO_ANALYTICS = var.libre_app_disable_meilisearch_analytics
+    #  MEILI_HOST         = var.libre_app_meili_host != null ? var.libre_app_meili_host : "${azurerm_linux_web_app.meilisearch.name}.azurewebsites.net"
+    #  MEILI_MASTER_KEY   = var.libre_app_meili_key != null ? var.libre_app_meili_key : random_string.meilisearch_master_key.result # "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
 
     ### User - Balance ###
     #CHECK_BALANCE = false

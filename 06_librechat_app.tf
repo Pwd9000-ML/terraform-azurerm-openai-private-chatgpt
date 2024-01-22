@@ -72,55 +72,55 @@ resource "azurerm_service_plan" "az_openai_asp" {
 
 # Create meilisearch app
 # TODO: Add support for private endpoints instead of subnet access
-resource "azurerm_linux_web_app" "meilisearch" {
-  name                = var.meilisearch_app_name
-  location            = var.location
-  resource_group_name = azurerm_resource_group.az_openai_rg.name
-  service_plan_id     = azurerm_service_plan.az_openai_asp.id
-  https_only          = true
+# resource "azurerm_linux_web_app" "meilisearch" {
+#   name                = var.meilisearch_app_name
+#   location            = var.location
+#   resource_group_name = azurerm_resource_group.az_openai_rg.name
+#   service_plan_id     = azurerm_service_plan.az_openai_asp.id
+#   https_only          = true
 
-  app_settings = {
-    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+#   app_settings = {
+#     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
 
-    MEILI_MASTER_KEY   = var.meilisearch_app_key != null ? var.meilisearch_app_key : random_string.meilisearch_master_key.result #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
-    MEILI_NO_ANALYTICS = var.libre_app_disable_meilisearch_analytics
+#     MEILI_MASTER_KEY   = var.meilisearch_app_key != null ? var.meilisearch_app_key : random_string.meilisearch_master_key.result #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
+#     MEILI_NO_ANALYTICS = var.libre_app_disable_meilisearch_analytics
 
-    DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"
-    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-    DOCKER_ENABLE_CI                    = false
-    WEBSITES_PORT                       = 7700
-    PORT                                = 7700
-    DOCKER_CUSTOM_IMAGE_NAME            = "getmeili/meilisearch:latest"
-  }
+#     DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"
+#     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+#     DOCKER_ENABLE_CI                    = false
+#     WEBSITES_PORT                       = 7700
+#     PORT                                = 7700
+#     DOCKER_CUSTOM_IMAGE_NAME            = "getmeili/meilisearch:latest"
+#   }
 
-  site_config {
-    always_on = "true"
-    ip_restriction {
-      virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id != null ? var.meilisearch_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
-      priority                  = 100
-      name                      = "Allow from LibreChat app subnet"
-      action                    = "Allow"
-    }
-  }
+#   site_config {
+#     always_on = "true"
+#     ip_restriction {
+#       virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id != null ? var.meilisearch_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
+#       priority                  = 100
+#       name                      = "Allow from LibreChat app subnet"
+#       action                    = "Allow"
+#     }
+#   }
 
-  logs {
-    http_logs {
-      file_system {
-        retention_in_days = 7
-        retention_in_mb   = 35
-      }
-    }
-    application_logs {
-      file_system_level = "Information"
-    }
-  }
+#   logs {
+#     http_logs {
+#       file_system {
+#         retention_in_days = 7
+#         retention_in_mb   = 35
+#       }
+#     }
+#     application_logs {
+#       file_system_level = "Information"
+#     }
+#   }
 
-  identity {
-    type = "SystemAssigned"
-  }
+#   identity {
+#     type = "SystemAssigned"
+#   }
 
-  depends_on = [azurerm_subnet.az_openai_subnet]
-}
+#   depends_on = [azurerm_subnet.az_openai_subnet]
+# }
 
 # Grant kv access to meilisearch app to reference the master key secret
 resource "azurerm_role_assignment" "meilisearch_app_kv_access" {
@@ -160,7 +160,8 @@ resource "azurerm_linux_web_app" "librechat" {
   app_settings              = local.libre_app_settings
   virtual_network_subnet_id = var.libre_app_virtual_network_subnet_id != null ? var.libre_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
 
-  depends_on = [azurerm_linux_web_app.meilisearch, azurerm_subnet.az_openai_subnet]
+  #depends_on = [azurerm_linux_web_app.meilisearch, azurerm_subnet.az_openai_subnet]
+  depends_on = [azurerm_subnet.az_openai_subnet]
 }
 
 # Grant kv access to librechat app to reference environment variables (stored as secrets in key vault)
