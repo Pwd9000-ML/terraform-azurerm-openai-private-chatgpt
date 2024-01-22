@@ -51,7 +51,7 @@ oai_identity = {
 oai_network_acls = null
 oai_storage      = null
 oai_model_deployment = [
-    {
+  {
     deployment_id  = "gpt-35-turbo"
     model_name     = "gpt-35-turbo"
     model_format   = "OpenAI"
@@ -65,7 +65,7 @@ oai_model_deployment = [
     model_format   = "OpenAI"
     model_version  = "1106-Preview"
     scale_type     = "Standard"
-    scale_capacity = 15 
+    scale_capacity = 15
   },
   {
     deployment_id  = "gpt-4-1106-preview"
@@ -73,7 +73,7 @@ oai_model_deployment = [
     model_format   = "OpenAI"
     model_version  = "1106-Preview"
     scale_type     = "Standard"
-    scale_capacity = 15 
+    scale_capacity = 15
   },
   {
     deployment_id  = "gpt-4-vision-preview"
