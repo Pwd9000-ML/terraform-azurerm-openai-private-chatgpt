@@ -59,14 +59,14 @@ oai_model_deployment = [
     scale_type     = "Standard"
     scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
   },
- # {
- #   deployment_id  = "gpt-4-1106-preview"
- #   model_name     = "gpt-4"
- #   model_format   = "OpenAI"
- #   model_version  = "1106-Preview"
- #   scale_type     = "Standard"
- #   scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
- # },
+  # {
+  #   deployment_id  = "gpt-4-1106-preview"
+  #   model_name     = "gpt-4"
+  #   model_format   = "OpenAI"
+  #   model_version  = "1106-Preview"
+  #   scale_type     = "Standard"
+  #   scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
+  # },
   #{
   #  deployment_id  = "gpt-4-vision-preview"
   #  model_name     = "gpt-4"

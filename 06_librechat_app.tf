@@ -132,7 +132,6 @@ resource "azurerm_linux_web_app" "librechat" {
 
   site_config {
     minimum_tls_version = "1.2"
-    always_on = true
   }
 
   logs {

@@ -9,8 +9,8 @@ locals {
     PORT                                = var.libre_app_port
     WEBSITES_CONTAINER_START_TIME_LIMIT = 2500
     DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
-   # DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev:latest"
-    NODE_ENV                            = "production" #######
+    # DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev:latest"
+    NODE_ENV = "production" #######
 
     ### Server Configuration ###
     APP_TITLE     = var.libre_app_title
