@@ -76,10 +76,10 @@ resource "azurerm_linux_web_app" "librechat" {
     }
 
     ip_restriction {
-      ipip_address = var.libre_app_allowed_ip_address
-      priority     = 200
-      name         = "The CIDR notation of the IP or IP Range to match to allow. For example: 10.0.0.0/24 or 192.168.10.1/32"
-      action       = "Allow"
+      ip_address = var.libre_app_allowed_ip_address
+      priority   = 200
+      name       = "The CIDR notation of the IP or IP Range to match to allow. For example: 10.0.0.0/24 or 192.168.10.1/32"
+      action     = "Allow"
     }
   }
 
