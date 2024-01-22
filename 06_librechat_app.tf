@@ -150,19 +150,6 @@ resource "azurerm_role_assignment" "librechat_app_kv_access" {
 
 #TODO: Implement DALL-E 
 #TODO:
-# #  Deploy code from a public GitHub repo
-# # resource "azurerm_app_service_source_control" "sourcecontrol" {
-# #   app_id                 = azurerm_linux_web_app.librechat.id
-# #   repo_url               = "https://github.com/danny-avila/LibreChat"
-# #   branch                 = "main"    
-# #   type = "Github"
-
-# #   # use_manual_integration = true
-# #   # use_mercurial          = false
-# #   depends_on = [
-# #     azurerm_linux_web_app.librechat,
-# #   ]
-# # }
 
 # Implement a Search (either Meili or Azure AI Search)
 # # Generate random strings as keys for meilisearch and librechat (Stored securely in Azure Key Vault)

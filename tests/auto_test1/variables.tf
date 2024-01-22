@@ -422,6 +422,12 @@ variable "libre_app_port" {
   default     = 3080
 }
 
+variable "libre_app_docker_image" {
+  type        = string
+  description = "The Docker Image to use for the App Service."
+  default     = "ghcr.io/danny-avila/librechat-dev-api:latest"
+}
+
 variable "libre_app_mongo_uri" {
   type        = string
   description = "The MongoDB Connection String to connect to."
@@ -439,12 +445,6 @@ variable "libre_app_domain_server" {
   type        = string
   description = "To use locally, set DOMAIN_CLIENT and DOMAIN_SERVER to http://localhost:3080 (3080 being the port previously configured).When deploying to a custom domain, set DOMAIN_CLIENT and DOMAIN_SERVER to your deployed URL, e.g. https://mydomain.example.com"
   default     = "http://localhost:3080"
-}
-
-variable "libre_app_docker_image" {
-  type        = string
-  description = "The Docker Image to use for the App Service."
-  default     = "ghcr.io/danny-avila/librechat-dev-api:latest"
 }
 
 # Debug logging
@@ -532,17 +532,17 @@ variable "libre_app_plugins_creds_iv" {
   sensitive   = true
 }
 
-variable "libre_app_plugin_models" {
-  type        = string
-  description = "Libre App Plugin Models e.g. 'gpt-4,dall-e-3'"
-  default     = "gpt-4,dall-e-3"
-}
+# variable "libre_app_plugin_models" {
+#   type        = string
+#   description = "Libre App Plugin Models e.g. 'gpt-4,dall-e-3'"
+#   default     = "gpt-4,dall-e-3"
+# }
 
-variable "libre_app_plugins_use_azure" {
-  type        = bool
-  description = "Libre App Plugins Use Azure, required for Azure OpenAI Plugins e.g. 'dall-e-3'"
-  default     = true
-}
+# variable "libre_app_plugins_use_azure" {
+#   type        = bool
+#   description = "Libre App Plugins Use Azure, required for Azure OpenAI Plugins e.g. 'dall-e-3'"
+#   default     = true
+# }
 
 # Search
 variable "libre_app_enable_meilisearch" {

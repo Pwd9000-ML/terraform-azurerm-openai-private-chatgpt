@@ -127,10 +127,10 @@ libre_app_title         = "Azure OpenAI LibreChat"
 libre_app_custom_footer = "Privately hosted chat app powered by Azure OpenAI and LibreChat"
 libre_app_host          = "0.0.0.0"
 libre_app_port          = 80
+libre_app_docker_image  = "ghcr.io/danny-avila/librechat-dev-api:latest"
 libre_app_mongo_uri     = null
 libre_app_domain_client = "http://localhost:80"
 libre_app_domain_server = "http://localhost:80"
-libre_app_docker_image  = "ghcr.io/danny-avila/librechat-dev-api:latest"
 
 # debug logging
 libre_app_debug_logging = true
@@ -152,8 +152,8 @@ libre_app_az_oai_dall3_deployment_name        = "dall-e-3"
 libre_app_debug_plugins     = true
 libre_app_plugins_creds_key = null
 libre_app_plugins_creds_iv  = null
-libre_app_plugin_models     = "gpt-35-turbo,gpt-4,gpt-4-vision-preview"
-libre_app_plugins_use_azure = true
+# libre_app_plugin_models     = "gpt-35-turbo,gpt-4,gpt-4-vision-preview"
+# libre_app_plugins_use_azure = true
 
 # Search
 libre_app_enable_meilisearch = false

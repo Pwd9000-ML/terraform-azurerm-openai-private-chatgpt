@@ -37,8 +37,8 @@ locals {
     DEBUG_PLUGINS     = var.libre_app_debug_plugins
     CREDS_KEY         = var.libre_app_plugins_creds_key != null ? var.libre_app_plugins_creds_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
     CREDS_IV          = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
-    PLUGIN_MODELS     = var.libre_app_plugin_models
-    PLUGINS_USE_AZURE = var.libre_app_plugins_use_azure
+    #PLUGIN_MODELS     = var.libre_app_plugin_models
+    #PLUGINS_USE_AZURE = var.libre_app_plugins_use_azure
 
     ### Azure OpenAI DALL-E-3 Plugin (Only in 'SwedenCentral' and 'EastUS') ###
     DALLE3_AZURE_API_VERSION = var.libre_app_az_oai_dall3_api_version
