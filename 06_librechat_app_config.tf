@@ -8,7 +8,6 @@ locals {
     PORT                                = var.libre_app_port
     WEBSITES_CONTAINER_START_TIME_LIMIT = 1500
     DOCKER_CUSTOM_IMAGE_NAME            = "ghcr.io/danny-avila/librechat-dev-api:latest"
-    #NODE_ENV = "Production" #######
 
     ### Server Configuration ###
     APP_TITLE     = var.libre_app_title
@@ -32,17 +31,18 @@ locals {
     AZURE_OPENAI_API_INSTANCE_NAME     = var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]
     AZURE_OPENAI_API_VERSION           = var.libre_app_az_oai_api_version
 
-    ### Azure OpenAI DALL-E-3 (Only in 'SwedenCentral' and 'EastUS') ###
-    DALLE3_AZURE_API_VERSION = var.libre_app_az_oai_dall3_api_version
-    DALLE3_BASEURL           = "https://${var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]}.openai.azure.com/openai/deployments/${var.libre_app_az_oai_dall3_deployment_name}/"
-    DALLE3_API_KEY           = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
-
     ### Plugins ###
     # NOTE: You need a fixed key and IV. a 32-byte key (64 characters in hex) and 16-byte IV (32 characters in hex) 
     # Warning: If you don't set them, the app will crash on startup.
     DEBUG_PLUGINS = var.libre_app_debug_plugins
     CREDS_KEY     = var.libre_app_plugins_creds_key != null ? var.libre_app_plugins_creds_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
     CREDS_IV      = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
+    PLUGIN_MODELS = var.libre_app_plugin_models
+
+    ### Azure OpenAI DALL-E-3 Plugin (Only in 'SwedenCentral' and 'EastUS') ###
+    DALLE3_AZURE_API_VERSION = var.libre_app_az_oai_dall3_api_version
+    DALLE3_BASEURL           = "https://${var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]}.openai.azure.com/openai/deployments/${var.libre_app_az_oai_dall3_deployment_name}/"
+    DALLE_API_KEY            = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
 
     ### Search ###
     SEARCH = var.libre_app_enable_meilisearch

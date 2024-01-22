@@ -139,11 +139,11 @@ libre_app_az_oai_api_version                  = "2023-07-01-preview"
 libre_app_az_oai_dall3_api_version            = "2023-12-01-preview"
 libre_app_az_oai_dall3_deployment_name        = "dall-e-3"
 
-
 # Plugins
-libre_app_debug_plugins     = false
+libre_app_debug_plugins     = true
 libre_app_plugins_creds_key = null
 libre_app_plugins_creds_iv  = null
+libre_app_plugin_models     = "gpt-4,dall-e-3"
 
 # Search
 libre_app_enable_meilisearch = false

@@ -531,6 +531,13 @@ variable "libre_app_plugins_creds_iv" {
   sensitive   = true
 }
 
+variable "libre_app_plugin_models" {
+  type        = string
+  description = "Libre App Plugin Models e.g. 'gpt-4,dall-e-3'"
+  default     = "gpt-4,dall-e-3"
+}
+
+
 #TODO
 # Search
 variable "libre_app_enable_meilisearch" {
