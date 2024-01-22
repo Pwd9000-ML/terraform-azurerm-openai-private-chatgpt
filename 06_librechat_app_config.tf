@@ -30,7 +30,7 @@ locals {
     ### Azure OpenAI ###
     AZURE_API_KEY                      = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : azurerm_cognitive_account.az_openai.primary_access_key #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
     AZURE_OPENAI_MODELS                = var.libre_app_az_oai_models
-    AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = var.libre_app_az_oai_use_model_as_deployment_name
+    AZURE_USE_MODEL_AS_DEPLOYMENT_NAME = false #var.libre_app_az_oai_use_model_as_deployment_name
     AZURE_OPENAI_API_INSTANCE_NAME     = var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]
     AZURE_OPENAI_API_VERSION           = var.libre_app_az_oai_api_version
 
@@ -59,6 +59,40 @@ locals {
     REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 7                                                                                                       #7 days
     JWT_SECRET                = var.libre_app_jwt_secret != null ? var.libre_app_jwt_secret : random_string.libre_app_jwt_secret.result                         #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_secret.id})"
     JWT_REFRESH_SECRET        = var.libre_app_jwt_refresh_secret != null ? var.libre_app_jwt_refresh_secret : random_string.libre_app_jwt_refresh_secret.result #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_refresh_secret.id})"
+
+    ###To remove
+    DEBUG_OPENAI = false
+
+    BAN_VIOLATIONS = true
+    BAN_DURATION   = 1000 * 60 * 60 * 2
+    BAN_INTERVAL   = 20
+
+    LOGIN_VIOLATION_SCORE        = 1
+    REGISTRATION_VIOLATION_SCORE = 1
+    CONCURRENT_VIOLATION_SCORE   = 1
+    MESSAGE_VIOLATION_SCORE      = 1
+    NON_BROWSER_VIOLATION_SCORE  = 20
+
+    LOGIN_MAX       = 7
+    LOGIN_WINDOW    = 5
+    REGISTER_MAX    = 5
+    REGISTER_WINDOW = 60
+
+    LIMIT_CONCURRENT_MESSAGES = true
+    CONCURRENT_MESSAGE_MAX    = 2
+
+    LIMIT_MESSAGE_IP  = true
+    MESSAGE_IP_MAX    = 40
+    MESSAGE_IP_WINDOW = 1
+
+    LIMIT_MESSAGE_USER  = false
+    MESSAGE_USER_MAX    = 40
+    MESSAGE_USER_WINDOW = 1
+
+    AZURE_OPENAI_API_DEPLOYMENT_NAME = "gpt-4"
+    # AZURE_OPENAI_API_VERSION = var.azure_openai_api_version
+    # AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME =
+    # AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  =
   }
 }
 
