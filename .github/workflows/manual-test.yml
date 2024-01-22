@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  manual_plan_apply_destroy:
+  manual_plan_apply:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Run Dependency Tests - Plan AND Apply AND Destroy
+      - name: Plan AND Apply Only
         uses: Pwd9000-ML/terraform-azurerm-tests@v1.0.6
         with:
           test_type: plan-apply              ## (Required) Valid options are "plan", "plan-apply", "plan-apply-destroy". Default="plan"
