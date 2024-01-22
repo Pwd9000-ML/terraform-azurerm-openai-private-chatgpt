@@ -61,7 +61,7 @@ oai_model_deployment = [
   },
   {
     deployment_id  = "gpt-4"
-    model_name     = "1106-Preview"
+    model_name     = "gpt-4"
     model_format   = "OpenAI"
     model_version  = "1106-Preview"
     scale_type     = "Standard"
