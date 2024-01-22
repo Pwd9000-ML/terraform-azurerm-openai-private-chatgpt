@@ -51,6 +51,14 @@ oai_identity = {
 oai_network_acls = null
 oai_storage      = null
 oai_model_deployment = [
+    {
+    deployment_id  = "gpt-4"
+    model_name     = "gpt-4"
+    model_format   = "OpenAI"
+    model_version  = "0613"
+    scale_type     = "Standard"
+    scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
+  },
   {
     deployment_id  = "gpt-4-1106-preview"
     model_name     = "gpt-4"
@@ -100,7 +108,7 @@ cosmosdb_public_network_access_enabled     = true
 ### 06 app services (librechat app + meilisearch) ###
 # App Service Plan
 app_service_name     = "openaiasp"
-app_service_sku_name = "B1"
+app_service_sku_name = "B2"
 
 # Meilisearch App
 #meilisearch_app_name                      = "meilisearchapp"
@@ -132,7 +140,7 @@ libre_app_endpoints = "azureOpenAI"
 
 # Azure OpenAI
 libre_app_az_oai_api_key                      = null
-libre_app_az_oai_models                       = "gpt-4-1106-preview,gpt-4-vision-preview,dall-e-3"
+libre_app_az_oai_models                       = "gpt-4,gpt-4-1106-preview,gpt-4-vision-preview"
 libre_app_az_oai_use_model_as_deployment_name = true
 libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
@@ -143,7 +151,7 @@ libre_app_az_oai_dall3_deployment_name        = "dall-e-3"
 libre_app_debug_plugins     = true
 libre_app_plugins_creds_key = null
 libre_app_plugins_creds_iv  = null
-libre_app_plugin_models     = "gpt-4-1106-preview,gpt-4-vision-preview,dall-e-3"
+libre_app_plugin_models     = "dall-e-3"
 libre_app_plugins_use_azure = true
 
 # Search
