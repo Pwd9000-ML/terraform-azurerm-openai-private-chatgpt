@@ -65,15 +65,7 @@ oai_model_deployment = [
     model_format   = "OpenAI"
     model_version  = "1106-Preview"
     scale_type     = "Standard"
-    scale_capacity = 15
-  },
-  {
-    deployment_id  = "gpt-4-1106-preview"
-    model_name     = "gpt-4"
-    model_format   = "OpenAI"
-    model_version  = "1106-Preview"
-    scale_type     = "Standard"
-    scale_capacity = 15
+    scale_capacity = 20
   },
   {
     deployment_id  = "gpt-4-vision-preview"
