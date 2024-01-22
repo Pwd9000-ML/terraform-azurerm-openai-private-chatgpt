@@ -51,7 +51,7 @@ oai_identity = {
 oai_network_acls = null
 oai_storage      = null
 oai_model_deployment = [
-    {
+  {
     deployment_id  = "gpt-4"
     model_name     = "gpt-4"
     model_format   = "OpenAI"
