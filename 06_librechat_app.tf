@@ -90,7 +90,7 @@ resource "azurerm_linux_web_app" "meilisearch" {
     DOCKER_ENABLE_CI                    = false
     WEBSITES_PORT                       = 7700
     PORT                                = 7700
-    DOCKER_CUSTOM_IMAGE_NAME            = "getmeili/meilisearch:latest"
+    DOCKER_CUSTOM_IMAGE_NAME            = "getmeili/meilisearch:v1.5.1"
   }
 
   site_config {
