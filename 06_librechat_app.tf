@@ -123,11 +123,11 @@ resource "azurerm_service_plan" "az_openai_asp" {
 # }
 
 # Grant kv access to meilisearch app to reference the master key secret
-resource "azurerm_role_assignment" "meilisearch_app_kv_access" {
-  scope                = azurerm_key_vault.az_openai_kv.id
-  principal_id         = azurerm_linux_web_app.meilisearch.identity[0].principal_id
-  role_definition_name = "Key Vault Secrets User" # Read secret contents. Only works for key vaults that use the 'Azure role-based access control' permission model.
-}
+# resource "azurerm_role_assignment" "meilisearch_app_kv_access" {
+#   scope                = azurerm_key_vault.az_openai_kv.id
+#   principal_id         = azurerm_linux_web_app.meilisearch.identity[0].principal_id
+#   role_definition_name = "Key Vault Secrets User" # Read secret contents. Only works for key vaults that use the 'Azure role-based access control' permission model.
+# }
 
 resource "azurerm_linux_web_app" "librechat" {
   name                          = var.libre_app_name
