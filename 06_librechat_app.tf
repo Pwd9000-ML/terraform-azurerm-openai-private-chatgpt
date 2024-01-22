@@ -68,10 +68,11 @@ resource "azurerm_linux_web_app" "librechat" {
 
   site_config {
     minimum_tls_version = "1.2"
+    #TODO - Make dynamic 
     ip_restriction {
       virtual_network_subnet_id = var.libre_app_virtual_network_subnet_id != null ? var.libre_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
       priority                  = 100
-      name                      = "Allow from LibreChat app subnet"
+      name                      = "Allow access from app subnet, should also host other services e.g. CosmosDB, MeiliSearch, etc."
       action                    = "Allow"
     }
 
