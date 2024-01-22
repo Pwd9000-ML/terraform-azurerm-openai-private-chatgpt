@@ -51,13 +51,21 @@ oai_identity = {
 oai_network_acls = null
 oai_storage      = null
 oai_model_deployment = [
-  {
-    deployment_id  = "gpt-4"
-    model_name     = "gpt-4"
+    {
+    deployment_id  = "gpt-35-turbo"
+    model_name     = "gpt-35-turbo"
     model_format   = "OpenAI"
-    model_version  = "0613"
+    model_version  = "1106"
     scale_type     = "Standard"
     scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
+  },
+  {
+    deployment_id  = "gpt-4"
+    model_name     = "1106-Preview"
+    model_format   = "OpenAI"
+    model_version  = "1106-Preview"
+    scale_type     = "Standard"
+    scale_capacity = 15 
   },
   {
     deployment_id  = "gpt-4-1106-preview"
@@ -65,7 +73,7 @@ oai_model_deployment = [
     model_format   = "OpenAI"
     model_version  = "1106-Preview"
     scale_type     = "Standard"
-    scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
+    scale_capacity = 15 
   },
   {
     deployment_id  = "gpt-4-vision-preview"
@@ -140,7 +148,7 @@ libre_app_endpoints = "azureOpenAI"
 
 # Azure OpenAI
 libre_app_az_oai_api_key                      = null
-libre_app_az_oai_models                       = "gpt-4,gpt-4-1106-preview,gpt-4-vision-preview"
+libre_app_az_oai_models                       = "gpt-35-turbo,gpt-4,gpt-4-vision-preview"
 libre_app_az_oai_use_model_as_deployment_name = true
 libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
@@ -151,7 +159,7 @@ libre_app_az_oai_dall3_deployment_name        = "dall-e-3"
 libre_app_debug_plugins     = true
 libre_app_plugins_creds_key = null
 libre_app_plugins_creds_iv  = null
-libre_app_plugin_models     = "dall-e-3"
+libre_app_plugin_models     = "gpt-35-turbo,gpt-4,gpt-4-vision-preview"
 libre_app_plugins_use_azure = true
 
 # Search
