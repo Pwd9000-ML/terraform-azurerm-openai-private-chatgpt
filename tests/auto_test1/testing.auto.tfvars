@@ -66,6 +66,14 @@ oai_model_deployment = [
     model_version  = "vision-preview"
     scale_type     = "Standard"
     scale_capacity = 5
+  },
+    {
+    deployment_id  = "dall-e-3"
+    model_name     = "dall-e-3"
+    model_format   = "OpenAI"
+    model_version  = "3.0"
+    scale_type     = "Standard"
+    scale_capacity = 2
   }
 ]
 
