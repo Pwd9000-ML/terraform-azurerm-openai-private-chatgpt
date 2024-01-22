@@ -350,26 +350,26 @@ variable "app_service_sku_name" {
   default     = "B1"
 }
 
-# Meilisearch App Service
-variable "meilisearch_app_name" {
-  type        = string
-  description = "Name of the meilisearch App Service."
-  default     = "meilisearchapp9000"
+# # Meilisearch App Service
+# variable "meilisearch_app_name" {
+#   type        = string
+#   description = "Name of the meilisearch App Service."
+#   default     = "meilisearchapp9000"
 
-}
+# }
 
-variable "meilisearch_app_virtual_network_subnet_id" {
-  type        = string
-  description = "The ID of the subnet to deploy the meilisearch App Service in."
-  default     = null
-}
+# variable "meilisearch_app_virtual_network_subnet_id" {
+#   type        = string
+#   description = "The ID of the subnet to deploy the meilisearch App Service in."
+#   default     = null
+# }
 
-variable "meilisearch_app_key" {
-  type        = string
-  description = "The Meilisearch API Key to use for authentication."
-  default     = null
-  sensitive   = true
-}
+# variable "meilisearch_app_key" {
+#   type        = string
+#   description = "The Meilisearch API Key to use for authentication."
+#   default     = null
+#   sensitive   = true
+# }
 
 # LibreChat App Service
 variable "libre_app_name" {
@@ -512,20 +512,20 @@ variable "libre_app_plugins_creds_iv" {
 variable "libre_app_enable_meilisearch" {
   type        = bool
   description = "Enable Meilisearch"
-  default     = true
+  default     = false
 }
 
-variable "libre_app_disable_meilisearch_analytics" {
-  type        = bool
-  description = "Disable Meilisearch Analytics"
-  default     = true
-}
+# variable "libre_app_disable_meilisearch_analytics" {
+#   type        = bool
+#   description = "Disable Meilisearch Analytics"
+#   default     = true
+# }
 
-variable "libre_app_meili_host" {
-  type        = string
-  description = "For the API server to connect to the search server. E.g. https://meilisearch.example.com"
-  default     = null
-}
+# variable "libre_app_meili_host" {
+#   type        = string
+#   description = "For the API server to connect to the search server. E.g. https://meilisearch.example.com"
+#   default     = null
+# }
 
 variable "libre_app_meili_key" {
   type        = string

@@ -86,9 +86,9 @@ module "private-chatgpt-openai" {
   app_service_sku_name = var.app_service_sku_name
 
   # MeiSearch App
-  meilisearch_app_name                      = "${var.meilisearch_app_name}${random_integer.number.result}"
-  meilisearch_app_virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id
-  meilisearch_app_key                       = var.meilisearch_app_key
+  #meilisearch_app_name                      = "${var.meilisearch_app_name}${random_integer.number.result}"
+  #meilisearch_app_virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id
+  #meilisearch_app_key                       = var.meilisearch_app_key
 
   # LibreChat App
   libre_app_name                          = "${var.libre_app_name}${random_integer.number.result}"
@@ -125,10 +125,10 @@ module "private-chatgpt-openai" {
   libre_app_plugins_creds_iv  = var.libre_app_plugins_creds_iv
 
   # Search
-  libre_app_enable_meilisearch            = var.libre_app_enable_meilisearch
-  libre_app_disable_meilisearch_analytics = var.libre_app_disable_meilisearch_analytics
-  libre_app_meili_host                    = var.libre_app_meili_host
-  libre_app_meili_key                     = var.libre_app_meili_key
+  libre_app_enable_meilisearch = var.libre_app_enable_meilisearch
+  #libre_app_disable_meilisearch_analytics = var.libre_app_disable_meilisearch_analytics
+  #libre_app_meili_host                    = var.libre_app_meili_host
+  #libre_app_meili_key                     = var.libre_app_meili_key
 
   # User Registration
   libre_app_allow_email_login         = var.libre_app_allow_email_login
