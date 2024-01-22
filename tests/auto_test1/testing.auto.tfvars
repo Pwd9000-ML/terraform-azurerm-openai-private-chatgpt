@@ -132,7 +132,7 @@ libre_app_endpoints = "azureOpenAI"
 
 # Azure OpenAI
 libre_app_az_oai_api_key                      = null
-libre_app_az_oai_models                       = "gpt-4-1106-preview,gpt-4-vision-preview"
+libre_app_az_oai_models                       = "gpt-4-1106-preview,gpt-4-vision-preview,dall-e-3"
 libre_app_az_oai_use_model_as_deployment_name = true
 libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
@@ -143,7 +143,8 @@ libre_app_az_oai_dall3_deployment_name        = "dall-e-3"
 libre_app_debug_plugins     = true
 libre_app_plugins_creds_key = null
 libre_app_plugins_creds_iv  = null
-libre_app_plugin_models     = "gpt-4,dall-e-3,gpt-4-1106-preview,gpt-4-vision-preview"
+libre_app_plugin_models     = "gpt-4-1106-preview,gpt-4-vision-preview,dall-e-3"
+libre_app_plugins_use_azure = true
 
 # Search
 libre_app_enable_meilisearch = false

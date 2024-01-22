@@ -537,6 +537,11 @@ variable "libre_app_plugin_models" {
   default     = "gpt-4,dall-e-3"
 }
 
+variable "libre_app_plugins_use_azure" {
+  type        = bool
+  description = "Libre App Plugins Use Azure, required for Azure OpenAI Plugins e.g. 'dall-e-3'"
+  default     = true
+}
 
 #TODO
 # Search
