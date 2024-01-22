@@ -72,7 +72,7 @@ resource "azurerm_linux_web_app" "librechat" {
     ip_restriction {
       virtual_network_subnet_id = var.libre_app_virtual_network_subnet_id != null ? var.libre_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
       priority                  = 100
-      name                      = "${azurerm_subnet.az_openai_subnet.id}-access" # "Allow from LibreChat app subnet and hosted services e.g. cosmosdb, meilisearch etc."
+      name                      = "${azurerm_subnet.az_openai_subnet.name}-access" # "Allow from LibreChat app subnet and hosted services e.g. cosmosdb, meilisearch etc."
       action                    = "Allow"
     }
 
