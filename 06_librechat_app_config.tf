@@ -55,8 +55,8 @@ locals {
     ALLOW_REGISTRATION        = var.libre_app_allow_registration                                                                                                #true
     ALLOW_SOCIAL_LOGIN        = var.libre_app_allow_social_login                                                                                                #false
     ALLOW_SOCIAL_REGISTRATION = var.libre_app_allow_social_registration                                                                                         #false
-    SESSION_EXPIRY            = 1000 * 60 * 15                                                                                                                  #15 minutes
-    REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 7                                                                                                       #7 days
+    SESSION_EXPIRY            = 1000 * 60 * 7                                                                                                                  #15 minutes
+    REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 5                                                                                                       #7 days
     JWT_SECRET                = var.libre_app_jwt_secret != null ? var.libre_app_jwt_secret : random_string.libre_app_jwt_secret.result                         #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_secret.id})"
     JWT_REFRESH_SECRET        = var.libre_app_jwt_refresh_secret != null ? var.libre_app_jwt_refresh_secret : random_string.libre_app_jwt_refresh_secret.result #"@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_refresh_secret.id})"
 

@@ -117,22 +117,22 @@ libre_app_virtual_network_subnet_id     = null
 libre_app_title         = "Azure OpenAI LibreChat"
 libre_app_custom_footer = "Privately hosted chat app powered by Azure OpenAI and LibreChat"
 libre_app_host          = "0.0.0.0"
-libre_app_port          = 443
+libre_app_port          = 80
 libre_app_mongo_uri     = null
-libre_app_domain_client = "https://0.0.0.0:443"
-libre_app_domain_server = "https://0.0.0.0:443"
+libre_app_domain_client = "https://0.0.0.0:80"
+libre_app_domain_server = "https://0.0.0.0:80"
 
 # debug logging
 libre_app_debug_logging = true
 libre_app_debug_console = false
 
 # Endpoints
-libre_app_endpoints = "azureOpenAI"
+libre_app_endpoints = "azureOpenAI,OpenAI"
 
 # Azure OpenAI
 libre_app_az_oai_api_key                      = null
-libre_app_az_oai_models                       = "gpt-4,gpt-4-1106-preview,gpt-4-vision-preview"
-libre_app_az_oai_use_model_as_deployment_name = true
+libre_app_az_oai_models                       = "gpt-4"
+libre_app_az_oai_use_model_as_deployment_name = false#true
 libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
 
