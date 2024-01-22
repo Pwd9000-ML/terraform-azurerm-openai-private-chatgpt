@@ -105,7 +105,7 @@ app_service_sku_name = "B1"
 # Meilisearch App
 meilisearch_app_name                      = "meilisearchapp"
 meilisearch_app_virtual_network_subnet_id = null
-meilisearch_app_key                       = "dfsdgdsffgdsfgds"#null
+meilisearch_app_key                       = "dfsdgdsffgdsfgds" #null
 
 # LibreChat App Service
 libre_app_name                          = "librechatapp"
@@ -138,22 +138,22 @@ libre_app_az_oai_api_version                  = "2023-07-01-preview"
 
 # Plugins
 libre_app_debug_plugins     = false
-libre_app_plugins_creds_key = "dfsdgdsffgdsfgds"#null
-libre_app_plugins_creds_iv  = "dfsdgdsffgdsfgds"#null
+libre_app_plugins_creds_key = "dfsdgdsffgdsfgds" #null
+libre_app_plugins_creds_iv  = "dfsdgdsffgdsfgds" #null
 
 # Search
 libre_app_enable_meilisearch            = false
 libre_app_disable_meilisearch_analytics = true
 libre_app_meili_host                    = null
-libre_app_meili_key                     = "dfsdgdsffgdsfgds"#null
+libre_app_meili_key                     = "dfsdgdsffgdsfgds" #null
 
 # User Registration
 libre_app_allow_email_login         = true
 libre_app_allow_registration        = true
 libre_app_allow_social_login        = false
 libre_app_allow_social_registration = false
-libre_app_jwt_secret                = "dfsdgdsffgdsfgds"#null
-libre_app_jwt_refresh_secret        = "dfsdgdsffgdsfgds"#null
+libre_app_jwt_secret                = "dfsdgdsffgdsfgds" #null
+libre_app_jwt_refresh_secret        = "dfsdgdsffgdsfgds" #null
 
 # ### CDN - Front Door ###
 # create_front_door_cdn = true
