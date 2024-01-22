@@ -143,7 +143,7 @@ libre_app_az_oai_dall3_deployment_name        = "dall-e-3"
 libre_app_debug_plugins     = true
 libre_app_plugins_creds_key = null
 libre_app_plugins_creds_iv  = null
-libre_app_plugin_models     = "gpt-4,dall-e-3"
+libre_app_plugin_models     = "gpt-4,dall-e-3,gpt-4-1106-preview,gpt-4-vision-preview"
 
 # Search
 libre_app_enable_meilisearch = false
