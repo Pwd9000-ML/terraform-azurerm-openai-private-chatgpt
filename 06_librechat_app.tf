@@ -57,8 +57,7 @@ resource "azurerm_service_plan" "az_openai_asp" {
   sku_name            = var.app_service_sku_name
 }
 
-
-
+#Create LibeChat App Service
 resource "azurerm_linux_web_app" "librechat" {
   name                          = var.libre_app_name
   location                      = var.location
@@ -69,6 +68,19 @@ resource "azurerm_linux_web_app" "librechat" {
 
   site_config {
     minimum_tls_version = "1.2"
+    ip_restriction {
+      virtual_network_subnet_id = var.libre_app_virtual_network_subnet_id != null ? var.libre_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
+      priority                  = 100
+      name                      = "Allow from LibreChat app subnet"
+      action                    = "Allow"
+    }
+
+    ip_restriction {
+      virtual_network_subnet_id = var.libre_app_allowed_ip_address
+      priority                  = 200
+      name                      = "The CIDR notation of the IP or IP Range to match to allow. For example: 10.0.0.0/24 or 192.168.10.1/32"
+      action                    = "Allow"
+    }
   }
 
   logs {
@@ -99,6 +111,41 @@ resource "azurerm_role_assignment" "librechat_app_kv_access" {
   principal_id         = azurerm_linux_web_app.librechat.identity[0].principal_id
   role_definition_name = "Key Vault Secrets User" # Read secret contents. Only works for key vaults that use the 'Azure role-based access control' permission model.
 }
+
+#Custom Domain / Certificates / Allowed IPs
+# resource "azurerm_dns_zone" "dns-zone" {
+#   name                = var.azure_dns_zone
+#   resource_group_name = var.azure_resource_group_name
+# }
+
+# resource "azurerm_linux_web_app" "app-service" {
+#   name                = "some-service"
+#   resource_group_name = var.azure_resource_group_name
+#   location            = var.azure_region
+#   service_plan_id = "some-plan"
+#   site_config {}
+# }
+
+# resource "azurerm_dns_txt_record" "domain-verification" {
+#   name                = "asuid.api.domain.com"
+#   zone_name           = var.azure_dns_zone
+#   resource_group_name = var.azure_resource_group_name
+#   ttl                 = 300
+
+#   record {
+#     value = azurerm_linux_web_app.app-service.custom_domain_verification_id
+#   }
+# }
+
+# resource "azurerm_dns_cname_record" "cname-record" {
+#   name                = "domain.com"
+#   zone_name           = azurerm_dns_zone.dns-zone.name
+#   resource_group_name = var.azure_resource_group_name
+#   ttl                 = 300
+#   record              = azurerm_linux_web_app.app-service.default_hostname
+
+#   depends_on = [azurerm_dns_txt_record.domain-verification]
+# }
 
 #TODO:
 # #  Deploy code from a public GitHub repo

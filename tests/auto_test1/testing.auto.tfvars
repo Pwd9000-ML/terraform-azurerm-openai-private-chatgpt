@@ -103,6 +103,7 @@ app_service_sku_name = "B1"
 libre_app_name                          = "librechatapp"
 libre_app_public_network_access_enabled = true
 libre_app_virtual_network_subnet_id     = null
+libre_app_allowed_ip_address            = "0.0.0.0/0"
 
 ### LibreChat App Settings ###
 # Server Config

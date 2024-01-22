@@ -390,6 +390,12 @@ variable "libre_app_virtual_network_subnet_id" {
   default     = null
 }
 
+variable "libre_app_allowed_ip_address" {
+  type        = string
+  description = "The IP Address to allow access to the LibreChat App Service from."
+  default     = "0.0.0.0/0"
+}
+
 # LibreChat App Service App Settings
 # Server Config
 variable "libre_app_title" {
