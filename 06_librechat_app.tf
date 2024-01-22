@@ -77,7 +77,7 @@ resource "azurerm_linux_web_app" "meilisearch" {
   app_settings = {
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
 
-    MEILI_MASTER_KEY   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
+    MEILI_MASTER_KEY   = var.meilisearch_app_key != null ? var.meilisearch_app_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.meilisearch_master_key.id})"
     MEILI_NO_ANALYTICS = true
 
     #DOCKER_REGISTRY_SERVER_URL          = "https://index.docker.io"

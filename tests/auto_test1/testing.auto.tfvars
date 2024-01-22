@@ -105,6 +105,7 @@ app_service_sku_name = "B1"
 # Meilisearch App
 meilisearch_app_name                      = "meilisearchapp"
 meilisearch_app_virtual_network_subnet_id = null
+meilisearch_app_key                       = null
 
 # LibreChat App Service
 libre_app_name                          = "librechatapp"

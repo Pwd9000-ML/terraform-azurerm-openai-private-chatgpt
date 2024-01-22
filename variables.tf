@@ -368,6 +368,13 @@ variable "meilisearch_app_virtual_network_subnet_id" {
   default     = null
 }
 
+variable "meilisearch_app_key" {
+  type        = string
+  description = "The Meilisearch API Key to use for authentication."
+  default     = null
+  sensitive   = true
+}
+
 # LibreChat App Service
 variable "libre_app_name" {
   type        = string

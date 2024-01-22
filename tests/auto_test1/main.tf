@@ -88,6 +88,7 @@ module "private-chatgpt-openai" {
   # MeiSearch App
   meilisearch_app_name                      = "${var.meilisearch_app_name}${random_integer.number.result}"
   meilisearch_app_virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id
+  meilisearch_app_key                       = var.meilisearch_app_key
 
   # LibreChat App
   libre_app_name                          = "${var.libre_app_name}${random_integer.number.result}"
