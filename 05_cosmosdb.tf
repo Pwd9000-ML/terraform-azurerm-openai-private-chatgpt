@@ -39,6 +39,7 @@ resource "azurerm_cosmosdb_account" "az_openai_mongodb" {
 
   is_virtual_network_filter_enabled = var.cosmosdb_is_virtual_network_filter_enabled
   public_network_access_enabled     = var.cosmosdb_public_network_access_enabled
+  depends_on                        = [azurerm_subnet.az_openai_subnet]
 }
 
 ### Save MongoDB URI details to Key Vault for consumption by other services (e.g. LibreChat App)

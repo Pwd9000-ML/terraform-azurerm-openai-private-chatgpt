@@ -118,6 +118,8 @@ resource "azurerm_linux_web_app" "meilisearch" {
   identity {
     type = "SystemAssigned"
   }
+
+  depends_on = [azurerm_subnet.az_openai_subnet]
 }
 
 # Grant kv access to meilisearch app to reference the master key secret
@@ -158,7 +160,7 @@ resource "azurerm_linux_web_app" "librechat" {
   app_settings              = local.libre_app_settings
   virtual_network_subnet_id = var.libre_app_virtual_network_subnet_id != null ? var.libre_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
 
-  depends_on = [azurerm_linux_web_app.meilisearch]
+  depends_on = [azurerm_linux_web_app.meilisearch, azurerm_subnet.az_openai_subnet]
 }
 
 # Grant kv access to librechat app to reference environment variables (stored as secrets in key vault)
