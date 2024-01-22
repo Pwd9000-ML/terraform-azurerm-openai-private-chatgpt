@@ -1,6 +1,6 @@
 ### 01 Common Variables + RG ###
 resource_group_name = "TF-Module-Automated-Tests-Cognitive-GPT"
-location            = "westus"
+location            = "SwedenCentral"
 tags = {
   Terraform   = "True"
   Description = "Private ChatGPT hosted on Azure OpenAI (Librechat)"
@@ -80,7 +80,7 @@ cosmosdb_max_interval_in_seconds = 10
 cosmosdb_max_staleness_prefix    = 200
 cosmosdb_geo_locations = [
   {
-    location          = "westus"
+    location          = "SwedenCentral"
     failover_priority = 0
   }
 ]

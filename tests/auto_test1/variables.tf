@@ -392,7 +392,7 @@ variable "libre_app_virtual_network_subnet_id" {
 
 variable "libre_app_allowed_ip_address" {
   type        = string
-  description = "The IP Address to allow access to the LibreChat App Service from."
+  description = "The IP Address to allow access to the LibreChat App Service from. (Change to your IP Address). default is allow all"
   default     = "0.0.0.0/0"
 }
 

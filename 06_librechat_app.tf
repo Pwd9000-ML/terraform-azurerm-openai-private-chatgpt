@@ -148,6 +148,7 @@ resource "azurerm_role_assignment" "librechat_app_kv_access" {
 #   depends_on = [azurerm_dns_txt_record.domain-verification]
 # }
 
+#TODO: Implement DALL-E 
 #TODO:
 # #  Deploy code from a public GitHub repo
 # # resource "azurerm_app_service_source_control" "sourcecontrol" {
