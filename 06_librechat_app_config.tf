@@ -91,9 +91,9 @@ locals {
 
     AZURE_OPENAI_API_DEPLOYMENT_NAME = "gpt-4"
 
-    BINGAI_TOKEN = random_string.meilisearch_app_key.result
+    BINGAI_TOKEN = "sdfdgf23rf23rcopjfoi3h9hf3efeef23"
 
-    CHATGPT_TOKEN  = random_string.meilisearch_app_key.result
+    CHATGPT_TOKEN  = "sdfdgf23rf23rcopjfoi3h9hf3efeef23"
     CHATGPT_MODELS = "text-davinci-002-render-sha"
 
     GOOGLE_KEY = "user_provided"
