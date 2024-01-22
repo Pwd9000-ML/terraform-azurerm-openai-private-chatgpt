@@ -108,7 +108,7 @@ cosmosdb_public_network_access_enabled     = true
 ### 06 app services (librechat app + meilisearch) ###
 # App Service Plan
 app_service_name     = "openaiasp"
-app_service_sku_name = "B2"
+app_service_sku_name = "B1"
 
 # Meilisearch App
 #meilisearch_app_name                      = "meilisearchapp"
@@ -130,6 +130,7 @@ libre_app_port          = 80
 libre_app_mongo_uri     = null
 libre_app_domain_client = "http://localhost:80"
 libre_app_domain_server = "http://localhost:80"
+libre_app_docker_image  = "ghcr.io/danny-avila/librechat-dev-api:latest"
 
 # debug logging
 libre_app_debug_logging = true

@@ -105,6 +105,7 @@ module "private-chatgpt-openai" {
   libre_app_mongo_uri     = var.libre_app_mongo_uri
   libre_app_domain_client = var.libre_app_domain_client
   libre_app_domain_server = var.libre_app_domain_server
+  libre_app_docker_image  = var.libre_app_docker_image
 
   # Debug Config
   libre_app_debug_logging = var.libre_app_debug_logging

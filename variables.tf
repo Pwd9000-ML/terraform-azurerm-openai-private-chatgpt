@@ -446,6 +446,12 @@ variable "libre_app_domain_server" {
   default     = "http://localhost:3080"
 }
 
+variable "libre_app_docker_image" {
+  type        = string
+  description = "The Docker Image to use for the App Service."
+  default     = "ghcr.io/danny-avila/librechat-dev-api:latest"
+}
+
 # Debug logging
 variable "libre_app_debug_logging" {
   type        = bool
