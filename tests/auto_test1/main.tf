@@ -102,7 +102,7 @@ module "private-chatgpt-openai" {
   libre_app_custom_footer = var.libre_app_custom_footer
   libre_app_host          = var.libre_app_host
   libre_app_port          = var.libre_app_port
-    libre_app_docker_image  = var.libre_app_docker_image
+  libre_app_docker_image  = var.libre_app_docker_image
   libre_app_mongo_uri     = var.libre_app_mongo_uri
   libre_app_domain_client = var.libre_app_domain_client
   libre_app_domain_server = var.libre_app_domain_server
