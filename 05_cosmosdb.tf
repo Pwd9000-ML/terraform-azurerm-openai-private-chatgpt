@@ -46,4 +46,5 @@ resource "azurerm_key_vault_secret" "openai_cosmos_uri" {
   name         = "${var.cosmosdb_name}-cosmos-uri"
   value        = azurerm_cosmosdb_account.az_openai_mongodb.primary_mongodb_connection_string
   key_vault_id = azurerm_key_vault.az_openai_kv.id
+  depends_on   = [azurerm_role_assignment.kv_role_assigment]
 }
