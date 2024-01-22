@@ -90,6 +90,16 @@ locals {
     MESSAGE_USER_WINDOW = 1
 
     AZURE_OPENAI_API_DEPLOYMENT_NAME = "gpt-4"
+
+    BINGAI_TOKEN = random_string.meilisearch_app_key.result
+
+    CHATGPT_TOKEN  = random_string.meilisearch_app_key.result
+    CHATGPT_MODELS = "text-davinci-002-render-sha"
+
+    GOOGLE_KEY = "user_provided"
+
+
+    DEBUG_OPENAI = false
     # AZURE_OPENAI_API_VERSION = var.azure_openai_api_version
     # AZURE_OPENAI_API_COMPLETIONS_DEPLOYMENT_NAME =
     # AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME  =
