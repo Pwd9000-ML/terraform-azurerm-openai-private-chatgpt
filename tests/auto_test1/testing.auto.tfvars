@@ -132,7 +132,7 @@ libre_app_endpoints = "azureOpenAI,OpenAI"
 # Azure OpenAI
 libre_app_az_oai_api_key                      = null
 libre_app_az_oai_models                       = "gpt-4"
-libre_app_az_oai_use_model_as_deployment_name = false#true
+libre_app_az_oai_use_model_as_deployment_name = false #true
 libre_app_az_oai_instance_name                = null
 libre_app_az_oai_api_version                  = "2023-07-01-preview"
 
