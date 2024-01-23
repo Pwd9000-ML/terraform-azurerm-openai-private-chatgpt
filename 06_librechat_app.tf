@@ -135,7 +135,7 @@ resource "azurerm_role_assignment" "librechat_app_kv_access" {
 #   resource_group_name = var.azure_resource_group_name
 # }
 
-resource "azurerm_dns_txt_record" "domain-verification" {
+resource "azurerm_dns_txt_record" "domain_verification" {
   count               = var.libre_app_custom_domain_create == true ? 1 : 0
   name                = "${var.librechat_app_custom_domain_name}txt"
   zone_name           = var.librechat_app_custom_dns_zone_name
@@ -147,7 +147,7 @@ resource "azurerm_dns_txt_record" "domain-verification" {
   }
 }
 
-resource "azurerm_dns_cname_record" "cname-record" {
+resource "azurerm_dns_cname_record" "cname_record" {
   count               = var.libre_app_custom_domain_create == true ? 1 : 0
   name                = var.librechat_app_custom_domain_name
   zone_name           = var.librechat_app_custom_dns_zone_name
@@ -155,25 +155,29 @@ resource "azurerm_dns_cname_record" "cname-record" {
   ttl                 = 600
   record              = azurerm_linux_web_app.librechat.default_hostname
 
-  depends_on = [azurerm_dns_txt_record.domain-verification]
+  depends_on = [azurerm_dns_txt_record.domain_verification]
 }
 
-# resource "azurerm_app_service_custom_hostname_binding" "hostname-binding" {
-#   hostname            = "api.domain.com"
-#   app_service_name    = azurerm_linux_web_app.app-service.name
-#   resource_group_name = var.azure_resource_group_name
+resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
+  count               = var.libre_app_custom_domain_create == true ? 1 : 0
+  hostname            = "${var.librechat_app_custom_domain_name}.${var.librechat_app_custom_dns_zone_name}"
+  app_service_name    = var.app_service_name
+  resource_group_name = azurerm_resource_group.az_openai_rg.name
 
-#   depends_on = [azurerm_dns_cname_record.cname-record]
-# }
+  depends_on = [azurerm_dns_cname_record.cname_record]
+}
 
-# resource "azurerm_app_service_managed_certificate" "example" {
-#   custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname-binding.id
-# }
+resource "azurerm_app_service_managed_certificate" "libre_app_cert" {
+  count                      = var.libre_app_custom_domain_create == true ? 1 : 0
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding[0].id
+}
 
-# resource "azurerm_app_service_certificate_binding" "example" {
-#   hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname-binding.id
-#   certificate_id      = azurerm_app_service_managed_certificate.example.id
-#   ssl_state           = "SniEnabled"
+resource "azurerm_app_service_certificate_binding" "libre_app_cert_binding" {
+  count               = var.libre_app_custom_domain_create == true ? 1 : 0
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding[0].id
+  certificate_id      = azurerm_app_service_managed_certificate.libre_app_cert[0].id
+  ssl_state           = "SniEnabled"
+}
 
 #TODO: Implement DALL-E 
 #TODO:
