@@ -118,8 +118,17 @@ app_service_sku_name = "B1"
 # LibreChat App Service
 libre_app_name                          = "librechatapp"
 libre_app_public_network_access_enabled = true
-libre_app_virtual_network_subnet_id     = null
-libre_app_allowed_ip_address            = "0.0.0.0/0"
+libre_app_virtual_network_subnet_id     = null # Access is allowed on the built in subnet of this module. If networking is created as part of the module, this will be automatically populated if value is 'null'
+libre_app_allowed_subnets               = null # Add any other subnet ids to allow access to the app service (optional)
+libre_app_allowed_ip_addresses = [
+  {
+    ip_address = "0.0.0.0/0"
+    priority   = 200
+    name       = "ip-access-rule1" # The CIDR notation of the IP or IP Range to match to allow. For example: 10.0.0.0/24 or 192.168.10.1/32"
+    action     = "Allow"
+  }
+]
+
 
 ### LibreChat App Settings ###
 # Server Config

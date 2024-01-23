@@ -386,14 +386,44 @@ variable "libre_app_public_network_access_enabled" {
 
 variable "libre_app_virtual_network_subnet_id" {
   type        = string
-  description = "The ID of the subnet to deploy the LibreChat App Service in."
+  description = "The ID of the subnet, used to allow access to the App Service (priority 100), e.g. cosmosdb, meilisearch etc. If networking is created as part of the module, this will be automatically populated if value is 'null'."
   default     = null
 }
 
-variable "libre_app_allowed_ip_address" {
-  type        = string
-  description = "The IP Address to allow access to the LibreChat App Service from. (Change to your IP Address). default is allow all"
-  default     = "0.0.0.0/0"
+variable "libre_app_allowed_subnets" {
+  description = "Allowed Subnets (By default the subnet the app service is deployed in is allowed access already as priority 100). Add any additionals here"
+  type = list(object({
+    virtual_network_subnet_ids = string
+    priority                   = number
+    name                       = string
+    action                     = string
+  }))
+  default = [
+    {
+      virtual_network_subnet_id = "subnet_id1"
+      priority                  = 200
+      name                      = "subnet-access-rule1" # "Allow from LibreChat app subnet and hosted services e.g. cosmosdb, meilisearch etc."
+      action                    = "Allow"
+    }
+  ]
+}
+
+variable "libre_app_allowed_ip_addresses" {
+  description = "Allowed IP Addresses"
+  type = list(object({
+    ip_address = string
+    priority   = number
+    name       = string
+    action     = string
+  }))
+  default = [
+    {
+      ip_address = "0.0.0.0/0"
+      priority   = 300
+      name       = "ip-access-rule1" # The CIDR notation of the IP or IP Range to match to allow. For example: 10.0.0.0/24 or 192.168.10.1/32"
+      action     = "Allow"
+    }
+  ]
 }
 
 # LibreChat App Service App Settings

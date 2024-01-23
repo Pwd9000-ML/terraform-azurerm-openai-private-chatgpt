@@ -94,7 +94,8 @@ module "private-chatgpt-openai" {
   libre_app_name                          = "${var.libre_app_name}${random_integer.number.result}"
   libre_app_virtual_network_subnet_id     = var.libre_app_virtual_network_subnet_id
   libre_app_public_network_access_enabled = var.libre_app_public_network_access_enabled
-  libre_app_allowed_ip_address            = var.libre_app_allowed_ip_address
+  libre_app_allowed_subnets               = var.libre_app_allowed_subnets
+  libre_app_allowed_ip_addresses          = var.libre_app_allowed_ip_addresses
 
   ### LibreChat App Settings ###
   # Server Config

@@ -68,7 +68,8 @@ resource "azurerm_linux_web_app" "librechat" {
 
   site_config {
     minimum_tls_version = "1.2"
-    #TODO - Make dynamic 
+
+    # allow subnet access from built in created subnet of this module
     ip_restriction {
       virtual_network_subnet_id = var.libre_app_virtual_network_subnet_id != null ? var.libre_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
       priority                  = 100
@@ -76,11 +77,26 @@ resource "azurerm_linux_web_app" "librechat" {
       action                    = "Allow"
     }
 
-    ip_restriction {
-      ip_address = var.libre_app_allowed_ip_address
-      priority   = 200
-      name       = "ip-access" # "The CIDR notation of the IP or IP Range to match to allow. For example: 10.0.0.0/24 or 192.168.10.1/32"
-      action     = "Allow"
+    # ip_restriction for subnet access add additional via dynamic (optional)
+    dynamic "ip_restriction" {
+      for_each = var.libre_app_allowed_subnets != null ? var.libre_app_allowed_subnets : []
+      content {
+        virtual_network_subnet_id = ip_restriction.value.virtual_network_subnet_id
+        priority                  = ip_restriction.value.priority
+        name                      = ip_restriction.value.name
+        action                    = ip_restriction.value.action
+      }
+    }
+
+    # ip_restriction for ip access add additional via dynamic (optional)
+    dynamic "ip_restriction" {
+      for_each = var.libre_app_allowed_ip_addresses != null ? var.libre_app_allowed_ip_addresses : []
+      content {
+        ip_address = ip_restriction.value.ip_address
+        priority   = ip_restriction.value.priority
+        name       = ip_restriction.value.name
+        action     = ip_restriction.value.action
+      }
     }
   }
 
