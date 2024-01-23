@@ -9,6 +9,15 @@ New integrations and features have been added to the module to use the latest **
 
 [![LIBRE](https://img.youtube.com/vi/pNIOs1ovsXw/0.jpg)](https://www.youtube.com/watch?v=pNIOs1ovsXw)  
 
+## Coming next - Feature development
+
+- [ ] Custom domain support with managed certificates
+- [ ] Privatise solution with Private endpoint support
+- [ ] Front Door and WAF support for public entrypoint
+- [ ] Azure AI Search/MeiliSearch Integration
+- [ ] Add additional support for [Azure OpenAI DALL-E-3](https://docs.microsoft.com/en-us/azure/cognitive-services/openai-dall-e/overview)
+- [ ] Updated documentation and examples
+
 ## Legacy Version 1.x
 
 **NOTE:** Legacy version **1.x** can be found in the legacy branch **[here](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/legacy-v1)**  
