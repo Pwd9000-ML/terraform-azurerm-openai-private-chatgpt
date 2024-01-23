@@ -140,22 +140,23 @@ resource "azurerm_dns_txt_record" "domain-verification" {
   name                = var.librechat_app_custom_domain_name
   zone_name           = var.librechat_app_custom_dns_zone_name
   resource_group_name = var.dns_resource_group_name
-  ttl                 = 300
+  ttl                 = 600
 
   record {
     value = azurerm_linux_web_app.librechat.custom_domain_verification_id
   }
 }
 
-# resource "azurerm_dns_cname_record" "cname-record" {
-#   name                = "domain.com"
-#   zone_name           = azurerm_dns_zone.dns-zone.name
-#   resource_group_name = var.azure_resource_group_name
-#   ttl     azurerm_linux_web_app.librechat.custom_domain_verification_id
-#   record              = azurerm_linux_web_app.app-service.default_hostname
+resource "azurerm_dns_cname_record" "cname-record" {
+  count               = var.libre_app_custom_domain_create == true ? 1 : 0
+  name                = var.librechat_app_custom_domain_name
+  zone_name           = var.librechat_app_custom_dns_zone_name
+  resource_group_name = var.dns_resource_group_name
+  ttl                 = 600
+  record              = azurerm_linux_web_app.librechat.default_site_hostname
 
-#   depends_on = [azurerm_dns_txt_record.domain-verification]
-# }
+  depends_on = [azurerm_dns_txt_record.domain-verification]
+}
 
 # resource "azurerm_app_service_custom_hostname_binding" "hostname-binding" {
 #   hostname            = "api.domain.com"
