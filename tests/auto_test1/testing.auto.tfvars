@@ -129,7 +129,6 @@ libre_app_allowed_ip_addresses = [
   }
 ]
 
-
 ### LibreChat App Settings ###
 # Server Config
 libre_app_title         = "Azure OpenAI LibreChat"
@@ -177,3 +176,9 @@ libre_app_allow_social_login        = false
 libre_app_allow_social_registration = false
 libre_app_jwt_secret                = null
 libre_app_jwt_refresh_secret        = null
+
+# Custom Domain and Managed Certificate (Optional)
+libre_app_custom_domain_create     = true
+librechat_app_custom_domain_name   = "privategpt"
+librechat_app_custom_dns_zone_name = "pwd9000.com"
+dns_resource_group_name            = "Pwd9000-EB-Network"

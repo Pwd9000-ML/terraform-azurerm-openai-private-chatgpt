@@ -638,3 +638,29 @@ variable "libre_app_jwt_refresh_secret" {
   default     = null
   sensitive   = true
 }
+
+# Custom Domain and Managed Certificate (Optional)
+
+variable "libre_app_custom_domain_create" {
+  type        = bool
+  description = "Create a custom domain and managed certificate for the App Service."
+  default     = false
+}
+
+variable "librechat_app_custom_domain_name" {
+  type        = string
+  description = "The custom domain to use for the App Service."
+  default     = "privategpt"
+}
+
+variable "librechat_app_custom_dns_zone_name" {
+  type        = string
+  description = "The DNS Zone to use for the App Service."
+  default     = "domain.com"
+}
+
+variable "dns_resource_group_name" {
+  type        = string
+  description = "The Resource Group that contains the custom DNS Zone to use for the App Service"
+  default     = "dns-rg"
+}

@@ -144,4 +144,10 @@ module "private-chatgpt-openai" {
   libre_app_allow_social_registration = var.libre_app_allow_social_registration
   libre_app_jwt_secret                = var.libre_app_jwt_secret
   libre_app_jwt_refresh_secret        = var.libre_app_jwt_refresh_secret
+
+  # Custom Domain and Managed Certificate (Optional)
+  libre_app_custom_domain_create     = var.libre_app_custom_domain_create
+  librechat_app_custom_domain_name   = "${var.librechat_app_custom_domain_name}${random_integer.number.result}"
+  librechat_app_custom_dns_zone_name = var.librechat_app_custom_dns_zone_name
+  dns_resource_group_name            = var.dns_resource_group_name
 }
