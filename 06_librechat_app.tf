@@ -161,10 +161,10 @@ resource "azurerm_dns_cname_record" "cname_record" {
 resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
   count               = var.libre_app_custom_domain_create == true ? 1 : 0
   hostname            = "${var.librechat_app_custom_domain_name}.${var.librechat_app_custom_dns_zone_name}"
-  app_service_name    = var.app_service_name
+  app_service_name    = var.libre_app_name
   resource_group_name = azurerm_resource_group.az_openai_rg.name
 
-  depends_on = [azurerm_dns_cname_record.cname_record, azurerm_service_plan.az_openai_asp ]
+  depends_on = [azurerm_dns_cname_record.cname_record, azurerm_linux_web_app.librechat ]
 }
 
 resource "azurerm_app_service_managed_certificate" "libre_app_cert" {
