@@ -137,7 +137,7 @@ resource "azurerm_role_assignment" "librechat_app_kv_access" {
 
 resource "azurerm_dns_txt_record" "domain-verification" {
   count               = var.libre_app_custom_domain_create == true ? 1 : 0
-  name                = var.librechat_app_custom_domain_name
+  name                = "${var.librechat_app_custom_domain_name}txt"
   zone_name           = var.librechat_app_custom_dns_zone_name
   resource_group_name = var.dns_resource_group_name
   ttl                 = 600
