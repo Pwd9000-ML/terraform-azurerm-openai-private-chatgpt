@@ -153,7 +153,7 @@ resource "azurerm_dns_cname_record" "cname-record" {
   zone_name           = var.librechat_app_custom_dns_zone_name
   resource_group_name = var.dns_resource_group_name
   ttl                 = 600
-  record              = azurerm_linux_web_app.librechat.default_site_hostname
+  record              = azurerm_linux_web_app.librechat.default_hostname
 
   depends_on = [azurerm_dns_txt_record.domain-verification]
 }
