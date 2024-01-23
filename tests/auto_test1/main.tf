@@ -94,7 +94,8 @@ module "private-chatgpt-openai" {
   libre_app_name                          = "${var.libre_app_name}${random_integer.number.result}"
   libre_app_virtual_network_subnet_id     = var.libre_app_virtual_network_subnet_id
   libre_app_public_network_access_enabled = var.libre_app_public_network_access_enabled
-  libre_app_allowed_ip_address            = var.libre_app_allowed_ip_address
+  libre_app_allowed_subnets               = var.libre_app_allowed_subnets
+  libre_app_allowed_ip_addresses          = var.libre_app_allowed_ip_addresses
 
   ### LibreChat App Settings ###
   # Server Config
@@ -143,4 +144,10 @@ module "private-chatgpt-openai" {
   libre_app_allow_social_registration = var.libre_app_allow_social_registration
   libre_app_jwt_secret                = var.libre_app_jwt_secret
   libre_app_jwt_refresh_secret        = var.libre_app_jwt_refresh_secret
+
+  # Custom Domain and Managed Certificate (Optional)
+  libre_app_custom_domain_create     = var.libre_app_custom_domain_create
+  librechat_app_custom_domain_name   = "${var.librechat_app_custom_domain_name}${random_integer.number.result}"
+  librechat_app_custom_dns_zone_name = var.librechat_app_custom_dns_zone_name
+  dns_resource_group_name            = var.dns_resource_group_name
 }

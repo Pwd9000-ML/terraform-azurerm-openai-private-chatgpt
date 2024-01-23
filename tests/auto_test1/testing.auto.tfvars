@@ -118,8 +118,16 @@ app_service_sku_name = "B1"
 # LibreChat App Service
 libre_app_name                          = "librechatapp"
 libre_app_public_network_access_enabled = true
-libre_app_virtual_network_subnet_id     = null
-libre_app_allowed_ip_address            = "0.0.0.0/0"
+libre_app_virtual_network_subnet_id     = null # Access is allowed on the built in subnet of this module. If networking is created as part of the module, this will be automatically populated if value is 'null' (priority 100)
+libre_app_allowed_subnets               = null # Add any other subnet ids to allow access to the app service (optional)
+libre_app_allowed_ip_addresses = [
+  {
+    ip_address = "0.0.0.0/0" # Allow all IP Addresses (change to your IP range)
+    priority   = 200
+    name       = "ip-access-rule1"
+    action     = "Allow"
+  }
+]
 
 ### LibreChat App Settings ###
 # Server Config
@@ -168,3 +176,9 @@ libre_app_allow_social_login        = false
 libre_app_allow_social_registration = false
 libre_app_jwt_secret                = null
 libre_app_jwt_refresh_secret        = null
+
+# Custom Domain and Managed Certificate (Optional)
+libre_app_custom_domain_create     = true
+librechat_app_custom_domain_name   = "privategpt"
+librechat_app_custom_dns_zone_name = "pwd9000.com"
+dns_resource_group_name            = "Pwd9000-EB-Network"

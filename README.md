@@ -11,7 +11,7 @@ New integrations and features have been added to the module to use the latest **
 
 ## Coming next - Feature development
 
-- [ ] Custom domain support with managed certificates
+- [x] Custom domain support with managed certificates (Released in v2.1.0)
 - [ ] Privatise solution with Private endpoint support
 - [ ] Front Door and WAF support for public entrypoint
 - [ ] Azure AI Search/MeiliSearch Integration

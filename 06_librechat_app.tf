@@ -68,7 +68,8 @@ resource "azurerm_linux_web_app" "librechat" {
 
   site_config {
     minimum_tls_version = "1.2"
-    #TODO - Make dynamic 
+
+    # allow subnet access from built in created subnet of this module
     ip_restriction {
       virtual_network_subnet_id = var.libre_app_virtual_network_subnet_id != null ? var.libre_app_virtual_network_subnet_id : azurerm_subnet.az_openai_subnet.id
       priority                  = 100
@@ -76,11 +77,26 @@ resource "azurerm_linux_web_app" "librechat" {
       action                    = "Allow"
     }
 
-    ip_restriction {
-      ip_address = var.libre_app_allowed_ip_address
-      priority   = 200
-      name       = "ip-access" # "The CIDR notation of the IP or IP Range to match to allow. For example: 10.0.0.0/24 or 192.168.10.1/32"
-      action     = "Allow"
+    # ip_restriction for subnet access add additional via dynamic (optional)
+    dynamic "ip_restriction" {
+      for_each = var.libre_app_allowed_subnets != null ? var.libre_app_allowed_subnets : []
+      content {
+        virtual_network_subnet_id = ip_restriction.value.virtual_network_subnet_id
+        priority                  = ip_restriction.value.priority
+        name                      = ip_restriction.value.name
+        action                    = ip_restriction.value.action
+      }
+    }
+
+    # ip_restriction for ip access add additional via dynamic (optional)
+    dynamic "ip_restriction" {
+      for_each = var.libre_app_allowed_ip_addresses != null ? var.libre_app_allowed_ip_addresses : []
+      content {
+        ip_address = ip_restriction.value.ip_address
+        priority   = ip_restriction.value.priority
+        name       = ip_restriction.value.name
+        action     = ip_restriction.value.action
+      }
     }
   }
 
@@ -119,34 +135,49 @@ resource "azurerm_role_assignment" "librechat_app_kv_access" {
 #   resource_group_name = var.azure_resource_group_name
 # }
 
-# resource "azurerm_linux_web_app" "app-service" {
-#   name                = "some-service"
-#   resource_group_name = var.azure_resource_group_name
-#   location            = var.azure_region
-#   service_plan_id = "some-plan"
-#   site_config {}
-# }
+resource "azurerm_dns_txt_record" "domain_verification" {
+  count               = var.libre_app_custom_domain_create == true ? 1 : 0
+  name                = "${var.librechat_app_custom_domain_name}txt"
+  zone_name           = var.librechat_app_custom_dns_zone_name
+  resource_group_name = var.dns_resource_group_name
+  ttl                 = 600
 
-# resource "azurerm_dns_txt_record" "domain-verification" {
-#   name                = "asuid.api.domain.com"
-#   zone_name           = var.azure_dns_zone
-#   resource_group_name = var.azure_resource_group_name
-#   ttl                 = 300
+  record {
+    value = azurerm_linux_web_app.librechat.custom_domain_verification_id
+  }
+}
 
-#   record {
-#     value = azurerm_linux_web_app.app-service.custom_domain_verification_id
-#   }
-# }
+resource "azurerm_dns_cname_record" "cname_record" {
+  count               = var.libre_app_custom_domain_create == true ? 1 : 0
+  name                = var.librechat_app_custom_domain_name
+  zone_name           = var.librechat_app_custom_dns_zone_name
+  resource_group_name = var.dns_resource_group_name
+  ttl                 = 600
+  record              = azurerm_linux_web_app.librechat.default_hostname
 
-# resource "azurerm_dns_cname_record" "cname-record" {
-#   name                = "domain.com"
-#   zone_name           = azurerm_dns_zone.dns-zone.name
-#   resource_group_name = var.azure_resource_group_name
-#   ttl                 = 300
-#   record              = azurerm_linux_web_app.app-service.default_hostname
+  depends_on = [azurerm_dns_txt_record.domain_verification]
+}
 
-#   depends_on = [azurerm_dns_txt_record.domain-verification]
-# }
+resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
+  count               = var.libre_app_custom_domain_create == true ? 1 : 0
+  hostname            = "${var.librechat_app_custom_domain_name}.${var.librechat_app_custom_dns_zone_name}"
+  app_service_name    = var.libre_app_name
+  resource_group_name = azurerm_resource_group.az_openai_rg.name
+
+  depends_on = [azurerm_dns_cname_record.cname_record, azurerm_linux_web_app.librechat ]
+}
+
+resource "azurerm_app_service_managed_certificate" "libre_app_cert" {
+  count                      = var.libre_app_custom_domain_create == true ? 1 : 0
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding[0].id
+}
+
+resource "azurerm_app_service_certificate_binding" "libre_app_cert_binding" {
+  count               = var.libre_app_custom_domain_create == true ? 1 : 0
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding[0].id
+  certificate_id      = azurerm_app_service_managed_certificate.libre_app_cert[0].id
+  ssl_state           = "SniEnabled"
+}
 
 #TODO: Implement DALL-E 
 #TODO:

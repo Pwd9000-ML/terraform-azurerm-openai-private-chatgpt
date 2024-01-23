@@ -391,14 +391,44 @@ variable "libre_app_public_network_access_enabled" {
 
 variable "libre_app_virtual_network_subnet_id" {
   type        = string
-  description = "The ID of the subnet to deploy the LibreChat App Service in."
+  description = "The ID of the subnet, used to allow access to the App Service (priority 100), e.g. cosmosdb, meilisearch etc. If networking is created as part of the module, this will be automatically populated if value is 'null'."
   default     = null
 }
 
-variable "libre_app_allowed_ip_address" {
-  type        = string
-  description = "The IP Address to allow access to the LibreChat App Service from. (Change to your IP Address). default is allow all"
-  default     = "0.0.0.0/0"
+variable "libre_app_allowed_subnets" {
+  description = "Allowed Subnets (By default the subnet the app service is deployed in is allowed access already as priority 100). Add any additionals here"
+  type = list(object({
+    virtual_network_subnet_id = string
+    priority                  = number
+    name                      = string
+    action                    = string
+  }))
+  default = [
+    {
+      virtual_network_subnet_id = "subnet_id1"
+      priority                  = 200
+      name                      = "subnet-access-rule1" # "Allow from LibreChat app subnet and hosted services e.g. cosmosdb, meilisearch etc."
+      action                    = "Allow"
+    }
+  ]
+}
+
+variable "libre_app_allowed_ip_addresses" {
+  description = "Allowed IP Addresses. The CIDR notation of the IP or IP Range to match to allow. For example: 10.0.0.0/24 or 192.168.10.1/32"
+  type = list(object({
+    ip_address = string
+    priority   = number
+    name       = string
+    action     = string
+  }))
+  default = [
+    {
+      ip_address = "0.0.0.0/0" # Allow all IP Addresses (change to your IP range)
+      priority   = 300
+      name       = "ip-access-rule1"
+      action     = "Allow"
+    }
+  ]
 }
 
 # LibreChat App Service App Settings
@@ -558,24 +588,24 @@ variable "libre_app_enable_meilisearch" {
   default     = false
 }
 
-# # variable "libre_app_disable_meilisearch_analytics" {
-# #   type        = bool
-# #   description = "Disable Meilisearch Analytics"
-# #   default     = true
-# # }
+# variable "libre_app_disable_meilisearch_analytics" {
+#   type        = bool
+#   description = "Disable Meilisearch Analytics"
+#   default     = true
+# }
 
-# # variable "libre_app_meili_host" {
-# #   type        = string
-# #   description = "For the API server to connect to the search server. E.g. https://meilisearch.example.com"
-# #   default     = null
-# # }
+# variable "libre_app_meili_host" {
+#   type        = string
+#   description = "For the API server to connect to the search server. E.g. https://meilisearch.example.com"
+#   default     = null
+# }
 
-# # variable "libre_app_meili_key" {
-# #   type        = string
-# #   description = "Meilisearch API Key"
-# #   default     = null
-# #   sensitive   = true
-# # }
+# variable "libre_app_meili_key" {
+#   type        = string
+#   description = "Meilisearch API Key"
+#   default     = null
+#   sensitive   = true
+# }
 
 # User Registration
 variable "libre_app_allow_email_login" {
@@ -614,4 +644,30 @@ variable "libre_app_jwt_refresh_secret" {
   description = "JWT Refresh Secret"
   default     = null
   sensitive   = true
+}
+
+# Custom Domain and Managed Certificate (Optional)
+
+variable "libre_app_custom_domain_create" {
+  type        = bool
+  description = "Create a custom domain and managed certificate for the App Service."
+  default     = false
+}
+
+variable "librechat_app_custom_domain_name" {
+  type        = string
+  description = "The custom domain to use for the App Service."
+  default     = "privategpt"
+}
+
+variable "librechat_app_custom_dns_zone_name" {
+  type        = string
+  description = "The DNS Zone to use for the App Service."
+  default     = "domain.com"
+}
+
+variable "dns_resource_group_name" {
+  type        = string
+  description = "The Resource Group that contains the custom DNS Zone to use for the App Service"
+  default     = "dns-rg"
 }
