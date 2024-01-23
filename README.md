@@ -8,7 +8,7 @@
 This version is a complete rewrite of the module and is not backwards compatible with version 1.x.  
 New integrations and features have been added to the module to use the latest **Azure OpenAI** services and features such as `GPT-4-1106`, `GPT-4-Vision` and `DALL-E-3`. A new ChatBot UI / [LibreChat](https://docs.librechat.ai/index.html) has been added to the module to provide a complete solution.
 
-<iframe width="757" height="500" src="https://www.youtube.com/embed/pNIOs1ovsXw" title="LibreChat: An Open Source Enhanced ChatGPT Clone with AI Model Switching, LangChain Plugins, &amp; More" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![LIBRE](https://img.youtube.com/vi/pNIOs1ovsXw/0.jpg)](https://www.youtube.com/watch?v=pNIOs1ovsXw)
 
 ## Introduction
 
@@ -25,7 +25,7 @@ While Azure OpenAI does come with a cost, it's highly affordable—often, a conv
 
 ## Diagram
 
-coming soon...    
+coming soon...
 
 ## Description
 
