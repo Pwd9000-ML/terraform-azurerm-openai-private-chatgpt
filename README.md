@@ -1,12 +1,10 @@
-[![Manual-Tests-and-Release](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/actions/workflows/manual-tests.yml/badge.svg)](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/actions/workflows/manual-tests.yml) [![Automated-Dependency-Tests-and-Release](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/actions/workflows/dependency-tests.yml/badge.svg)](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/actions/workflows/dependency-tests.yml) [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
-
 # Module: Azure OpenAI Private ChatGPT
 
 **NOTE:** Your Azure subscription will need to be whitelisted for **Azure Open AI**. At the release time of this module (August 2023) you will need to request access via this **[form](https://aka.ms/oai/access)** and a further form for **[GPT 4](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xURjE4QlhVUERGQ1NXOTlNT0w1NldTWjJCMSQlQCN0PWcu)**. Once you have access deploy either **GPT-35-Turbo**, **GPT-35-Turbo-16k** or if you have access to **GPT-4-32k**, go forward with that model.  
 
 Easily construct a ChatGPT-style interface using Azure OpenAI and a suite of Azure services. Simplifying the complex.  
 
-![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/chatbotui1.png)  
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/legacy-v1/assets/chatbotui1.png)  
 
 ## Introduction
 
@@ -25,7 +23,7 @@ This terraform module helps establishing a secure **ChatGPT-like** interface. Th
 
 ## Diagram
 
-![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/mainflow1.png)
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/legacy-v1/assets/mainflow1.png)
 
 ## Description
 
@@ -64,17 +62,17 @@ This flexible terraform module is an **OpenAI accelerator** that can be used to 
 
 ## ChatBot Demo
 
-![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/chatbotui2.png)
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/legacy-v1/assets/chatbotui2.png)
 
 ## Examples
 
-See **[Private ChatGPT with Azure Front Door + Firewall on existing DNS zone](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/master/examples/PrivateGPT_w_AFD_WAF_existing_DNS_zone):**  
+See **[Private ChatGPT with Azure Front Door + Firewall on existing DNS zone](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/legacy-v1/examples/PrivateGPT_w_AFD_WAF_existing_DNS_zone):**  
 For an example of how to create a Privately hosted instance of ChatBot/ChatGPT on Azure OpenAI with AFD + WAF using an existing DNS zone for the custom domain configuration.  
 
-See **[Private ChatGPT with Azure Front Door + Firewall on new DNS zone](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/master/examples/PrivateGPT_w_AFD_WAF_new_DNS_zone):**  
+See **[Private ChatGPT with Azure Front Door + Firewall on new DNS zone](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/legacy-v1/examples/PrivateGPT_w_AFD_WAF_new_DNS_zone):**  
 For an example of how to create a Privately hosted instance of ChatBot/ChatGPT on Azure OpenAI with AFD + WAF using a new DNS zone for the custom domain configuration.  
 
-See **[Private ChatGPT instance only](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/master/examples/PrivateGPT_without_AFD_WAF):**  
+See **[Private ChatGPT instance only](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/legacy-v1/examples/PrivateGPT_without_AFD_WAF):**  
 For an example of how to create a Privately hosted instance of ChatBot/ChatGPT on Azure OpenAI only. (No AFD + WAF + DNS zone)  
 
 This module is published on the **[Public Terraform Registry - openai-private-chatgpt](https://registry.terraform.io/modules/Pwd9000-ML/openai-private-chatgpt/azurerm/latest)**  
