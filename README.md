@@ -4,8 +4,11 @@
 
 ## Legacy Version 1.x
 
-**NOTE:** This module is now in version **2.x**. The legacy version **1.x** can be found in the legacy branch **[here](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/legacy-v1)  
-This version is a complete rewrite of the module and is not backwards compatible with version 1.x.  
+**NOTE:** This module is now in version **2.x**. The legacy version **1.x** can be found in the legacy branch **[here](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/legacy-v1)**  
+
+**[Version 1.x Documentation](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/blob/legacy-v1/README.md)**  
+
+Version **2.x** a complete rewrite of the module and is not backwards compatible with version **1.x.**  
 New integrations and features have been added to the module to use the latest **Azure OpenAI** services and features such as `GPT-4-1106`, `GPT-4-Vision` and `DALL-E-3`. A new ChatBot UI / [LibreChat](https://docs.librechat.ai/index.html) has been added to the module to provide a complete solution.
 
 [![LIBRE](https://img.youtube.com/vi/pNIOs1ovsXw/0.jpg)](https://www.youtube.com/watch?v=pNIOs1ovsXw)
