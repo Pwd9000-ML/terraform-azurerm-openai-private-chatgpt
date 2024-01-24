@@ -178,7 +178,7 @@ libre_app_jwt_secret                = null
 libre_app_jwt_refresh_secret        = null
 
 # violations
-violations = {
+libre_app_violations = {
   enabled                      = false
   ban_duration                 = 1000 * 60 * 60 * 2
   ban_interval                 = 20

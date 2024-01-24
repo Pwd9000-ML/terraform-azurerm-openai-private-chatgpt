@@ -648,7 +648,7 @@ variable "libre_app_jwt_refresh_secret" {
 
 # Violations 
 
-variable "violations" {
+variable "libre_app_violations" {
   description = "Configuration for violations"
   type = object({
     enabled                      = bool

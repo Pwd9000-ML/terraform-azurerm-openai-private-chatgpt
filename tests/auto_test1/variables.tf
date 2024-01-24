@@ -640,8 +640,7 @@ variable "libre_app_jwt_refresh_secret" {
 }
 
 # Violations
-
-variable "violations" {
+variable "libre_app_violations" {
   description = "Configuration for violations"
   type = object({
     enabled                      = bool
@@ -690,7 +689,6 @@ variable "violations" {
 }
 
 # Custom Domain and Managed Certificate (Optional)
-
 variable "libre_app_custom_domain_create" {
   type        = bool
   description = "Create a custom domain and managed certificate for the App Service."
