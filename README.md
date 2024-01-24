@@ -51,10 +51,6 @@ While Azure OpenAI does come with a cost, it's highly affordable—often, a conv
 
 coming soon...
 
-## Description
-
-coming soon...
-
 ## Examples
 
 - [Public Deployment with Custom Domain and IP Whitelisting](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/master/examples/public_deployment_with_custom_domain)
@@ -68,6 +64,10 @@ coming soon...
 ### Presets
 
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/presets1.png)
+
+### Vision analysis
+
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/vision1.png)
 
 ## Contributing
 
