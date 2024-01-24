@@ -82,7 +82,7 @@ locals {
 
     LIMIT_MESSAGE_IP  = var.libre_app_violations.limit_message_ip
     MESSAGE_IP_MAX    = var.libre_app_violations.message_ip_max
-    MESSAGE_IP_WINDOW = var.violations.message_ip_window
+    MESSAGE_IP_WINDOW = var.libre_app_violations.message_ip_window
 
     LIMIT_MESSAGE_USER  = var.libre_app_violations.limit_message_user
     MESSAGE_USER_MAX    = var.libre_app_violations.message_user_max
