@@ -81,7 +81,7 @@ oai_model_deployment = [
     model_format   = "OpenAI"
     model_version  = "3.0"
     scale_type     = "Standard"
-    scale_capacity = 2
+    scale_capacity = 1
   }
 ]
 
