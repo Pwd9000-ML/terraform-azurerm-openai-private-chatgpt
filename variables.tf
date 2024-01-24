@@ -646,6 +646,56 @@ variable "libre_app_jwt_refresh_secret" {
   sensitive   = true
 }
 
+# Violations 
+
+variable "violations" {
+  description = "Configuration for violations"
+  type = object({
+    enabled                      = bool
+    ban_duration                 = number
+    ban_interval                 = number
+    login_violation_score        = number
+    registration_violation_score = number
+    concurrent_violation_score   = number
+    message_violation_score      = number
+    non_browser_violation_score  = number
+    login_max                    = number
+    login_window                 = number
+    register_max                 = number
+    register_window              = number
+    limit_concurrent_messages    = bool
+    concurrent_message_max       = number
+    limit_message_ip             = bool
+    message_ip_max               = number
+    message_ip_window            = number
+    limit_message_user           = bool
+    message_user_max             = number
+    message_user_window          = number
+  })
+  default = {
+    enabled                      = true
+    ban_duration                 = 1000 * 60 * 60 * 2
+    ban_interval                 = 20
+    login_violation_score        = 1
+    registration_violation_score = 1
+    concurrent_violation_score   = 1
+    message_violation_score      = 1
+    non_browser_violation_score  = 20
+    login_max                    = 7
+    login_window                 = 5
+    register_max                 = 5
+    register_window              = 60
+    limit_concurrent_messages    = true
+    concurrent_message_max       = 2
+    limit_message_ip             = true
+    message_ip_max               = 40
+    message_ip_window            = 1
+    limit_message_user           = false
+    message_user_max             = 40
+    message_user_window          = 1
+  }
+}
+
 # Custom Domain and Managed Certificate (Optional)
 
 variable "libre_app_custom_domain_create" {

@@ -60,6 +60,33 @@ locals {
     REFRESH_TOKEN_EXPIRY      = (1000 * 60 * 60 * 24) * 5 #7 days
     JWT_SECRET                = var.libre_app_jwt_secret != null ? var.libre_app_jwt_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_secret.id})"
     JWT_REFRESH_SECRET        = var.libre_app_jwt_refresh_secret != null ? var.libre_app_jwt_refresh_secret : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_jwt_refresh_secret.id})"
+
+    ### User Violations ###
+    BAN_VIOLATIONS = var.violations.enabled
+    BAN_DURATION   = var.violations.ban_duration
+    BAN_INTERVAL   = var.violations.ban_interval
+
+    LOGIN_VIOLATION_SCORE        = var.violations.login_violation_score
+    REGISTRATION_VIOLATION_SCORE = var.violations.registration_violation_score
+    CONCURRENT_VIOLATION_SCORE   = var.violations.concurrent_violation_score
+    MESSAGE_VIOLATION_SCORE      = var.violations.message_violation_score
+    NON_BROWSER_VIOLATION_SCORE  = var.violations.non_browser_violation_score
+
+    LOGIN_MAX       = var.violations.login_max
+    LOGIN_WINDOW    = var.violations.login_window
+    REGISTER_MAX    = var.violations.register_max
+    REGISTER_WINDOW = var.violations.register_window
+
+    LIMIT_CONCURRENT_MESSAGES = var.violations.limit_concurrent_messages
+    CONCURRENT_MESSAGE_MAX    = var.violations.concurrent_message_max
+
+    LIMIT_MESSAGE_IP  = var.violations.limit_message_ip
+    MESSAGE_IP_MAX    = var.violations.message_ip_max
+    MESSAGE_IP_WINDOW = var.violations.message_ip_window
+
+    LIMIT_MESSAGE_USER  = var.violations.limit_message_user
+    MESSAGE_USER_MAX    = var.violations.message_user_max
+    MESSAGE_USER_WINDOW = var.violations.message_user_window
   }
 }
 

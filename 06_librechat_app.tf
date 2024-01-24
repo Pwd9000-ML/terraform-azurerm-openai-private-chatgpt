@@ -164,7 +164,7 @@ resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
   app_service_name    = var.libre_app_name
   resource_group_name = azurerm_resource_group.az_openai_rg.name
 
-  depends_on = [azurerm_dns_cname_record.cname_record, azurerm_linux_web_app.librechat ]
+  depends_on = [azurerm_dns_cname_record.cname_record, azurerm_linux_web_app.librechat]
 }
 
 resource "azurerm_app_service_managed_certificate" "libre_app_cert" {

@@ -145,6 +145,9 @@ module "private-chatgpt-openai" {
   libre_app_jwt_secret                = var.libre_app_jwt_secret
   libre_app_jwt_refresh_secret        = var.libre_app_jwt_refresh_secret
 
+  # Violations
+  violations = var.violations
+
   # Custom Domain and Managed Certificate (Optional)
   libre_app_custom_domain_create     = var.libre_app_custom_domain_create
   librechat_app_custom_domain_name   = "${var.librechat_app_custom_domain_name}${random_integer.number.result}"
