@@ -1,4 +1,4 @@
-# Example - Public Deployment with Custom Domain and IP Whitelisting
+# Public Deployment with Custom Domain and IP Whitelisting
 
 This example contains a Terraform script for provisioning a set of Azure resources for a chat application powered by Azure OpenAI models. The script is designed to be modular and configurable, allowing you to customise the resources and settings to fit your specific needs.  
 

@@ -63,7 +63,21 @@ coming soon...
 
 - [Public Deployment with Custom Domain and IP Whitelisting](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/master/examples/public_deployment_with_custom_domain)
 
-Enjoy!  
+## Contributing
+
+Contributions are welcome. Please submit a pull request if you have any improvements or fixes. Make sure to follow the existing code style and add comments to your code explaining what it does.  
+
+## License
+
+This terraform module is licensed under the MIT License. See the LICENSE file for more details.  
+
+## Support
+
+If you encounter any issues or have any questions about this terraform module, please open an issue on GitHub. We'll do our best to respond as quickly as possible.  
+
+## Acknowledgements
+
+This terraform module was developed by **Marcel Lupo** as part of a project to explore the capabilities of Azure OpenAI models. We'd like to thank the OpenAI and Microsoft team for their incredible work and ongoing support of the AI community. 
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
