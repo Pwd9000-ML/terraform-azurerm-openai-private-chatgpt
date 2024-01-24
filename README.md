@@ -61,7 +61,11 @@ coming soon...
 
 ## Screens
 
+### Model Selection
+
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/demo1.png)  
+
+### Presets
 
 ![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/presets1.png)
 
