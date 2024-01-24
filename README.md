@@ -55,13 +55,15 @@ coming soon...
 
 coming soon...
 
-## ChatBot Demo
-
-coming soon...
-
 ## Examples
 
 - [Public Deployment with Custom Domain and IP Whitelisting](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/master/examples/public_deployment_with_custom_domain)
+
+## Screens
+
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/demo1.png)  
+
+![image.png](https://raw.githubusercontent.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/master/assets/presets1.png)
 
 ## Contributing
 
