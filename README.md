@@ -189,6 +189,7 @@ No modules.
 | <a name="input_libre_app_port"></a> [libre\_app\_port](#input\_libre\_app\_port) | The host port to listen on. | `number` | `3080` | no |
 | <a name="input_libre_app_public_network_access_enabled"></a> [libre\_app\_public\_network\_access\_enabled](#input\_libre\_app\_public\_network\_access\_enabled) | Whether or not public network access is enabled. Defaults to `false`. | `bool` | `true` | no |
 | <a name="input_libre_app_title"></a> [libre\_app\_title](#input\_libre\_app\_title) | Add a custom title for the App. | `string` | `"PrivateGPT"` | no |
+| <a name="input_libre_app_violations"></a> [libre\_app\_violations](#input\_libre\_app\_violations) | Configuration for violations | <pre>object({<br>    enabled                      = bool<br>    ban_duration                 = number<br>    ban_interval                 = number<br>    login_violation_score        = number<br>    registration_violation_score = number<br>    concurrent_violation_score   = number<br>    message_violation_score      = number<br>    non_browser_violation_score  = number<br>    login_max                    = number<br>    login_window                 = number<br>    register_max                 = number<br>    register_window              = number<br>    limit_concurrent_messages    = bool<br>    concurrent_message_max       = number<br>    limit_message_ip             = bool<br>    message_ip_max               = number<br>    message_ip_window            = number<br>    limit_message_user           = bool<br>    message_user_max             = number<br>    message_user_window          = number<br>  })</pre> | <pre>{<br>  "ban_duration": 7200000,<br>  "ban_interval": 20,<br>  "concurrent_message_max": 2,<br>  "concurrent_violation_score": 1,<br>  "enabled": true,<br>  "limit_concurrent_messages": true,<br>  "limit_message_ip": true,<br>  "limit_message_user": false,<br>  "login_max": 7,<br>  "login_violation_score": 1,<br>  "login_window": 5,<br>  "message_ip_max": 40,<br>  "message_ip_window": 1,<br>  "message_user_max": 40,<br>  "message_user_window": 1,<br>  "message_violation_score": 1,<br>  "non_browser_violation_score": 20,<br>  "register_max": 5,<br>  "register_window": 60,<br>  "registration_violation_score": 1<br>}</pre> | no |
 | <a name="input_libre_app_virtual_network_subnet_id"></a> [libre\_app\_virtual\_network\_subnet\_id](#input\_libre\_app\_virtual\_network\_subnet\_id) | The ID of the subnet, used to allow access to the App Service (priority 100), e.g. cosmosdb, meilisearch etc. If networking is created as part of the module, this will be automatically populated if value is 'null'. | `string` | `null` | no |
 | <a name="input_librechat_app_custom_dns_zone_name"></a> [librechat\_app\_custom\_dns\_zone\_name](#input\_librechat\_app\_custom\_dns\_zone\_name) | The DNS Zone to use for the App Service. | `string` | `"domain.com"` | no |
 | <a name="input_librechat_app_custom_domain_name"></a> [librechat\_app\_custom\_domain\_name](#input\_librechat\_app\_custom\_domain\_name) | The custom domain to use for the App Service. | `string` | `"privategpt"` | no |
@@ -215,5 +216,31 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_app_service_default_hostname"></a> [app\_service\_default\_hostname](#output\_app\_service\_default\_hostname) | The default hostname of the App Service |
+| <a name="output_app_service_id"></a> [app\_service\_id](#output\_app\_service\_id) | The ID of the App Service |
+| <a name="output_app_service_name"></a> [app\_service\_name](#output\_app\_service\_name) | The name of the App Service |
+| <a name="output_app_service_outbound_ip_addresses"></a> [app\_service\_outbound\_ip\_addresses](#output\_app\_service\_outbound\_ip\_addresses) | The outbound IP addresses of the App Service |
+| <a name="output_app_service_plan_id"></a> [app\_service\_plan\_id](#output\_app\_service\_plan\_id) | The ID of the App Service Plan |
+| <a name="output_app_service_plan_name"></a> [app\_service\_plan\_name](#output\_app\_service\_plan\_name) | The name of the App Service Plan |
+| <a name="output_cognitive_deployment_ids"></a> [cognitive\_deployment\_ids](#output\_cognitive\_deployment\_ids) | The IDs of the OpenAI Cognitive Account Model Deployments |
+| <a name="output_cognitive_deployment_names"></a> [cognitive\_deployment\_names](#output\_cognitive\_deployment\_names) | The names of the OpenAI Cognitive Account Model Deployments |
+| <a name="output_cosmosdb_account_connection_strings"></a> [cosmosdb\_account\_connection\_strings](#output\_cosmosdb\_account\_connection\_strings) | The primary connection string for the Cosmos DB account |
+| <a name="output_cosmosdb_account_endpoint"></a> [cosmosdb\_account\_endpoint](#output\_cosmosdb\_account\_endpoint) | The endpoint used to connect to the Cosmos DB account |
+| <a name="output_cosmosdb_account_id"></a> [cosmosdb\_account\_id](#output\_cosmosdb\_account\_id) | The ID of the Cosmos DB account |
+| <a name="output_cosmosdb_account_name"></a> [cosmosdb\_account\_name](#output\_cosmosdb\_account\_name) | The name of the Cosmos DB account |
+| <a name="output_cosmosdb_account_primary_key"></a> [cosmosdb\_account\_primary\_key](#output\_cosmosdb\_account\_primary\_key) | The primary master key for the Cosmos DB account |
+| <a name="output_cosmosdb_account_secondary_key"></a> [cosmosdb\_account\_secondary\_key](#output\_cosmosdb\_account\_secondary\_key) | The secondary master key for the Cosmos DB account |
+| <a name="output_key_vault_id"></a> [key\_vault\_id](#output\_key\_vault\_id) | The ID of the Key Vault |
+| <a name="output_key_vault_name"></a> [key\_vault\_name](#output\_key\_vault\_name) | The name of the Key Vault |
+| <a name="output_key_vault_uri"></a> [key\_vault\_uri](#output\_key\_vault\_uri) | The URI of the Key Vault |
+| <a name="output_openai_endpoint"></a> [openai\_endpoint](#output\_openai\_endpoint) | The endpoint used to connect to the Cognitive Service Account. |
+| <a name="output_openai_primary_key"></a> [openai\_primary\_key](#output\_openai\_primary\_key) | The primary access key for the Cognitive Service Account. |
+| <a name="output_openai_secondary_key"></a> [openai\_secondary\_key](#output\_openai\_secondary\_key) | The secondary access key for the Cognitive Service Account. |
+| <a name="output_openai_subdomain"></a> [openai\_subdomain](#output\_openai\_subdomain) | The subdomain used to connect to the Cognitive Service Account. |
+| <a name="output_subnet_id"></a> [subnet\_id](#output\_subnet\_id) | The ID of the subnet |
+| <a name="output_subnet_name"></a> [subnet\_name](#output\_subnet\_name) | The name of the subnet |
+| <a name="output_virtual_network_id"></a> [virtual\_network\_id](#output\_virtual\_network\_id) | The ID of the virtual network |
+| <a name="output_virtual_network_name"></a> [virtual\_network\_name](#output\_virtual\_network\_name) | The name of the virtual network |
 <!-- END_TF_DOCS -->
