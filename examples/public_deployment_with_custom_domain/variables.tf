@@ -350,27 +350,6 @@ variable "app_service_sku_name" {
   default     = "B1"
 }
 
-# # Meilisearch App Service
-# variable "meilisearch_app_name" {
-#   type        = string
-#   description = "Name of the meilisearch App Service."
-#   default     = "meilisearchapp9000"
-
-# }
-
-# variable "meilisearch_app_virtual_network_subnet_id" {
-#   type        = string
-#   description = "The ID of the subnet to deploy the meilisearch App Service in."
-#   default     = null
-# }
-
-# variable "meilisearch_app_key" {
-#   type        = string
-#   description = "The Meilisearch API Key to use for authentication."
-#   default     = null
-#   sensitive   = true
-# }
-
 # LibreChat App Service
 variable "libre_app_name" {
   type        = string
@@ -562,36 +541,12 @@ variable "libre_app_plugins_creds_iv" {
   sensitive   = true
 }
 
-# variable "libre_app_plugin_models" {
-#   type        = string
-#   description = "Libre App Plugin Models e.g. 'gpt-4,dall-e-3'"
-#   default     = "gpt-4,dall-e-3"
-# }
-
-# variable "libre_app_plugins_use_azure" {
-#   type        = bool
-#   description = "Libre App Plugins Use Azure, required for Azure OpenAI Plugins e.g. 'dall-e-3'"
-#   default     = true
-# }
-
 # Search
 variable "libre_app_enable_meilisearch" {
   type        = bool
   description = "Enable Meilisearch"
   default     = false
 }
-
-# variable "libre_app_disable_meilisearch_analytics" {
-#   type        = bool
-#   description = "Disable Meilisearch Analytics"
-#   default     = true
-# }
-
-# variable "libre_app_meili_host" {
-#   type        = string
-#   description = "For the API server to connect to the search server. E.g. https://meilisearch.example.com"
-#   default     = null
-# }
 
 variable "libre_app_meili_key" {
   type        = string

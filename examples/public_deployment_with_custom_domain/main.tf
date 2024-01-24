@@ -1,6 +1,6 @@
 terraform {
-  backend "azurerm" {}
-  #backend "local" { path = "terraform-test1.tfstate" }
+  #backend "azurerm" {}
+  backend "local" { path = "terraform-example1.tfstate" }
 }
 
 provider "azurerm" {
@@ -20,11 +20,9 @@ resource "random_integer" "number" {
   max = 9999
 }
 
-# ##################################################
-# # MODULE TO TEST                                 #
-# ##################################################
 module "private-chatgpt-openai" {
-  source = "../.."
+  source  = "Pwd9000-ML/openai-private-chatgpt/azurerm"
+  version = "~> 2.2.0"
 
   # 01 common + RG #
   #================#
@@ -85,11 +83,6 @@ module "private-chatgpt-openai" {
   app_service_name     = "${var.app_service_name}${random_integer.number.result}"
   app_service_sku_name = var.app_service_sku_name
 
-  # MeiSearch App
-  #meilisearch_app_name                      = "${var.meilisearch_app_name}${random_integer.number.result}"
-  #meilisearch_app_virtual_network_subnet_id = var.meilisearch_app_virtual_network_subnet_id
-  #meilisearch_app_key                       = var.meilisearch_app_key
-
   # LibreChat App
   libre_app_name                          = "${var.libre_app_name}${random_integer.number.result}"
   libre_app_virtual_network_subnet_id     = var.libre_app_virtual_network_subnet_id
@@ -128,14 +121,9 @@ module "private-chatgpt-openai" {
   libre_app_debug_plugins     = var.libre_app_debug_plugins
   libre_app_plugins_creds_key = var.libre_app_plugins_creds_key
   libre_app_plugins_creds_iv  = var.libre_app_plugins_creds_iv
-  # libre_app_plugin_models     = var.libre_app_plugin_models
-  # libre_app_plugins_use_azure = var.libre_app_plugins_use_azure
 
   # Search
   libre_app_enable_meilisearch = var.libre_app_enable_meilisearch
-  #libre_app_disable_meilisearch_analytics = var.libre_app_disable_meilisearch_analytics
-  #libre_app_meili_host                    = var.libre_app_meili_host
-  #libre_app_meili_key                     = var.libre_app_meili_key
 
   # User Registration
   libre_app_allow_email_login         = var.libre_app_allow_email_login
@@ -150,7 +138,7 @@ module "private-chatgpt-openai" {
 
   # Custom Domain and Managed Certificate (Optional)
   libre_app_custom_domain_create     = var.libre_app_custom_domain_create
-  librechat_app_custom_domain_name   = "${var.librechat_app_custom_domain_name}${random_integer.number.result}"
+  librechat_app_custom_domain_name   = var.librechat_app_custom_domain_name
   librechat_app_custom_dns_zone_name = var.librechat_app_custom_dns_zone_name
   dns_resource_group_name            = var.dns_resource_group_name
 }
