@@ -22,6 +22,7 @@ New integrations and features have been added to the module to use the latest **
 
 - [x] Added User Violations Support
 - [x] Updated documentation and examples
+- [x] Added module outputs
 
 ### v2.1.x
 
@@ -60,7 +61,7 @@ coming soon...
 
 ## Examples
 
-coming soon...
+- [Public Deployment with Custom Domain and IP Whitelisting](https://github.com/Pwd9000-ML/terraform-azurerm-openai-private-chatgpt/tree/master/examples/public_deployment_with_custom_domain)
 
 Enjoy!  
 

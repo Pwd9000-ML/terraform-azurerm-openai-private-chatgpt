@@ -17,7 +17,6 @@ resource "azurerm_key_vault" "az_openai_kv" {
   depends_on = [azurerm_subnet.az_openai_subnet]
 }
 
-
 # Add "self" permission to key vault RBAC (to manange key vault secrets)
 resource "azurerm_role_assignment" "kv_role_assigment" {
   for_each             = toset(["Key Vault Administrator"])
