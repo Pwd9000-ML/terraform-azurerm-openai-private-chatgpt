@@ -36,7 +36,7 @@ output "key_vault_name" {
 
 output "key_vault_uri" {
   description = "The URI of the Key Vault"
-  value       = azurerm_key_vault.az_openai_kv.uri
+  value       = azurerm_key_vault.az_openai_kv.vault_uri
 }
 
 # OPENAI Details
