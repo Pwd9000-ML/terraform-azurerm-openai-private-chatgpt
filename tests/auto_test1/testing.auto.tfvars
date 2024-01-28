@@ -67,14 +67,14 @@ oai_model_deployment = [
     scale_type     = "Standard"
     scale_capacity = 20
   },
-#  {
-#    deployment_id  = "gpt-4-vision-preview"
-#    model_name     = "gpt-4"
-#    model_format   = "OpenAI"
-#    model_version  = "vision-preview"
-#    scale_type     = "Standard"
-#    scale_capacity = 5
-#  },
+  #  {
+  #    deployment_id  = "gpt-4-vision-preview"
+  #    model_name     = "gpt-4"
+  #    model_format   = "OpenAI"
+  #    model_version  = "vision-preview"
+  #    scale_type     = "Standard"
+  #    scale_capacity = 5
+  #  },
   {
     deployment_id  = "dall-e-3"
     model_name     = "dall-e-3"
