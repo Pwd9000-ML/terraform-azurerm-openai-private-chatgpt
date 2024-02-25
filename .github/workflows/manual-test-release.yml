@@ -65,7 +65,7 @@ jobs:
     steps:
       - name: Determine version 
         id: version
-        uses: zwaldowski/semver-release-action@v3
+        uses: zwaldowski/semver-release-action@v4
         with:
           bump: minor
           dry_run: true
