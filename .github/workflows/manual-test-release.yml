@@ -65,7 +65,7 @@ jobs:
     steps:
       - name: Determine version 
         id: version
-        uses: zwaldowski/semver-release-action@v3
+        uses: zwaldowski/semver-release-action@v4
         with:
           bump: minor
           dry_run: true
@@ -73,7 +73,7 @@ jobs:
 
       - name: Create new release and push to registry 
         id: release
-        uses: ncipollo/release-action@v1.13.0
+        uses: ncipollo/release-action@v1.14.0
         with:
           generateReleaseNotes: true
           name: "v${{ steps.version.outputs.version }}"
