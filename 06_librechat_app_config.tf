@@ -34,11 +34,11 @@ locals {
     ### Plugins ###
     # NOTE: You need a fixed key and IV. a 32-byte key (64 characters in hex) and 16-byte IV (32 characters in hex) 
     # Warning: If you don't set them, the app will crash on startup.
-    DEBUG_PLUGINS = var.libre_app_debug_plugins
-    CREDS_KEY     = var.libre_app_plugins_creds_key != null ? var.libre_app_plugins_creds_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
-    CREDS_IV      = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
-    #PLUGIN_MODELS     = var.libre_app_plugin_models
-    #PLUGINS_USE_AZURE = var.libre_app_plugins_use_azure
+    DEBUG_PLUGINS     = var.libre_app_debug_plugins
+    CREDS_KEY         = var.libre_app_plugins_creds_key != null ? var.libre_app_plugins_creds_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_key.id})"
+    CREDS_IV          = var.libre_app_plugins_creds_iv != null ? var.libre_app_plugins_creds_iv : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.libre_app_creds_iv.id})"
+    PLUGIN_MODELS     = var.libre_app_plugin_models
+    PLUGINS_USE_AZURE = var.libre_app_plugins_use_azure
 
     ### Azure OpenAI DALL-E-3 Plugin (Only in 'SwedenCentral' and 'EastUS') ###
     DALLE3_AZURE_API_VERSION = var.libre_app_az_oai_dall3_api_version

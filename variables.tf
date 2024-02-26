@@ -568,17 +568,17 @@ variable "libre_app_plugins_creds_iv" {
   sensitive   = true
 }
 
-# variable "libre_app_plugin_models" {
-#   type        = string
-#   description = "Libre App Plugin Models e.g. 'gpt-4,dall-e-3'"
-#   default     = "gpt-4,dall-e-3"
-# }
+variable "libre_app_plugin_models" {
+  type        = string
+  description = "Libre App Plugin Models"
+  default     = "gpt-4,gpt-4-turbo-preview,gpt-4-0125-preview,gpt-4-1106-preview,gpt-4-0613,gpt-3.5-turbo,gpt-3.5-turbo-0125,gpt-3.5-turbo-1106,gpt-3.5-turbo-0613"
+}
 
-# variable "libre_app_plugins_use_azure" {
-#   type        = bool
-#   description = "Libre App Plugins Use Azure, required for Azure OpenAI Plugins e.g. 'dall-e-3'"
-#   default     = true
-# }
+variable "libre_app_plugins_use_azure" {
+  type        = bool
+  description = "Libre App Plugins Use Azure, required for Azure OpenAI Plugins"
+  default     = false
+}
 
 #TODO
 # Search
