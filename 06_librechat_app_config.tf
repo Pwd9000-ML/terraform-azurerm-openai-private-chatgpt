@@ -43,7 +43,7 @@ locals {
     ### Azure OpenAI DALL-E-3 Plugin (Only in 'SwedenCentral' and 'EastUS') ###
     DALLE3_AZURE_API_VERSION = var.libre_app_az_oai_dall3_api_version
     DALLE3_BASEURL           = "https://${var.libre_app_az_oai_instance_name != null ? var.libre_app_az_oai_instance_name : split("//", split(".", azurerm_cognitive_account.az_openai.endpoint)[0])[1]}.openai.azure.com/openai/deployments/${var.libre_app_az_oai_dall3_deployment_name}/"
-    DALLE_API_KEY            = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
+    DALLE3_API_KEY            = var.libre_app_az_oai_api_key != null ? var.libre_app_az_oai_api_key : "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.openai_primary_key.id})"
 
     ### Search ###
     SEARCH = var.libre_app_enable_meilisearch
