@@ -11,12 +11,16 @@ New integrations and features have been added to the module to use the latest **
 
 ## Coming next - Feature development
 
-### v2.3.x
+### v2.4.x
 
 - [ ] Privatise solution with Private endpoint support
 - [ ] Front Door and WAF support for public entrypoint
 - [ ] Azure AI Search/MeiliSearch Integration
 - [ ] Add additional support for [Azure OpenAI DALL-E-3](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#dall-e-models-preview)
+
+### v2.3.x
+
+- [x] Dependency updates and tests
 
 ### v2.2.x
 
@@ -91,13 +95,13 @@ This terraform module was developed by **Marcel Lupo** as part of a project to e
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.7.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.90.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.102.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.90.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.102.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
