@@ -11,12 +11,16 @@ New integrations and features have been added to the module to use the latest **
 
 ## Coming next - Feature development
 
-### v2.4.x
+### v2.5.x
 
 - [ ] Privatise solution with Private endpoint support
 - [ ] Front Door and WAF support for public entrypoint
 - [ ] Azure AI Search/MeiliSearch Integration
 - [ ] Add additional support for [Azure OpenAI DALL-E-3](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#dall-e-models-preview)
+
+### v2.4.x
+
+- [x] Dependency updates
 
 ### v2.3.x
 
