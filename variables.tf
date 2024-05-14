@@ -35,22 +35,22 @@ variable "vnet_address_space" {
 
 variable "subnet_config" {
   type = object({
-    subnet_name                                   = string
-    subnet_address_space                          = list(string)
-    service_endpoints                             = list(string)
-    private_endpoint_network_policies_enabled     = bool
-    private_link_service_network_policies_enabled = bool
+    subnet_name                           = string
+    subnet_address_space                  = list(string)
+    service_endpoints                     = list(string)
+    private_endpoint_network_policies     = bool
+    private_link_service_network_policies = bool
     subnets_delegation_settings = map(list(object({
       name    = string
       actions = list(string)
     })))
   })
   default = {
-    subnet_name                                   = "app-cosmos-sub"
-    subnet_address_space                          = ["10.4.0.0/24"]
-    service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
-    private_endpoint_network_policies_enabled     = false
-    private_link_service_network_policies_enabled = false
+    subnet_name                           = "app-cosmos-sub"
+    subnet_address_space                  = ["10.4.0.0/24"]
+    service_endpoints                     = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
+    private_endpoint_network_policies     = false
+    private_link_service_network_policies = false
     subnets_delegation_settings = {
       app-service-plan = [
         {

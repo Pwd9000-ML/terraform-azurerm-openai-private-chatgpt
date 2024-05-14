@@ -100,12 +100,6 @@ output "cosmosdb_account_secondary_key" {
   value       = azurerm_cosmosdb_account.az_openai_mongodb.secondary_key
 }
 
-output "cosmosdb_account_connection_strings" {
-  description = "The primary connection string for the Cosmos DB account"
-  sensitive   = true
-  value       = azurerm_cosmosdb_account.az_openai_mongodb.connection_strings
-}
-
 # App Service Details
 output "app_service_plan_id" {
   description = "The ID of the App Service Plan"
