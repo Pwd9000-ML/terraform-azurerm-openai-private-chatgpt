@@ -95,13 +95,13 @@ This terraform module was developed by **Marcel Lupo** as part of a project to e
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.7.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.102.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.103.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.102.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.103.1 |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
@@ -236,7 +236,6 @@ No modules.
 | <a name="output_app_service_plan_name"></a> [app\_service\_plan\_name](#output\_app\_service\_plan\_name) | The name of the App Service Plan |
 | <a name="output_cognitive_deployment_ids"></a> [cognitive\_deployment\_ids](#output\_cognitive\_deployment\_ids) | The IDs of the OpenAI Cognitive Account Model Deployments |
 | <a name="output_cognitive_deployment_names"></a> [cognitive\_deployment\_names](#output\_cognitive\_deployment\_names) | The names of the OpenAI Cognitive Account Model Deployments |
-| <a name="output_cosmosdb_account_connection_strings"></a> [cosmosdb\_account\_connection\_strings](#output\_cosmosdb\_account\_connection\_strings) | The primary connection string for the Cosmos DB account |
 | <a name="output_cosmosdb_account_endpoint"></a> [cosmosdb\_account\_endpoint](#output\_cosmosdb\_account\_endpoint) | The endpoint used to connect to the Cosmos DB account |
 | <a name="output_cosmosdb_account_id"></a> [cosmosdb\_account\_id](#output\_cosmosdb\_account\_id) | The ID of the Cosmos DB account |
 | <a name="output_cosmosdb_account_name"></a> [cosmosdb\_account\_name](#output\_cosmosdb\_account\_name) | The name of the Cosmos DB account |
