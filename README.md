@@ -16,7 +16,7 @@ New integrations and features have been added to the module to use the latest **
 - [ ] Privatise solution with Private endpoint support
 - [ ] Front Door and WAF support for public entrypoint
 - [ ] Azure AI Search/MeiliSearch Integration
-- [ ] Add additional support for [Azure OpenAI DALL-E-3](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#dall-e-models-preview)
+- [ ] Add additional support for [Azure OpenAI DALL-E-3](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#dall-e-models-preview/?wt.mc_id=DT-MVP-5004771)
 
 ### v2.6.x (current)
 
@@ -51,7 +51,7 @@ An effective solution lies in utilising a hosted version of the popular LLM on *
 - **Data Privacy**: By hosting OpenAI's models on Azure, your prompts will never serve as a source for training the LLM. It's simply a self-contained version running on Azure tailored for your use.
 
 - **Enhanced Security**: Azure OpenAI offers robust security measures, from the capability to secure specific endpoints to intricate role-based access controls.
-For a deeper dive, refer to this [Microsoft Learn article](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview).  
+For a deeper dive, refer to this [Microsoft Learn article](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview/?wt.mc_id=DT-MVP-5004771).  
 
 While Azure OpenAI does come with a cost, it's highly affordable—often, a conversation costs under 10 cents. You can review Azure [OpenAI's pricing](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/) details here.
 
