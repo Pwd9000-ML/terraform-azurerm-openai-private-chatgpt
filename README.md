@@ -11,15 +11,18 @@ New integrations and features have been added to the module to use the latest **
 
 ## Coming next - Feature development
 
-### v2.5.x
+### v2.7.x (in development)
 
-- [x] AzureRM provider v4.x.x support added
 - [ ] Privatise solution with Private endpoint support
 - [ ] Front Door and WAF support for public entrypoint
 - [ ] Azure AI Search/MeiliSearch Integration
 - [ ] Add additional support for [Azure OpenAI DALL-E-3](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models#dall-e-models-preview)
 
-### v2.4.x
+### v2.6.x (current)
+
+- [x] AzureRM provider v4.x.x support added
+
+### v2.4.x, v2.5.x
 
 - [x] Dependency updates
 
