@@ -13,6 +13,7 @@ New integrations and features have been added to the module to use the latest **
 
 ### v2.5.x
 
+- [x] AzureRM provider v4.x.x support added
 - [ ] Privatise solution with Private endpoint support
 - [ ] Front Door and WAF support for public entrypoint
 - [ ] Azure AI Search/MeiliSearch Integration
