@@ -1,13 +1,13 @@
 # Create CosmosDB Account running MongoDB
 resource "azurerm_cosmosdb_account" "az_openai_mongodb" {
-  name                      = var.cosmosdb_name
-  resource_group_name       = azurerm_resource_group.az_openai_rg.name
-  location                  = var.location
-  offer_type                = var.cosmosdb_offer_type
-  kind                      = var.cosmosdb_kind
-  enable_automatic_failover = var.cosmosdb_automatic_failover
-  enable_free_tier          = var.use_cosmosdb_free_tier
-  tags                      = var.tags
+  name                       = var.cosmosdb_name
+  resource_group_name        = azurerm_resource_group.az_openai_rg.name
+  location                   = var.location
+  offer_type                 = var.cosmosdb_offer_type
+  kind                       = var.cosmosdb_kind
+  automatic_failover_enabled = var.cosmosdb_automatic_failover
+  free_tier_enabled          = var.use_cosmosdb_free_tier
+  tags                       = var.tags
 
   consistency_policy {
     consistency_level       = var.cosmosdb_consistency_level
@@ -31,7 +31,7 @@ resource "azurerm_cosmosdb_account" "az_openai_mongodb" {
   }
 
   dynamic "virtual_network_rule" {
-    for_each = var.cosmosdb_virtual_network_subnets != null ? var.cosmosdb_virtual_network_subnets : azurerm_subnet.az_openai_subnet.*.id
+    for_each = var.cosmosdb_virtual_network_subnets != null ? var.cosmosdb_virtual_network_subnets : azurerm_subnet.az_openai_subnet[*].id
     content {
       id = virtual_network_rule.value
     }

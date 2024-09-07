@@ -67,12 +67,12 @@ resource "azurerm_cognitive_deployment" "az_openai_models" {
     name    = each.value.model_name
     version = each.value.model_version
   }
-  scale {
-    type     = each.value.scale_type
-    tier     = each.value.scale_tier
-    size     = each.value.scale_size
-    family   = each.value.scale_family
-    capacity = each.value.scale_capacity
+  sku {
+    name     = each.value.sku_name
+    tier     = each.value.sku_tier
+    size     = each.value.sku_size
+    family   = each.value.sku_family
+    capacity = each.value.sku_capacity
   }
 }
 

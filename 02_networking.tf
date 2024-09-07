@@ -15,7 +15,7 @@ resource "azurerm_subnet" "az_openai_subnet" {
   address_prefixes                              = var.subnet_config.subnet_address_space
   service_endpoints                             = var.subnet_config.service_endpoints
   private_link_service_network_policies_enabled = var.subnet_config.private_link_service_network_policies_enabled
-  private_endpoint_network_policies_enabled     = var.subnet_config.private_endpoint_network_policies_enabled
+  private_endpoint_network_policies             = var.subnet_config.private_endpoint_network_policies_enabled
   dynamic "delegation" {
     for_each = var.subnet_config.subnets_delegation_settings
     content {

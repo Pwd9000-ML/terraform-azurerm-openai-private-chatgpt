@@ -52,36 +52,36 @@ oai_network_acls = null
 oai_storage      = null
 oai_model_deployment = [
   {
-    deployment_id  = "gpt-35-turbo"
-    model_name     = "gpt-35-turbo"
-    model_format   = "OpenAI"
-    model_version  = "1106"
-    scale_type     = "Standard"
-    scale_capacity = 20 # 34K == Roughly 204 RPM (Requests per minute)
+    deployment_id = "gpt-35-turbo"
+    model_name    = "gpt-35-turbo"
+    model_format  = "OpenAI"
+    model_version = "1106"
+    sku_name      = "Standard"
+    sku_capacity  = 20 # 34K == Roughly 204 RPM (Requests per minute)
   },
   {
-    deployment_id  = "gpt-4"
-    model_name     = "gpt-4"
-    model_format   = "OpenAI"
-    model_version  = "1106-Preview"
-    scale_type     = "Standard"
-    scale_capacity = 20
+    deployment_id = "gpt-4"
+    model_name    = "gpt-4"
+    model_format  = "OpenAI"
+    model_version = "1106-Preview"
+    sku_name      = "Standard"
+    sku_capacity  = 20
   },
   {
-    deployment_id  = "gpt-4-vision-preview"
-    model_name     = "gpt-4"
-    model_format   = "OpenAI"
-    model_version  = "vision-preview"
-    scale_type     = "Standard"
-    scale_capacity = 5
+    deployment_id = "gpt-4-vision-preview"
+    model_name    = "gpt-4"
+    model_format  = "OpenAI"
+    model_version = "vision-preview"
+    sku_name      = "Standard"
+    sku_capacity  = 5
   },
   {
-    deployment_id  = "dall-e-3"
-    model_name     = "dall-e-3"
-    model_format   = "OpenAI"
-    model_version  = "3.0"
-    scale_type     = "Standard"
-    scale_capacity = 2
+    deployment_id = "dall-e-3"
+    model_name    = "dall-e-3"
+    model_format  = "OpenAI"
+    model_version = "3.0"
+    sku_name      = "Standard"
+    sku_capacity  = 2
   }
 ]
 
