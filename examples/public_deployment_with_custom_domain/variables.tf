@@ -35,7 +35,7 @@ variable "subnet_config" {
     subnet_name                                   = string
     subnet_address_space                          = list(string)
     service_endpoints                             = list(string)
-    private_endpoint_network_policies_enabled     = bool
+    private_endpoint_network_policies_enabled     = string
     private_link_service_network_policies_enabled = bool
     subnets_delegation_settings = map(list(object({
       name    = string
@@ -46,7 +46,7 @@ variable "subnet_config" {
     subnet_name                                   = "app-cosmos-sub"
     subnet_address_space                          = ["10.4.0.0/24"]
     service_endpoints                             = ["Microsoft.AzureCosmosDB", "Microsoft.Web"]
-    private_endpoint_network_policies_enabled     = false
+    private_endpoint_network_policies_enabled     = "Enabled"
     private_link_service_network_policies_enabled = false
     subnets_delegation_settings = {
       app-service-plan = [
