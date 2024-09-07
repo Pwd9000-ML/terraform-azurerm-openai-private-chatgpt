@@ -22,11 +22,7 @@ New integrations and features have been added to the module to use the latest **
 
 - [x] AzureRM provider v4.x.x support added
 
-### v2.4.x, v2.5.x
-
-- [x] Dependency updates
-
-### v2.3.x
+### v2.3.x, v2.4.x, v2.5.x
 
 - [x] Dependency updates and tests
 
